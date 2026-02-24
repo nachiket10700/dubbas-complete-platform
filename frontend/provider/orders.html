@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orders - Dabba's Provider</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        /* Navigation - same as menu.html */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Sidebar - same as menu.html */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Filters */
+        .order-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ff6b6b;
+            border-radius: 50px;
+            background: transparent;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .filter-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b6b;
+        }
+
+        /* Orders Table */
+        .orders-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8f9fc;
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+        }
+
+        td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-confirmed {
+            background: #cce5ff;
+            color: #004085;
+        }
+
+        .status-preparing {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-ready {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .order-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-action {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-update {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .btn-accept {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .btn-reject {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .status-select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="user-menu">
+                <div class="user-avatar">SK</div>
+                <span>Spice Kitchen</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link active">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="menu.html" class="nav-link">
+                    <i class="fas fa-utensil-spoon"></i>
+                    <span>Menu Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="earnings.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Earnings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Orders</h1>
+        </div>
+
+        <!-- Filters -->
+        <div class="order-filters">
+            <button class="filter-btn active" onclick="filterOrders('all')">All Orders</button>
+            <button class="filter-btn" onclick="filterOrders('pending')">Pending</button>
+            <button class="filter-btn" onclick="filterOrders('preparing')">Preparing</button>
+            <button class="filter-btn" onclick="filterOrders('ready')">Ready</button>
+            <button class="filter-btn" onclick="filterOrders('delivered')">Delivered</button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search orders..." id="searchInput">
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="orders-table">
+            <table id="ordersTable">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Items</th>
+                        <th>Total</th>
+                        <th>Time</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="ordersBody">
+                    <!-- Orders will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Status Update Modal -->
+    <div id="statusModal" class="modal">
+        <div class="modal-content">
+            <h3>Update Order Status</h3>
+            <select id="orderStatus" class="status-select">
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="preparing">Preparing</option>
+                <option value="ready">Ready for Pickup</option>
+                <option value="out-for-delivery">Out for Delivery</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+            <button class="btn-save" onclick="updateStatus()">Update Status</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample orders data
+        let orders = [
+            { id: 'ORD001', customer: 'Rahul Sharma', items: ['Butter Chicken', 'Naan'], total: 450, time: '10:30 AM', status: 'pending', address: 'Andheri East, Mumbai' },
+            { id: 'ORD002', customer: 'Priya Patel', items: ['Paneer Tikka', 'Rice'], total: 380, time: '10:15 AM', status: 'confirmed', address: 'Bandra West, Mumbai' },
+            { id: 'ORD003', customer: 'Amit Kumar', items: ['Biryani', 'Raita'], total: 420, time: '09:45 AM', status: 'preparing', address: 'Juhu, Mumbai' },
+            { id: 'ORD004', customer: 'Sneha Reddy', items: ['Dal Makhani', 'Naan'], total: 340, time: '09:30 AM', status: 'ready', address: 'Powai, Mumbai' },
+            { id: 'ORD005', customer: 'Vikram Singh', items: ['Chicken Tikka', 'Salad'], total: 520, time: '09:15 AM', status: 'delivered', address: 'Malad West, Mumbai' },
+            { id: 'ORD006', customer: 'Anita Desai', items: ['Veg Thali'], total: 280, time: '08:50 AM', status: 'delivered', address: 'Goregaon East, Mumbai' },
+            { id: 'ORD007', customer: 'Rajesh Khanna', items: ['Fish Curry', 'Rice'], total: 490, time: '08:30 AM', status: 'cancelled', address: 'Dadar, Mumbai' }
+        ];
+
+        let currentOrderId = null;
+
+        // Load orders
+        function loadOrders(filter = 'all', search = '') {
+            let filteredOrders = orders;
+            
+            if (filter !== 'all') {
+                filteredOrders = orders.filter(o => o.status === filter);
+            }
+            
+            if (search) {
+                filteredOrders = filteredOrders.filter(o => 
+                    o.id.toLowerCase().includes(search.toLowerCase()) ||
+                    o.customer.toLowerCase().includes(search.toLowerCase())
+                );
+            }
+
+            const tbody = document.getElementById('ordersBody');
+            tbody.innerHTML = filteredOrders.map(order => `
+                <tr>
+                    <td><strong>${order.id}</strong></td>
+                    <td>${order.customer}</td>
+                    <td>${order.items.join(', ')}</td>
+                    <td>₹${order.total}</td>
+                    <td>${order.time}</td>
+                    <td>
+                        <span class="order-status status-${order.status}">
+                            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="order-actions">
+                            <button class="btn-action btn-view" onclick="viewOrder('${order.id}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="btn-action btn-update" onclick="openStatusModal('${order.id}')">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Filter orders
+        function filterOrders(status) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            loadOrders(status, document.getElementById('searchInput').value);
+        }
+
+        // Search orders
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const activeFilter = document.querySelector('.filter-btn.active').textContent.toLowerCase();
+            const filter = activeFilter === 'all orders' ? 'all' : activeFilter;
+            loadOrders(filter, e.target.value);
+        });
+
+        // View order details
+        function viewOrder(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                alert(`Order Details:\nID: ${order.id}\nCustomer: ${order.customer}\nItems: ${order.items.join(', ')}\nTotal: ₹${order.total}\nAddress: ${order.address}\nStatus: ${order.status}`);
+            }
+        }
+
+        // Open status modal
+        function openStatusModal(orderId) {
+            currentOrderId = orderId;
+            const order = orders.find(o => o.id === orderId);
+            document.getElementById('orderStatus').value = order.status;
+            document.getElementById('statusModal').style.display = 'block';
+        }
+
+        // Update status
+        function updateStatus() {
+            const newStatus = document.getElementById('orderStatus').value;
+            const order = orders.find(o => o.id === currentOrderId);
+            if (order) {
+                order.status = newStatus;
+                loadOrders();
+                document.getElementById('statusModal').style.display = 'none';
+                alert(`Order ${currentOrderId} status updated to ${newStatus}`);
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('statusModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        loadOrders();
+    </script>
+</body>
+</html>

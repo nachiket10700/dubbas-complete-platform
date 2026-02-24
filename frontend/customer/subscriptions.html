@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Subscriptions - Dabba's</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as orders.html */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Active Subscription */
+        .active-subscription {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .subscription-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subscription-plan {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .subscription-dates {
+            display: flex;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .date-item {
+            text-align: center;
+        }
+
+        .date-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            margin-bottom: 0.3rem;
+        }
+
+        .date-value {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            border-radius: 4px;
+            width: 60%;
+        }
+
+        /* Subscription Grid */
+        .subscriptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.15);
+            border-color: #ff6b6b;
+        }
+
+        .plan-card.popular::before {
+            content: 'Most Popular';
+            position: absolute;
+            top: 1rem;
+            right: -2rem;
+            background: #ff6b6b;
+            color: white;
+            padding: 0.3rem 3rem;
+            transform: rotate(45deg);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .plan-description {
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+            color: #666;
+        }
+
+        .plan-features i {
+            color: #4ecdc4;
+        }
+
+        .btn-plan {
+            width: 100%;
+            padding: 1rem;
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-plan:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-plan.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Delivery Schedule */
+        .schedule-card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .schedule-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .delivery-item {
+            background: #f8f9fc;
+            padding: 1rem;
+            border-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .delivery-date {
+            font-weight: 600;
+        }
+
+        .delivery-status {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-scheduled {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-skipped {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .pause-options {
+            display: flex;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .pause-option {
+            flex: 1;
+            padding: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .pause-option:hover {
+            border-color: #ff6b6b;
+        }
+
+        .pause-option.selected {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        .btn-confirm {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (same as orders.html) -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge">3</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <span>John Doe</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar (same as orders.html) -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="subscriptions.html" class="nav-link active">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="wishlist.html" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="addresses.html" class="nav-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Addresses</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="profile.html" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="login.html" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>My Subscriptions</h1>
+            <button class="btn-primary" onclick="showPlans()">
+                <i class="fas fa-plus"></i> New Subscription
+            </button>
+        </div>
+
+        <!-- Active Subscription -->
+        <div class="active-subscription">
+            <div class="subscription-info">
+                <h3>Active Subscription</h3>
+                <div class="subscription-plan">Monthly Master</div>
+                <p>₹1999/month • 1 meal per day</p>
+                <div class="subscription-dates">
+                    <div class="date-item">
+                        <div class="date-label">Started</div>
+                        <div class="date-value">Feb 1, 2026</div>
+                    </div>
+                    <div class="date-item">
+                        <div class="date-label">Renews on</div>
+                        <div class="date-value">Mar 1, 2026</div>
+                    </div>
+                </div>
+            </div>
+            <div style="text-align: right;">
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p style="margin-top: 0.5rem;">23 days remaining</p>
+                <button class="btn-primary" style="margin-top: 1rem; background: white; color: #ff6b6b;" onclick="manageSubscription()">
+                    Manage Subscription
+                </button>
+            </div>
+        </div>
+
+        <!-- Available Plans -->
+        <h2 style="margin-bottom: 1.5rem;">Available Plans</h2>
+        <div class="subscriptions-grid" id="plansGrid">
+            <!-- Plans will be loaded here -->
+        </div>
+
+        <!-- Delivery Schedule -->
+        <div class="schedule-card">
+            <div class="schedule-header">
+                <h2>Upcoming Deliveries</h2>
+                <button class="btn-primary" onclick="customizeSchedule()">
+                    <i class="fas fa-edit"></i> Customize
+                </button>
+            </div>
+            <div class="schedule-grid" id="scheduleGrid">
+                <!-- Schedule will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Manage Subscription Modal -->
+    <div id="manageModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Manage Subscription</h2>
+            
+            <div style="margin: 2rem 0;">
+                <button class="btn-plan" style="margin-bottom: 1rem;" onclick="pauseSubscription()">
+                    <i class="fas fa-pause"></i> Pause Subscription
+                </button>
+                <button class="btn-plan" style="margin-bottom: 1rem;" onclick="cancelSubscription()">
+                    <i class="fas fa-times"></i> Cancel Subscription
+                </button>
+                <button class="btn-plan" onclick="changePlan()">
+                    <i class="fas fa-sync"></i> Change Plan
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pause Modal -->
+    <div id="pauseModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Pause Subscription</h2>
+            <p>Choose how long you want to pause</p>
+            
+            <div class="pause-options">
+                <div class="pause-option" onclick="selectPause(7)">7 days</div>
+                <div class="pause-option" onclick="selectPause(14)">14 days</div>
+                <div class="pause-option" onclick="selectPause(30)">30 days</div>
+            </div>
+            
+            <button class="btn-confirm" onclick="confirmPause()">Confirm Pause</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample plans data
+        const plans = [
+            {
+                name: 'Daily Delight',
+                price: 99,
+                period: 'day',
+                description: 'Perfect for trying out',
+                features: ['1 meal per day', 'Free delivery', 'Choose cuisine', 'Cancel anytime'],
+                popular: false
+            },
+            {
+                name: 'Weekly Warrior',
+                price: 599,
+                period: 'week',
+                description: 'Most popular choice',
+                features: ['7 meals', 'Save 15%', 'Free delivery', 'Priority support', 'Flexible schedule'],
+                popular: true
+            },
+            {
+                name: 'Monthly Master',
+                price: 1999,
+                period: 'month',
+                description: 'Best value for money',
+                features: ['30 meals', 'Save 33%', 'Free delivery', 'Premium support', 'Skip anytime'],
+                popular: false
+            },
+            {
+                name: 'Family Weekly',
+                price: 1499,
+                period: 'week',
+                description: 'For the whole family',
+                features: ['21 meals (3 per day)', 'Family portions', 'Free delivery', 'Priority support'],
+                popular: false
+            },
+            {
+                name: 'Family Monthly',
+                price: 4999,
+                period: 'month',
+                description: 'Complete family solution',
+                features: ['90 meals (3 per day)', 'Save 20%', 'Free delivery', 'Premium support'],
+                popular: false
+            }
+        ];
+
+        // Sample schedule data
+        const schedule = [
+            { date: '2026-02-25', day: 'Tuesday', meal: 'Butter Chicken', status: 'scheduled' },
+            { date: '2026-02-26', day: 'Wednesday', meal: 'Paneer Tikka', status: 'scheduled' },
+            { date: '2026-02-27', day: 'Thursday', meal: 'Biryani', status: 'scheduled' },
+            { date: '2026-02-28', day: 'Friday', meal: 'Dal Makhani', status: 'scheduled' },
+            { date: '2026-03-01', day: 'Saturday', meal: 'Chole Bhature', status: 'scheduled' }
+        ];
+
+        // Load plans
+        function loadPlans() {
+            const grid = document.getElementById('plansGrid');
+            grid.innerHTML = plans.map(plan => `
+                <div class="plan-card ${plan.popular ? 'popular' : ''}">
+                    <h3 class="plan-name">${plan.name}</h3>
+                    <div class="plan-price">₹${plan.price}<span>/${plan.period}</span></div>
+                    <p class="plan-description">${plan.description}</p>
+                    <ul class="plan-features">
+                        ${plan.features.map(f => `
+                            <li><i class="fas fa-check"></i> ${f}</li>
+                        `).join('')}
+                    </ul>
+                    <button class="btn-plan" onclick="subscribe('${plan.name}')">
+                        Subscribe Now
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        // Load schedule
+        function loadSchedule() {
+            const grid = document.getElementById('scheduleGrid');
+            grid.innerHTML = schedule.map(item => `
+                <div class="delivery-item">
+                    <div>
+                        <div class="delivery-date">${item.day}</div>
+                        <small>${item.date}</small>
+                        <div style="margin-top: 0.3rem;">${item.meal}</div>
+                    </div>
+                    <span class="delivery-status status-${item.status}">
+                        ${item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                    </span>
+                </div>
+            `).join('');
+        }
+
+        // Subscribe to plan
+        function subscribe(planName) {
+            alert(`You have subscribed to ${planName}!`);
+        }
+
+        // Show plans (scroll to plans)
+        function showPlans() {
+            document.getElementById('plansGrid').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Manage subscription
+        function manageSubscription() {
+            document.getElementById('manageModal').style.display = 'block';
+        }
+
+        // Pause subscription
+        let selectedPauseDays = 7;
+        
+        function pauseSubscription() {
+            document.getElementById('manageModal').style.display = 'none';
+            document.getElementById('pauseModal').style.display = 'block';
+        }
+
+        function selectPause(days) {
+            selectedPauseDays = days;
+            document.querySelectorAll('.pause-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function confirmPause() {
+            alert(`Subscription paused for ${selectedPauseDays} days`);
+            document.getElementById('pauseModal').style.display = 'none';
+        }
+
+        function cancelSubscription() {
+            if (confirm('Are you sure you want to cancel your subscription?')) {
+                alert('Subscription cancelled');
+                document.getElementById('manageModal').style.display = 'none';
+            }
+        }
+
+        function changePlan() {
+            alert('Change plan feature coming soon!');
+        }
+
+        function customizeSchedule() {
+            alert('Schedule customization coming soon!');
+        }
+
+        // Close modals
+        document.querySelectorAll('.close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        };
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // Initialize
+        loadPlans();
+        loadSchedule();
+    </script>
+</body>
+</html>

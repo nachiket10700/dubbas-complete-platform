@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications - Dabba's</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as previous pages */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-icon {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #ff6b6b;
+            border-radius: 10px;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-icon:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Notification Filters */
+        .notification-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ff6b6b;
+            border-radius: 50px;
+            background: transparent;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Notifications List */
+        .notifications-list {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .notification-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .notification-item:hover {
+            background: #f8f9fc;
+        }
+
+        .notification-item.unread {
+            background: #fff5f0;
+        }
+
+        .notification-item.unread::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: #ff6b6b;
+        }
+
+        .notification-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .notification-content {
+            flex: 1;
+        }
+
+        .notification-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .notification-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .notification-time {
+            color: #999;
+            font-size: 0.9rem;
+        }
+
+        .notification-message {
+            color: #666;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+
+        .notification-meta {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .notification-badge {
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .badge-order {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .badge-promo {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-system {
+            background: #fff3e0;
+            color: #f57c00;
+        }
+
+        .badge-complaint {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .notification-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .btn-mark-read, .btn-delete-notification {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-mark-read {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-delete-notification {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        .btn-mark-read:hover, .btn-delete-notification:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state i {
+            font-size: 5rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 2rem;
+        }
+
+        /* Loading Skeleton */
+        .skeleton {
+            animation: skeleton-loading 1s linear infinite alternate;
+        }
+
+        @keyframes skeleton-loading {
+            0% { background-color: #f0f0f0; }
+            100% { background-color: #e0e0e0; }
+        }
+
+        .skeleton-item {
+            display: flex;
+            gap: 1.5rem;
+            padding: 1.5rem;
+        }
+
+        .skeleton-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            background: #e0e0e0;
+        }
+
+        .skeleton-content {
+            flex: 1;
+        }
+
+        .skeleton-line {
+            height: 20px;
+            background: #e0e0e0;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .skeleton-line.short {
+            width: 60%;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge">3</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <span>John Doe</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="subscriptions.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="wishlist.html" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="addresses.html" class="nav-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Addresses</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notifications.html" class="nav-link active">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="profile.html" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="login.html" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Notifications</h1>
+            <div class="notification-actions">
+                <button class="btn-icon" onclick="markAllAsRead()">
+                    <i class="fas fa-check-double"></i> Mark all read
+                </button>
+                <button class="btn-icon" onclick="clearAll()">
+                    <i class="fas fa-trash"></i> Clear all
+                </button>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="notification-filters">
+            <button class="filter-btn active" onclick="filterNotifications('all')">All</button>
+            <button class="filter-btn" onclick="filterNotifications('unread')">Unread</button>
+            <button class="filter-btn" onclick="filterNotifications('order')">Orders</button>
+            <button class="filter-btn" onclick="filterNotifications('promo')">Promotions</button>
+            <button class="filter-btn" onclick="filterNotifications('system')">System</button>
+            <button class="filter-btn" onclick="filterNotifications('complaint')">Complaints</button>
+        </div>
+
+        <!-- Notifications List -->
+        <div class="notifications-list" id="notificationsList">
+            <!-- Notifications will be loaded here -->
+        </div>
+    </main>
+
+    <script>
+        // Sample notifications data
+        const notifications = [
+            {
+                id: 1,
+                type: 'order',
+                title: 'Order Confirmed',
+                message: 'Your order #ORD001 has been confirmed and is being prepared.',
+                time: '5 minutes ago',
+                read: false,
+                icon: 'fa-shopping-bag',
+                actionable: true,
+                actionLink: 'orders.html'
+            },
+            {
+                id: 2,
+                type: 'order',
+                title: 'Order Out for Delivery',
+                message: 'Your order #ORD002 is out for delivery. Expected by 8:30 PM.',
+                time: '30 minutes ago',
+                read: false,
+                icon: 'fa-truck',
+                actionable: true,
+                actionLink: 'orders.html'
+            },
+            {
+                id: 3,
+                type: 'promo',
+                title: 'Special Weekend Offer',
+                message: 'Get 20% off on all Biryanis this weekend. Use code: BIRYANI20',
+                time: '2 hours ago',
+                read: true,
+                icon: 'fa-tag',
+                actionable: true,
+                actionLink: 'dashboard.html'
+            },
+            {
+                id: 4,
+                type: 'system',
+                title: 'Subscription Renewal',
+                message: 'Your Monthly Master subscription will renew on Mar 1, 2026.',
+                time: '1 day ago',
+                read: true,
+                icon: 'fa-calendar-alt',
+                actionable: true,
+                actionLink: 'subscriptions.html'
+            },
+            {
+                id: 5,
+                type: 'complaint',
+                title: 'Complaint Update',
+                message: 'Your complaint #CMP001 has been resolved. Refund of ₹450 processed.',
+                time: '2 days ago',
+                read: true,
+                icon: 'fa-exclamation-circle',
+                actionable: true,
+                actionLink: 'complaints.html'
+            },
+            {
+                id: 6,
+                type: 'order',
+                title: 'Order Delivered',
+                message: 'Your order #ORD003 has been delivered. Enjoy your meal!',
+                time: '3 days ago',
+                read: true,
+                icon: 'fa-check-circle',
+                actionable: true,
+                actionLink: 'orders.html'
+            },
+            {
+                id: 7,
+                type: 'promo',
+                title: 'New Restaurant Alert',
+                message: 'Punjab Grill has joined Dabba\'s. Get 50% off on first order!',
+                time: '4 days ago',
+                read: true,
+                icon: 'fa-store',
+                actionable: true,
+                actionLink: 'dashboard.html'
+            },
+            {
+                id: 8,
+                type: 'system',
+                title: 'Wallet Credit',
+                message: '₹100 added to your wallet from referral bonus.',
+                time: '5 days ago',
+                read: true,
+                icon: 'fa-wallet',
+                actionable: true,
+                actionLink: 'payments.html'
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        // Load notifications
+        function loadNotifications() {
+            const list = document.getElementById('notificationsList');
+            
+            let filtered = notifications;
+            if (currentFilter === 'unread') {
+                filtered = notifications.filter(n => !n.read);
+            } else if (currentFilter !== 'all') {
+                filtered = notifications.filter(n => n.type === currentFilter);
+            }
+
+            if (filtered.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-bell-slash"></i>
+                        <h3>No notifications</h3>
+                        <p>You're all caught up! Check back later for updates.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = filtered.map(notification => {
+                const badgeClass = 
+                    notification.type === 'order' ? 'badge-order' :
+                    notification.type === 'promo' ? 'badge-promo' :
+                    notification.type === 'system' ? 'badge-system' : 'badge-complaint';
+                
+                return `
+                    <div class="notification-item ${!notification.read ? 'unread' : ''}" onclick="handleNotificationClick(${notification.id})">
+                        <div class="notification-icon">
+                            <i class="fas ${notification.icon}"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-header">
+                                <span class="notification-title">${notification.title}</span>
+                                <span class="notification-time">${notification.time}</span>
+                            </div>
+                            <p class="notification-message">${notification.message}</p>
+                            <div class="notification-meta">
+                                <span class="notification-badge ${badgeClass}">
+                                    ${notification.type.charAt(0).toUpperCase() + notification.type.slice(1)}
+                                </span>
+                            </div>
+                            <div class="notification-actions" onclick="event.stopPropagation()">
+                                ${!notification.read ? `
+                                    <button class="btn-mark-read" onclick="markAsRead(${notification.id})">
+                                        <i class="fas fa-check"></i> Mark as read
+                                    </button>
+                                ` : ''}
+                                <button class="btn-delete-notification" onclick="deleteNotification(${notification.id})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Filter notifications
+        function filterNotifications(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            currentFilter = filter;
+            loadNotifications();
+        }
+
+        // Mark as read
+        function markAsRead(id) {
+            const notification = notifications.find(n => n.id === id);
+            if (notification) {
+                notification.read = true;
+                loadNotifications();
+            }
+        }
+
+        // Mark all as read
+        function markAllAsRead() {
+            notifications.forEach(n => n.read = true);
+            loadNotifications();
+            alert('All notifications marked as read');
+        }
+
+        // Delete notification
+        function deleteNotification(id) {
+            if (confirm('Delete this notification?')) {
+                const index = notifications.findIndex(n => n.id === id);
+                if (index !== -1) {
+                    notifications.splice(index, 1);
+                    loadNotifications();
+                }
+            }
+        }
+
+        // Clear all notifications
+        function clearAll() {
+            if (confirm('Delete all notifications?')) {
+                notifications.length = 0;
+                loadNotifications();
+            }
+        }
+
+        // Handle notification click
+        function handleNotificationClick(id) {
+            const notification = notifications.find(n => n.id === id);
+            if (notification && !notification.read) {
+                markAsRead(id);
+            }
+            if (notification.actionable) {
+                window.location.href = notification.actionLink;
+            }
+        }
+
+        // Show loading skeleton
+        function showLoadingSkeleton() {
+            const list = document.getElementById('notificationsList');
+            let skeleton = '';
+            for (let i = 0; i < 5; i++) {
+                skeleton += `
+                    <div class="skeleton-item">
+                        <div class="skeleton-icon skeleton"></div>
+                        <div class="skeleton-content">
+                            <div class="skeleton-line" style="width: 30%;"></div>
+                            <div class="skeleton-line"></div>
+                            <div class="skeleton-line short"></div>
+                        </div>
+                    </div>
+                `;
+            }
+            list.innerHTML = skeleton;
+            
+            setTimeout(loadNotifications, 1000);
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // Initialize
+        showLoadingSkeleton();
+
+        // Real-time notification count update
+        function updateNotificationCount() {
+            const unreadCount = notifications.filter(n => !n.read).length;
+            // You can update the badge in the navbar here
+        }
+    </script>
+</body>
+</html>

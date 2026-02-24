@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payments - Dabba's</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as before */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .btn-primary {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Wallet Card */
+        .wallet-card {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .wallet-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .wallet-balance {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .wallet-label {
+            opacity: 0.9;
+        }
+
+        .btn-add-money {
+            padding: 0.8rem 2rem;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add-money:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Payment Methods */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+        }
+
+        .payment-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .method-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .method-card:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+        }
+
+        .method-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+            font-size: 1.5rem;
+        }
+
+        .method-info {
+            flex: 1;
+        }
+
+        .method-name {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .method-details {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .method-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .method-actions button {
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1rem;
+        }
+
+        .method-actions button:hover {
+            color: #ff6b6b;
+        }
+
+        .method-default {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            background: #d4edda;
+            color: #155724;
+            border-radius: 50px;
+        }
+
+        /* Add Method Card */
+        .add-method-card {
+            background: #f8f9fc;
+            border: 2px dashed #ff6b6b;
+            border-radius: 15px;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-height: 120px;
+        }
+
+        .add-method-card:hover {
+            background: #ffeae4;
+        }
+
+        .add-method-card i {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Transactions */
+        .transactions-list {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .transaction-icon {
+            width: 40px;
+            height: 40px;
+            background: #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+        }
+
+        .transaction-details h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .transaction-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .transaction-amount {
+            text-align: right;
+        }
+
+        .amount {
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .amount.credit {
+            color: #4caf50;
+        }
+
+        .amount.debit {
+            color: #ff6b6b;
+        }
+
+        .transaction-date {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .transaction-status {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            margin-top: 0.3rem;
+            display: inline-block;
+        }
+
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .close {
+            float: right;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-save {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation (same as orders.html) -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge">3</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <span>John Doe</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar (same as orders.html) -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="subscriptions.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="wishlist.html" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link active">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="addresses.html" class="nav-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Addresses</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="profile.html" class="nav-link">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="login.html" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Payments</h1>
+        </div>
+
+        <!-- Wallet Card -->
+        <div class="wallet-card">
+            <div class="wallet-header">
+                <div>
+                    <div class="wallet-balance">₹2,450</div>
+                    <div class="wallet-label">Wallet Balance</div>
+                </div>
+                <button class="btn-add-money" onclick="addMoney()">
+                    <i class="fas fa-plus"></i> Add Money
+                </button>
+            </div>
+            <p>Use wallet balance for faster checkout</p>
+        </div>
+
+        <!-- Payment Methods -->
+        <div class="section-title">
+            <h2>Saved Payment Methods</h2>
+            <button class="btn-primary" onclick="addPaymentMethod()">
+                <i class="fas fa-plus"></i> Add New
+            </button>
+        </div>
+
+        <div class="payment-methods" id="paymentMethods">
+            <!-- Payment methods will be loaded here -->
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="section-title">
+            <h2>Recent Transactions</h2>
+            <a href="#" style="color: #ff6b6b; text-decoration: none;">View All</a>
+        </div>
+
+        <div class="transactions-list" id="transactionsList">
+            <!-- Transactions will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Add Payment Method Modal -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Payment Method</h2>
+            
+            <div style="display: flex; gap: 1rem; margin: 2rem 0;">
+                <button class="btn-primary" style="flex: 1;" onclick="showCardForm()">
+                    <i class="fas fa-credit-card"></i> Card
+                </button>
+                <button class="btn-primary" style="flex: 1;" onclick="showUpiForm()">
+                    <i class="fas fa-mobile-alt"></i> UPI
+                </button>
+            </div>
+
+            <div id="cardForm">
+                <div class="form-group">
+                    <label>Card Number</label>
+                    <input type="text" placeholder="1234 5678 9012 3456">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Expiry</label>
+                        <input type="text" placeholder="MM/YY">
+                    </div>
+                    <div class="form-group">
+                        <label>CVV</label>
+                        <input type="password" placeholder="***">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Name on Card</label>
+                    <input type="text" placeholder="John Doe">
+                </div>
+            </div>
+
+            <div id="upiForm" style="display: none;">
+                <div class="form-group">
+                    <label>UPI ID</label>
+                    <input type="text" placeholder="username@okhdfcbank">
+                </div>
+            </div>
+
+            <button class="btn-save" onclick="savePaymentMethod()">Save Payment Method</button>
+        </div>
+    </div>
+
+    <!-- Add Money Modal -->
+    <div id="addMoneyModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Add Money to Wallet</h2>
+            
+            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
+                <button class="btn-primary" onclick="selectAmount(100)">₹100</button>
+                <button class="btn-primary" onclick="selectAmount(500)">₹500</button>
+                <button class="btn-primary" onclick="selectAmount(1000)">₹1000</button>
+            </div>
+
+            <div class="form-group">
+                <label>Custom Amount</label>
+                <input type="number" id="customAmount" placeholder="Enter amount">
+            </div>
+
+            <button class="btn-save" onclick="addToWallet()">Proceed to Payment</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample payment methods
+        const paymentMethods = [
+            {
+                type: 'card',
+                name: 'HDFC Bank Credit Card',
+                last4: '4242',
+                expiry: '12/26',
+                isDefault: true
+            },
+            {
+                type: 'upi',
+                name: 'Google Pay',
+                id: 'john@okhdfcbank',
+                isDefault: false
+            },
+            {
+                type: 'card',
+                name: 'SBI Debit Card',
+                last4: '1234',
+                expiry: '08/25',
+                isDefault: false
+            }
+        ];
+
+        // Sample transactions
+        const transactions = [
+            {
+                id: 'TXN001',
+                date: '2026-02-24',
+                description: 'Payment for Order #ORD001',
+                amount: 450,
+                type: 'debit',
+                status: 'success'
+            },
+            {
+                id: 'TXN002',
+                date: '2026-02-23',
+                description: 'Added money to wallet',
+                amount: 1000,
+                type: 'credit',
+                status: 'success'
+            },
+            {
+                id: 'TXN003',
+                date: '2026-02-22',
+                description: 'Subscription renewal - Monthly Master',
+                amount: 1999,
+                type: 'debit',
+                status: 'success'
+            },
+            {
+                id: 'TXN004',
+                date: '2026-02-21',
+                description: 'Payment for Order #ORD002',
+                amount: 380,
+                type: 'debit',
+                status: 'pending'
+            },
+            {
+                id: 'TXN005',
+                date: '2026-02-20',
+                description: 'Wallet refund for cancelled order',
+                amount: 450,
+                type: 'credit',
+                status: 'success'
+            }
+        ];
+
+        // Load payment methods
+        function loadPaymentMethods() {
+            const container = document.getElementById('paymentMethods');
+            container.innerHTML = paymentMethods.map(method => `
+                <div class="method-card">
+                    <div class="method-icon">
+                        <i class="fas fa-${method.type === 'card' ? 'credit-card' : 'mobile-alt'}"></i>
+                    </div>
+                    <div class="method-info">
+                        <div class="method-name">${method.name}</div>
+                        <div class="method-details">
+                            ${method.type === 'card' 
+                                ? `•••• ${method.last4} | Expires ${method.expiry}` 
+                                : method.id}
+                        </div>
+                        ${method.isDefault ? '<div class="method-default">Default</div>' : ''}
+                    </div>
+                    <div class="method-actions">
+                        <button onclick="editMethod('${method.name}')"><i class="fas fa-edit"></i></button>
+                        <button onclick="deleteMethod('${method.name}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Add "Add New" card
+            container.innerHTML += `
+                <div class="add-method-card" onclick="addPaymentMethod()">
+                    <i class="fas fa-plus-circle"></i>
+                    <p>Add New Payment Method</p>
+                </div>
+            `;
+        }
+
+        // Load transactions
+        function loadTransactions() {
+            const container = document.getElementById('transactionsList');
+            container.innerHTML = transactions.map(t => `
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <div class="transaction-icon">
+                            <i class="fas ${t.type === 'credit' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
+                        </div>
+                        <div class="transaction-details">
+                            <h4>${t.description}</h4>
+                            <p>${t.id} • ${t.date}</p>
+                        </div>
+                    </div>
+                    <div class="transaction-amount">
+                        <div class="amount ${t.type}">
+                            ${t.type === 'credit' ? '+' : '-'} ₹${t.amount}
+                        </div>
+                        <span class="transaction-status status-${t.status}">${t.status}</span>
+                        <div class="transaction-date">${t.date}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add money
+        let selectedAmount = 0;
+        const addMoneyModal = document.getElementById('addMoneyModal');
+        const paymentModal = document.getElementById('paymentModal');
+
+        function addMoney() {
+            addMoneyModal.style.display = 'block';
+        }
+
+        function selectAmount(amount) {
+            selectedAmount = amount;
+            document.getElementById('customAmount').value = amount;
+        }
+
+        function addToWallet() {
+            const amount = document.getElementById('customAmount').value;
+            if (amount && amount > 0) {
+                alert(`Adding ₹${amount} to wallet`);
+                addMoneyModal.style.display = 'none';
+            }
+        }
+
+        // Add payment method
+        function addPaymentMethod() {
+            paymentModal.style.display = 'block';
+        }
+
+        function showCardForm() {
+            document.getElementById('cardForm').style.display = 'block';
+            document.getElementById('upiForm').style.display = 'none';
+        }
+
+        function showUpiForm() {
+            document.getElementById('cardForm').style.display = 'none';
+            document.getElementById('upiForm').style.display = 'block';
+        }
+
+        function savePaymentMethod() {
+            alert('Payment method added successfully!');
+            paymentModal.style.display = 'none';
+        }
+
+        function editMethod(name) {
+            alert(`Edit ${name}`);
+        }
+
+        function deleteMethod(name) {
+            if (confirm(`Delete ${name}?`)) {
+                alert('Payment method deleted');
+            }
+        }
+
+        // Close modals
+        document.querySelectorAll('.close').forEach(btn => {
+            btn.addEventListener('click', function() {
+                this.closest('.modal').style.display = 'none';
+            });
+        });
+
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        };
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // Initialize
+        loadPaymentMethods();
+        loadTransactions();
+    </script>
+</body>
+</html>

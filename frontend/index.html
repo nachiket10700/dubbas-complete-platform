@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dabba's - Fresh Meals, Delivered Daily</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Swiper Slider -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background: #fefaf5;
+            color: #2d2d2d;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 10px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .navbar.scrolled {
+            padding: 0.8rem 5%;
+            background: white;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2d2d2d;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #ff6b6b;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .btn-outline:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .btn-large {
+            padding: 1.2rem 3rem;
+            font-size: 1.1rem;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 5%;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffeae4 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(255, 107, 107, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -20%;
+            left: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(78, 205, 196, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(5deg); }
+        }
+
+        .hero-content {
+            flex: 1;
+            z-index: 2;
+            max-width: 650px;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+            color: #2d2d2d;
+        }
+
+        .hero-content h1 .highlight {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.95rem;
+            color: #666;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero-image {
+            flex: 1;
+            z-index: 2;
+            text-align: center;
+            animation: floatImage 5s ease-in-out infinite;
+        }
+
+        @keyframes floatImage {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-20px) scale(1.02); }
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            filter: drop-shadow(0 20px 40px rgba(255, 107, 107, 0.2));
+        }
+
+        /* City Selector */
+        .city-selector {
+            display: flex;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .city-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 50px;
+            border: 2px solid transparent;
+            background: white;
+            color: #2d2d2d;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .city-btn i {
+            color: #ff6b6b;
+        }
+
+        .city-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+        }
+
+        .city-btn.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .city-btn.active i {
+            color: white;
+        }
+
+        /* Features Section */
+        .features {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.15);
+            border-color: #ff6b6b;
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: #ff6b6b;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #2d2d2d;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Popular Meals Section */
+        .popular-meals {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, #fff5f0 0%, #ffeae4 100%);
+        }
+
+        .meals-slider {
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow: hidden;
+            padding: 1rem;
+        }
+
+        .meal-card {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            margin: 1rem;
+            border: 1px solid rgba(255, 107, 107, 0.1);
+        }
+
+        .meal-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+        }
+
+        .meal-image {
+            height: 200px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .meal-image::before {
+            content: '🍽️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .meal-content {
+            padding: 1.5rem;
+        }
+
+        .meal-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #2d2d2d;
+        }
+
+        .meal-cuisine {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            color: white;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .meal-price {
+            font-size: 1.4rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .meal-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+        }
+
+        .meal-rating i {
+            color: gold;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Regional Section */
+        .regional-section {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .regional-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .region-card {
+            text-align: center;
+            padding: 2rem;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .region-card:hover {
+            transform: translateY(-10px) scale(1.05);
+            box-shadow: 0 20px 40px rgba(255, 107, 107, 0.2);
+        }
+
+        .region-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .region-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #2d2d2d;
+        }
+
+        .region-card p {
+            color: #ff6b6b;
+            font-weight: 600;
+        }
+
+        /* Language Selector */
+        .language-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .lang-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid #ff6b6b;
+            border-radius: 50px;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .lang-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            width: 250px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .language-selector:hover .lang-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .lang-dropdown a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            text-decoration: none;
+            color: #2d2d2d;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .lang-dropdown a:hover {
+            background: #fff5f0;
+            color: #ff6b6b;
+            padding-left: 2rem;
+        }
+
+        .lang-dropdown a.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        /* Footer */
+        .footer {
+            background: #2d2d2d;
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .footer-section h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-section ul {
+            list-style: none;
+        }
+
+        .footer-section ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-section ul li a {
+            color: #999;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .footer-section ul li a:hover {
+            color: #ff6b6b;
+            padding-left: 5px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #ff6b6b;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #999;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .hero-content h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero {
+                flex-direction: column;
+                text-align: center;
+                padding-top: 80px;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                justify-content: center;
+            }
+            
+            .city-selector {
+                justify-content: center;
+            }
+            
+            .section-header h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+            
+            .stat-number {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: fadeInUp 0.8s ease forwards;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="logo">Dabba<span>'s</span></div>
+        <div class="nav-links">
+            <a href="#home">Home</a>
+            <a href="#features">Features</a>
+            <a href="#popular">Popular</a>
+            <a href="#regions">Regions</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="nav-buttons">
+            <div class="language-selector">
+                <button class="lang-btn">
+                    <i class="fas fa-globe"></i> English
+                </button>
+                <div class="lang-dropdown">
+                    <a href="#" class="active" data-lang="en">🇬🇧 English</a>
+                    <a href="#" data-lang="hi">🇮🇳 हिन्दी</a>
+                    <a href="#" data-lang="mr">🇮🇳 मराठी</a>
+                    <a href="#" data-lang="ta">🇮🇳 தமிழ்</a>
+                    <a href="#" data-lang="te">🇮🇳 తెలుగు</a>
+                    <a href="#" data-lang="kn">🇮🇳 ಕನ್ನಡ</a>
+                    <a href="#" data-lang="ml">🇮🇳 മലയാളം</a>
+                    <a href="#" data-lang="bn">🇮🇳 বাংলা</a>
+                    <a href="#" data-lang="gu">🇮🇳 ગુજરાતી</a>
+                    <a href="#" data-lang="pa">🇮🇳 ਪੰਜਾਬੀ</a>
+                    <a href="#" data-lang="or">🇮🇳 ଓଡ଼ିଆ</a>
+                    <a href="#" data-lang="as">🇮🇳 অসমীয়া</a>
+                    <a href="#" data-lang="ur">🇮🇳 اردو</a>
+                </div>
+            </div>
+            <button class="btn btn-outline" onclick="location.href='/customer/login.html'">Login</button>
+            <button class="btn btn-primary" onclick="location.href='/customer/register.html'">Sign Up</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content" data-aos="fade-right">
+            <h1>
+                Fresh <span class="highlight">Meals</span><br>
+                Delivered <span class="highlight">Daily</span>
+            </h1>
+            <p>India's most trusted tiffin service with authentic regional flavors from 13 languages and 50+ cities.</p>
+            
+            <div class="city-selector">
+                <button class="city-btn active" data-city="mumbai">
+                    <i class="fas fa-location-dot"></i> Mumbai
+                </button>
+                <button class="city-btn" data-city="delhi">
+                    <i class="fas fa-location-dot"></i> Delhi
+                </button>
+                <button class="city-btn" data-city="bangalore">
+                    <i class="fas fa-location-dot"></i> Bangalore
+                </button>
+                <button class="city-btn" data-city="chennai">
+                    <i class="fas fa-location-dot"></i> Chennai
+                </button>
+                <button class="city-btn" data-city="kolkata">
+                    <i class="fas fa-location-dot"></i> Kolkata
+                </button>
+            </div>
+
+            <button class="btn btn-primary btn-large" onclick="location.href='/customer/register.html'">
+                Get Started <i class="fas fa-arrow-right"></i>
+            </button>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="stat-number">50+</span>
+                    <span class="stat-label">Cities</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">13</span>
+                    <span class="stat-label">Languages</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1000+</span>
+                    <span class="stat-label">Providers</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1M+</span>
+                    <span class="stat-label">Meals</span>
+                </div>
+            </div>
+        </div>
+        <div class="hero-image" data-aos="fade-left">
+            <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Ccircle cx='100' cy='100' r='90' fill='%23ff6b6b' opacity='0.1'/%3E%3Ctext x='50' y='120' font-family='Arial' font-size='40' fill='%23ff6b6b'%3E🍽️%3C/text%3E%3C/svg%3E" alt="Dabba's Hero">
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Why Choose Dabba's?</h2>
+            <p>Experience the best tiffin service with features designed for your convenience</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon">
+                    <i class="fas fa-utensils"></i>
+                </div>
+                <h3>Regional Flavors</h3>
+                <p>Authentic dishes from 13 Indian languages and 50+ cities, made by local experts.</p>
+            </div>
+
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <h3>Fresh Daily</h3>
+                <p>Meals prepared fresh every morning and delivered hot to your doorstep.</p>
+            </div>
+
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon">
+                    <i class="fas fa-leaf"></i>
+                </div>
+                <h3>Dietary Options</h3>
+                <p>Vegetarian, vegan, gluten-free, and Jain options available for all meals.</p>
+            </div>
+
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                <div class="feature-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Flexible Plans</h3>
+                <p>Daily, weekly, and monthly subscription plans to suit your needs.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Meals Section -->
+    <section class="popular-meals" id="popular">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Popular in Mumbai</h2>
+            <p>Most loved dishes by our Mumbai customers</p>
+        </div>
+
+        <div class="meals-slider swiper" data-aos="fade-up">
+            <div class="swiper-wrapper" id="popularMealsContainer">
+                <!-- Will be populated by JavaScript -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </section>
+
+    <!-- Regional Section -->
+    <section class="regional-section" id="regions">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Explore Regional Cuisines</h2>
+            <p>Discover authentic flavors from across India</p>
+        </div>
+
+        <div class="regional-grid" id="regionalGrid">
+            <!-- Will be populated by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Dabba's</h3>
+                <p>India's most trusted tiffin service with authentic regional flavors and 13 language support.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#popular">Popular Meals</a></li>
+                    <li><a href="#regions">Regional Cuisines</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#">FAQ</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <ul>
+                    <li><i class="fas fa-phone"></i> +91 1800-123-4567</li>
+                    <li><i class="fas fa-envelope"></i> support@dabbas.com</li>
+                    <li><i class="fas fa-map-marker-alt"></i> Mumbai, India</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Dabba's. All rights reserved. Made with ❤️ in India</p>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Initialize Swiper
+        const swiper = new Swiper('.meals-slider', {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 4,
+                },
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+        });
+
+        // Load popular meals from API
+        async function loadPopularMeals() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/recommendations/popular?limit=8');
+                const data = await response.json();
+                
+                const container = document.getElementById('popularMealsContainer');
+                if (data.recommendations && data.recommendations.length > 0) {
+                    container.innerHTML = data.recommendations.map(meal => `
+                        <div class="swiper-slide">
+                            <div class="meal-card">
+                                <div class="meal-image"></div>
+                                <div class="meal-content">
+                                    <h3 class="meal-title">${meal.name || 'Delicious Meal'}</h3>
+                                    <span class="meal-cuisine">${meal.cuisine || 'Indian'}</span>
+                                    <div class="meal-price">₹${meal.price || '199'}</div>
+                                    <div class="meal-rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                        <span>(${meal.rating || '4.5'})</span>
+                                    </div>
+                                    <button class="btn-add" onclick="addToCart('${meal.id}')">
+                                        Add to Cart <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+                }
+            } catch (error) {
+                console.error('Error loading meals:', error);
+                // Fallback data
+                loadFallbackMeals();
+            }
+        }
+
+        // Load fallback meals if API fails
+        function loadFallbackMeals() {
+            const fallbackMeals = [
+                { name: 'Vada Pav', cuisine: 'Maharashtrian', price: 30, rating: 4.8 },
+                { name: 'Pav Bhaji', cuisine: 'Maharashtrian', price: 120, rating: 4.7 },
+                { name: 'Misal Pav', cuisine: 'Maharashtrian', price: 80, rating: 4.6 },
+                { name: 'Puran Poli', cuisine: 'Maharashtrian', price: 60, rating: 4.5 },
+                { name: 'Modak', cuisine: 'Maharashtrian', price: 40, rating: 4.9 },
+                { name: 'Sabudana Khichdi', cuisine: 'Maharashtrian', price: 50, rating: 4.4 },
+            ];
+            
+            const container = document.getElementById('popularMealsContainer');
+            container.innerHTML = fallbackMeals.map(meal => `
+                <div class="swiper-slide">
+                    <div class="meal-card">
+                        <div class="meal-image"></div>
+                        <div class="meal-content">
+                            <h3 class="meal-title">${meal.name}</h3>
+                            <span class="meal-cuisine">${meal.cuisine}</span>
+                            <div class="meal-price">₹${meal.price}</div>
+                            <div class="meal-rating">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span>(${meal.rating})</span>
+                            </div>
+                            <button class="btn-add" onclick="addToCart('${meal.id}')">
+                                Add to Cart <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load regional grid
+        function loadRegionalGrid() {
+            const regions = [
+                { name: 'Maharashtra', dish: 'Vada Pav', icon: '🥘', lang: 'mr' },
+                { name: 'Tamil Nadu', dish: 'Idli-Sambar', icon: '🥥', lang: 'ta' },
+                { name: 'Karnataka', dish: 'Bisi Bele Bath', icon: '🍛', lang: 'kn' },
+                { name: 'Kerala', dish: 'Appam-Stew', icon: '🥘', lang: 'ml' },
+                { name: 'West Bengal', dish: 'Macher Jhol', icon: '🐟', lang: 'bn' },
+                { name: 'Punjab', dish: 'Sarson ka Saag', icon: '🌿', lang: 'pa' },
+                { name: 'Gujarat', dish: 'Dhokla', icon: '🍽️', lang: 'gu' },
+                { name: 'Hyderabad', dish: 'Biryani', icon: '🍚', lang: 'te' },
+            ];
+            
+            const container = document.getElementById('regionalGrid');
+            container.innerHTML = regions.map(region => `
+                <div class="region-card" onclick="changeLanguage('${region.lang}')">
+                    <div class="region-icon">${region.icon}</div>
+                    <h3>${region.name}</h3>
+                    <p>${region.dish}</p>
+                </div>
+            `).join('');
+        }
+
+        // Change language
+        function changeLanguage(lang) {
+            alert(`Language changed to ${lang}. This feature will be fully implemented with backend integration.`);
+            // Here you would call your backend API to change language
+            // fetch(`http://127.0.0.1:5000/api/languages/${lang}`)
+        }
+
+        // Add to cart function
+        function addToCart(mealId) {
+            alert('Item added to cart! Login to proceed.');
+            // Here you would add to cart logic
+        }
+
+        // City selector
+        document.querySelectorAll('.city-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.city-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const city = this.dataset.city;
+                loadCityMeals(city);
+            });
+        });
+
+        // Load meals for selected city
+        async function loadCityMeals(city) {
+            try {
+                const response = await fetch(`http://127.0.0.1:5000/api/local-recommendations?city=${city}`);
+                const data = await response.json();
+                console.log('City meals:', data);
+                // Update UI with city-specific meals
+            } catch (error) {
+                console.error('Error loading city meals:', error);
+            }
+        }
+
+        // Language selector
+        document.querySelectorAll('.lang-dropdown a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelectorAll('.lang-dropdown a').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+                const lang = this.dataset.lang;
+                document.querySelector('.lang-btn span').textContent = this.textContent.trim();
+                changeLanguage(lang);
+            });
+        });
+
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPopularMeals();
+            loadRegionalGrid();
+            
+            // Load Mumbai meals by default
+            loadCityMeals('mumbai');
+        });
+    </script>
+</body>
+</html>

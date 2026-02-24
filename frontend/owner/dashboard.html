@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Owner Dashboard - Dabba's</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .date-time {
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .date-range {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .date-range select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            background: white;
+        }
+
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.1);
+            border-color: #ff6b6b;
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-title {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-change {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .change-positive {
+            color: #4caf50;
+        }
+
+        .change-negative {
+            color: #f44336;
+        }
+
+        /* Charts Row */
+        .charts-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .chart-container {
+            height: 300px;
+            position: relative;
+        }
+
+        /* Recent Activity */
+        .activity-card {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .activity-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .view-all {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: #f8f9fc;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: #fff5f0;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .icon-provider {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        }
+
+        .icon-order {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+        }
+
+        .icon-complaint {
+            background: linear-gradient(135deg, #ffd700, #ffa500);
+        }
+
+        .icon-payment {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .activity-time {
+            font-size: 0.8rem;
+            color: #999;
+        }
+
+        .activity-status {
+            font-size: 0.8rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            background: #d4edda;
+            color: #155724;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .action-btn {
+            background: white;
+            border: 1px solid #f0f0f0;
+            border-radius: 12px;
+            padding: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-3px);
+            border-color: #ff6b6b;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.1);
+        }
+
+        .action-btn i {
+            font-size: 1.5rem;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-btn span {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #666;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .charts-row {
+                grid-template-columns: 1fr;
+            }
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="date-time" id="currentDateTime"></div>
+            <div class="user-menu">
+                <div class="user-avatar">AD</div>
+                <span>Admin</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link active">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="providers.html" class="nav-link">
+                    <i class="fas fa-store"></i>
+                    <span>Providers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Dashboard Overview</h1>
+            <div class="date-range">
+                <select id="timeRange">
+                    <option value="today">Today</option>
+                    <option value="week" selected>This Week</option>
+                    <option value="month">This Month</option>
+                    <option value="year">This Year</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Total Revenue</span>
+                    <div class="stat-icon">
+                        <i class="fas fa-rupee-sign"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalRevenue">₹12,45,678</div>
+                <div class="stat-change change-positive">
+                    <i class="fas fa-arrow-up"></i> +18.2% from last month
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Total Orders</span>
+                    <div class="stat-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="totalOrders">45,892</div>
+                <div class="stat-change change-positive">
+                    <i class="fas fa-arrow-up"></i> +12.5% from last month
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Active Providers</span>
+                    <div class="stat-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="activeProviders">2,847</div>
+                <div class="stat-change change-positive">
+                    <i class="fas fa-arrow-up"></i> +45 new this month
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-header">
+                    <span class="stat-title">Active Customers</span>
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+                <div class="stat-value" id="activeCustomers">42,156</div>
+                <div class="stat-change change-positive">
+                    <i class="fas fa-arrow-up"></i> +2,345 new this month
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Row -->
+        <div class="charts-row">
+            <!-- Revenue Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Revenue Overview</h3>
+                    <select id="revenuePeriod" onchange="updateRevenueChart()">
+                        <option value="week">Last 7 days</option>
+                        <option value="month" selected>Last 30 days</option>
+                        <option value="year">Last 12 months</option>
+                    </select>
+                </div>
+                <div class="chart-container">
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Order Status Distribution -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3>Order Status</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="orderStatusChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="activity-card">
+            <div class="activity-header">
+                <h3>Recent Activity</h3>
+                <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="activity-list" id="activityList">
+                <!-- Activity items will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="quick-actions">
+            <div class="action-btn" onclick="location.href='providers.html?action=verify'">
+                <i class="fas fa-check-circle"></i>
+                <span>Verify Providers</span>
+                <small style="color: #ff6b6b;">12 pending</small>
+            </div>
+            <div class="action-btn" onclick="location.href='complaints.html'">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span>Pending Complaints</span>
+                <small style="color: #ff6b6b;">8 new</small>
+            </div>
+            <div class="action-btn" onclick="location.href='payments.html'">
+                <i class="fas fa-clock"></i>
+                <span>Pending Payouts</span>
+                <small style="color: #ff6b6b;">₹42,500</small>
+            </div>
+            <div class="action-btn" onclick="location.href='settings.html'">
+                <i class="fas fa-sliders-h"></i>
+                <span>Platform Settings</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Logout Modal -->
+    <div id="logoutModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; align-items: center; justify-content: center;">
+        <div style="background: white; padding: 2rem; border-radius: 20px; max-width: 400px; text-align: center;">
+            <h3 style="margin-bottom: 1rem;">Confirm Logout</h3>
+            <p style="margin-bottom: 2rem; color: #666;">Are you sure you want to logout?</p>
+            <div style="display: flex; gap: 1rem;">
+                <button onclick="closeLogoutModal()" style="flex: 1; padding: 1rem; background: #f0f0f0; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">Cancel</button>
+                <button onclick="confirmLogout()" style="flex: 1; padding: 1rem; background: linear-gradient(135deg, #ff6b6b, #ff8e8e); color: white; border: none; border-radius: 10px; font-weight: 600; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('en-US', options);
+        }
+        setInterval(updateDateTime, 1000);
+        updateDateTime();
+
+        // Revenue Chart
+        const ctx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Revenue (₹)',
+                    data: [825000, 923000, 1028000, 1245000],
+                    borderColor: '#ff6b6b',
+                    backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '₹' + (value/1000) + 'k';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Order Status Chart
+        const ctx2 = document.getElementById('orderStatusChart').getContext('2d');
+        new Chart(ctx2, {
+            type: 'doughnut',
+            data: {
+                labels: ['Delivered', 'In Progress', 'Pending', 'Cancelled'],
+                datasets: [{
+                    data: [6543, 2341, 1234, 432],
+                    backgroundColor: [
+                        '#4caf50',
+                        '#ff9800',
+                        '#2196f3',
+                        '#f44336'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        // Update revenue chart based on period
+        function updateRevenueChart() {
+            const period = document.getElementById('revenuePeriod').value;
+            
+            if (period === 'week') {
+                revenueChart.data.labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                revenueChart.data.datasets[0].data = [125000, 142000, 138000, 151000, 189000, 245000, 198000];
+            } else if (period === 'month') {
+                revenueChart.data.labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                revenueChart.data.datasets[0].data = [825000, 923000, 1028000, 1245000];
+            } else {
+                revenueChart.data.labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+                revenueChart.data.datasets[0].data = [825000, 923000, 1028000, 1245000, 1350000, 1420000, 1580000, 1650000, 1720000, 1850000, 1980000, 2100000];
+            }
+            revenueChart.update();
+        }
+
+        // Load recent activity
+        function loadActivity() {
+            const activities = [
+                { type: 'provider', title: 'New Provider Registration', description: 'Spice Kitchen joined the platform', time: '5 minutes ago', status: 'pending' },
+                { type: 'order', title: 'High Value Order', description: 'Order #ORD001 - ₹2,450 from Mumbai', time: '15 minutes ago', status: 'completed' },
+                { type: 'complaint', title: 'New Complaint', description: 'Food quality issue from Customer #C001', time: '25 minutes ago', status: 'urgent' },
+                { type: 'payment', title: 'Payout Processed', description: '₹45,000 paid to 5 providers', time: '1 hour ago', status: 'completed' },
+                { type: 'provider', title: 'Provider Verified', description: 'Punjab Grill verification completed', time: '2 hours ago', status: 'verified' }
+            ];
+
+            const list = document.getElementById('activityList');
+            list.innerHTML = activities.map(activity => {
+                let iconClass = '';
+                let statusClass = '';
+                
+                if (activity.type === 'provider') iconClass = 'icon-provider fas fa-store';
+                else if (activity.type === 'order') iconClass = 'icon-order fas fa-shopping-bag';
+                else if (activity.type === 'complaint') iconClass = 'icon-complaint fas fa-exclamation-circle';
+                else iconClass = 'icon-payment fas fa-credit-card';
+
+                return `
+                    <div class="activity-item">
+                        <div class="activity-icon ${iconClass.split(' ')[0]}">
+                            <i class="${iconClass.split(' ')[1]}"></i>
+                        </div>
+                        <div class="activity-content">
+                            <div class="activity-title">${activity.title}</div>
+                            <div class="activity-time">${activity.description} • ${activity.time}</div>
+                        </div>
+                        <span class="activity-status">${activity.status}</span>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('logoutModal').style.display = 'flex';
+        });
+
+        function closeLogoutModal() {
+            document.getElementById('logoutModal').style.display = 'none';
+        }
+
+        function confirmLogout() {
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        }
+
+        // Initialize
+        loadActivity();
+    </script>
+</body>
+</html>

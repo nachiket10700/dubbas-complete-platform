@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Dabba's</title>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <!-- Chart.js for analytics -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fefaf5;
+            color: #2d2d2d;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 10px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .location-selector i {
+            color: #ff6b6b;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notifications i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .welcome-message {
+            padding: 1rem;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .welcome-message p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        /* Welcome Banner */
+        .welcome-banner {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 20px;
+            padding: 2rem;
+            color: white;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .welcome-text h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .welcome-text p {
+            opacity: 0.9;
+        }
+
+        .loyalty-card {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            text-align: center;
+        }
+
+        .loyalty-points {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 0.3rem;
+        }
+
+        /* Quick Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.1);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+            font-size: 1.5rem;
+        }
+
+        .stat-info h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .stat-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Section Title */
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-title h2 {
+            font-size: 1.5rem;
+        }
+
+        .view-all {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        /* Recommendations Grid */
+        .recommendations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .meal-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.15);
+        }
+
+        .meal-image {
+            height: 180px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            position: relative;
+        }
+
+        .meal-image::before {
+            content: '🍽️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .meal-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ff6b6b;
+        }
+
+        .meal-content {
+            padding: 1.5rem;
+        }
+
+        .meal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .meal-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .meal-cuisine {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: gold;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .explanation-badge {
+            background: #f5f5f5;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .explanation-badge i {
+            color: #ff6b6b;
+        }
+
+        /* Active Orders */
+        .orders-list {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-info h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .order-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .order-status {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .status-preparing {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-delivered {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Subscription Plans */
+        .subscriptions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 15px;
+            padding: 2rem 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            border-color: #ff6b6b;
+        }
+
+        .plan-card.active {
+            border-color: #ff6b6b;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+        }
+
+        .plan-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 800;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .plan-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .plan-features li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+        }
+
+        .plan-features i {
+            color: #4ecdc4;
+        }
+
+        .btn-plan {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-plan:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-plan.outline {
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #ff6b6b;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 3rem;
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="location-selector">
+                <i class="fas fa-location-dot"></i>
+                <span id="selectedCity">Mumbai</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="notifications">
+                <i class="far fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userInitials">JD</div>
+                <span id="userName">John Doe</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="welcome-message">
+            <h3 id="welcomeMessage">Welcome back, John! 👋</h3>
+            <p id="membershipLevel">Gold Member</p>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="#" class="nav-link active">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-utensils"></i>
+                    <span>Browse Meals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>My Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Favorites</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        <!-- Welcome Banner -->
+        <div class="welcome-banner" data-aos="fade-up">
+            <div class="welcome-text">
+                <h1 id="greeting">Good evening, John! 🌙</h1>
+                <p>Here's what we've prepared for you tonight</p>
+            </div>
+            <div class="loyalty-card">
+                <div class="loyalty-points" id="loyaltyPoints">2,450</div>
+                <p>Loyalty Points</p>
+            </div>
+        </div>
+
+        <!-- Quick Stats -->
+        <div class="stats-grid" data-aos="fade-up" data-aos-delay="100">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="activeOrders">3</h3>
+                    <p>Active Orders</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalOrders">47</h3>
+                    <p>Total Orders</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-tag"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="activeSubscriptions">2</h3>
+                    <p>Active Subscriptions</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-star"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="avgRating">4.8</h3>
+                    <p>Average Rating</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Personalized Recommendations -->
+        <div class="section-title" data-aos="fade-up">
+            <h2>Recommended for You 🔥</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div id="recommendationsContainer" class="recommendations-grid" data-aos="fade-up">
+            <!-- Recommendations will be loaded here -->
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading personalized recommendations...</p>
+            </div>
+        </div>
+
+        <!-- Active Orders -->
+        <div class="section-title" data-aos="fade-up">
+            <h2>Active Orders 🚚</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="orders-list" data-aos="fade-up" id="ordersContainer">
+            <!-- Orders will be loaded here -->
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading your orders...</p>
+            </div>
+        </div>
+
+        <!-- Subscription Plans -->
+        <div class="section-title" data-aos="fade-up">
+            <h2>Subscription Plans 📦</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="subscriptions-grid" data-aos="fade-up" id="plansContainer">
+            <!-- Plans will be loaded here -->
+            <div class="loading">
+                <div class="spinner"></div>
+                <p>Loading subscription plans...</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Check if user is logged in
+        const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+        const userId = localStorage.getItem('userId') || sessionStorage.getItem('userId');
+        const userRole = localStorage.getItem('userRole') || sessionStorage.getItem('userRole');
+        const username = localStorage.getItem('username') || sessionStorage.getItem('username') || 'John Doe';
+
+        // Redirect to login if not authenticated
+        if (!token) {
+            window.location.href = 'login.html';
+        }
+
+        // Set user info in UI
+        const userName = document.getElementById('userName');
+        const userInitials = document.getElementById('userInitials');
+        const welcomeMessage = document.getElementById('welcomeMessage');
+        const greeting = document.getElementById('greeting');
+
+        if (username) {
+            const names = username.split(' ');
+            userInitials.textContent = (names[0]?.[0] || 'J') + (names[1]?.[0] || 'D');
+            userName.textContent = username;
+            welcomeMessage.textContent = `Welcome back, ${names[0] || 'User'}! 👋`;
+            
+            // Set greeting based on time
+            const hour = new Date().getHours();
+            let timeGreeting = 'Good evening';
+            if (hour < 12) timeGreeting = 'Good morning';
+            else if (hour < 17) timeGreeting = 'Good afternoon';
+            greeting.textContent = `${timeGreeting}, ${names[0] || 'User'}! ${hour < 12 ? '☀️' : hour < 17 ? '⛅' : '🌙'}`;
+        }
+
+        // Show Alert Function
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas ${icons[type]}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 5000);
+        }
+
+        // Load Personalized Recommendations
+        async function loadRecommendations() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/recommendations', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                
+                const container = document.getElementById('recommendationsContainer');
+                
+                if (data.success && data.recommendations.length > 0) {
+                    container.innerHTML = data.recommendations.map(meal => `
+                        <div class="meal-card" onclick="viewMealDetails('${meal.id}')">
+                            <div class="meal-image">
+                                <span class="meal-tag">${meal.cuisine || 'Indian'}</span>
+                            </div>
+                            <div class="meal-content">
+                                <div class="meal-header">
+                                    <h3 class="meal-name">${meal.name || 'Delicious Meal'}</h3>
+                                    <span class="meal-price">₹${meal.price || '199'}</span>
+                                </div>
+                                <div class="meal-cuisine">${meal.provider_name || 'Local Kitchen'}</div>
+                                <div class="meal-rating">
+                                    <div class="stars">
+                                        ${generateStars(meal.rating || 4.5)}
+                                    </div>
+                                    <span class="rating-count">(${meal.order_count || 0}+ orders)</span>
+                                </div>
+                                ${meal.explanation ? `
+                                    <div class="explanation-badge">
+                                        <i class="fas fa-robot"></i>
+                                        <span>${meal.explanation}</span>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    // Load fallback recommendations
+                    loadFallbackRecommendations();
+                }
+            } catch (error) {
+                console.error('Error loading recommendations:', error);
+                loadFallbackRecommendations();
+            }
+        }
+
+        // Generate star rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            if (halfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Load fallback recommendations
+        function loadFallbackRecommendations() {
+            const fallbackMeals = [
+                { id: 1, name: 'Butter Chicken', cuisine: 'North Indian', price: 350, rating: 4.8, provider: 'Delhi Darbar', orders: 1234, explanation: 'Because you love North Indian cuisine' },
+                { id: 2, name: 'Masala Dosa', cuisine: 'South Indian', price: 120, rating: 4.9, provider: 'Madras Cafe', orders: 2341, explanation: 'Popular in your area' },
+                { id: 3, name: 'Vada Pav', cuisine: 'Maharashtrian', price: 30, rating: 4.7, provider: 'Mumbai Tiffin', orders: 3456, explanation: 'You ordered this before' },
+                { id: 4, name: 'Hyderabadi Biryani', cuisine: 'Hyderabadi', price: 350, rating: 4.8, provider: 'Biryani House', orders: 4567, explanation: 'Trending now' }
+            ];
+            
+            const container = document.getElementById('recommendationsContainer');
+            container.innerHTML = fallbackMeals.map(meal => `
+                <div class="meal-card" onclick="viewMealDetails(${meal.id})">
+                    <div class="meal-image">
+                        <span class="meal-tag">${meal.cuisine}</span>
+                    </div>
+                    <div class="meal-content">
+                        <div class="meal-header">
+                            <h3 class="meal-name">${meal.name}</h3>
+                            <span class="meal-price">₹${meal.price}</span>
+                        </div>
+                        <div class="meal-cuisine">${meal.provider}</div>
+                        <div class="meal-rating">
+                            <div class="stars">
+                                ${generateStars(meal.rating)}
+                            </div>
+                            <span class="rating-count">(${meal.orders}+ orders)</span>
+                        </div>
+                        <div class="explanation-badge">
+                            <i class="fas fa-robot"></i>
+                            <span>${meal.explanation}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Load Orders
+        async function loadOrders() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/customer/orders', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                
+                const container = document.getElementById('ordersContainer');
+                
+                if (data.success && data.orders.length > 0) {
+                    container.innerHTML = data.orders.map(order => `
+                        <div class="order-item">
+                            <div class="order-info">
+                                <h4>Order #${order.id}</h4>
+                                <p>${order.items ? order.items.length : 3} items • ₹${order.amount || 450}</p>
+                            </div>
+                            <div>
+                                <span class="order-status status-${order.status || 'preparing'}">
+                                    ${order.status || 'Preparing'}
+                                </span>
+                            </div>
+                        </div>
+                    `).join('');
+                    
+                    // Update active orders count
+                    const activeOrders = data.orders.filter(o => o.status === 'preparing' || o.status === 'confirmed').length;
+                    document.getElementById('activeOrders').textContent = activeOrders;
+                    document.getElementById('totalOrders').textContent = data.orders.length;
+                } else {
+                    loadFallbackOrders();
+                }
+            } catch (error) {
+                console.error('Error loading orders:', error);
+                loadFallbackOrders();
+            }
+        }
+
+        // Load fallback orders
+        function loadFallbackOrders() {
+            const fallbackOrders = [
+                { id: 'ORD001', items: 3, amount: 450, status: 'preparing' },
+                { id: 'ORD002', items: 2, amount: 280, status: 'delivered' },
+                { id: 'ORD003', items: 4, amount: 620, status: 'preparing' }
+            ];
+            
+            const container = document.getElementById('ordersContainer');
+            container.innerHTML = fallbackOrders.map(order => `
+                <div class="order-item">
+                    <div class="order-info">
+                        <h4>Order #${order.id}</h4>
+                        <p>${order.items} items • ₹${order.amount}</p>
+                    </div>
+                    <div>
+                        <span class="order-status status-${order.status}">
+                            ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}
+                        </span>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update active orders count
+            document.getElementById('activeOrders').textContent = '2';
+            document.getElementById('totalOrders').textContent = '47';
+        }
+
+        // Load Subscription Plans
+        async function loadPlans() {
+            try {
+                const response = await fetch('http://127.0.0.1:5000/api/customer/subscriptions', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const data = await response.json();
+                
+                const container = document.getElementById('plansContainer');
+                
+                if (data.success && data.subscriptions.length > 0) {
+                    container.innerHTML = data.subscriptions.map(plan => `
+                        <div class="plan-card ${plan.status === 'active' ? 'active' : ''}">
+                            <h3 class="plan-name">${plan.plan_name}</h3>
+                            <div class="plan-price">₹${plan.price}<span>/month</span></div>
+                            <ul class="plan-features">
+                                <li><i class="fas fa-check"></i> ${plan.meals_per_day} meal per day</li>
+                                <li><i class="fas fa-check"></i> Free delivery</li>
+                                <li><i class="fas fa-check"></i> Priority support</li>
+                            </ul>
+                            <button class="btn-plan ${plan.status === 'active' ? 'outline' : ''}">
+                                ${plan.status === 'active' ? 'Current Plan' : 'Subscribe'}
+                            </button>
+                        </div>
+                    `).join('');
+                    
+                    // Update active subscriptions count
+                    const activeSubs = data.subscriptions.filter(s => s.status === 'active').length;
+                    document.getElementById('activeSubscriptions').textContent = activeSubs;
+                } else {
+                    loadFallbackPlans();
+                }
+            } catch (error) {
+                console.error('Error loading plans:', error);
+                loadFallbackPlans();
+            }
+        }
+
+        // Load fallback plans
+        function loadFallbackPlans() {
+            const fallbackPlans = [
+                { name: 'Daily Delight', price: 99, meals: 1, status: 'active' },
+                { name: 'Weekly Warrior', price: 599, meals: 7, status: 'inactive' },
+                { name: 'Monthly Master', price: 1999, meals: 30, status: 'inactive' }
+            ];
+            
+            const container = document.getElementById('plansContainer');
+            container.innerHTML = fallbackPlans.map(plan => `
+                <div class="plan-card ${plan.status === 'active' ? 'active' : ''}">
+                    <h3 class="plan-name">${plan.name}</h3>
+                    <div class="plan-price">₹${plan.price}<span>/month</span></div>
+                    <ul class="plan-features">
+                        <li><i class="fas fa-check"></i> ${plan.meals} meals</li>
+                        <li><i class="fas fa-check"></i> Free delivery</li>
+                        <li><i class="fas fa-check"></i> Priority support</li>
+                    </ul>
+                    <button class="btn-plan ${plan.status === 'active' ? 'outline' : ''}">
+                        ${plan.status === 'active' ? 'Current Plan' : 'Subscribe'}
+                    </button>
+                </div>
+            `).join('');
+            
+            document.getElementById('activeSubscriptions').textContent = '1';
+        }
+
+        // View meal details
+        function viewMealDetails(mealId) {
+            // Navigate to meal detail page
+            window.location.href = `meal-details.html?id=${mealId}`;
+        }
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Clear storage
+            localStorage.clear();
+            sessionStorage.clear();
+            
+            // Redirect to login
+            window.location.href = 'login.html';
+        });
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            loadRecommendations();
+            loadOrders();
+            loadPlans();
+            
+            // Set loyalty points
+            document.getElementById('loyaltyPoints').textContent = '2,450';
+            document.getElementById('avgRating').textContent = '4.8';
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Dabba's</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as previous pages */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .cart-icon i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Profile Container */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* Profile Sidebar */
+        .profile-sidebar {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            height: fit-content;
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            color: white;
+            font-size: 3rem;
+            font-weight: 600;
+            border: 4px solid white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
+        }
+
+        .profile-email {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .profile-join {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 1.5rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 1.5rem 0;
+            border-top: 1px solid #f0f0f0;
+            border-bottom: 1px solid #f0f0f0;
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .badge-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .badge {
+            padding: 0.3rem 1rem;
+            background: #f0f0f0;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .badge.gold {
+            background: #ffd700;
+            color: #856404;
+        }
+
+        .badge i {
+            color: #ff6b6b;
+        }
+
+        /* Profile Content */
+        .profile-content {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #f0f0f0;
+            margin-bottom: 2rem;
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6b6b;
+            transition: width 0.3s ease;
+        }
+
+        .tab-btn:hover::after,
+        .tab-btn.active::after {
+            width: 100%;
+        }
+
+        .tab-btn.active {
+            color: #ff6b6b;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Forms */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .form-group input:disabled {
+            background: #f8f9fc;
+            cursor: not-allowed;
+        }
+
+        .btn-save {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-edit {
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border: none;
+            border-radius: 8px;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-edit:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Preferences */
+        .preference-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .preference-item:last-child {
+            border-bottom: none;
+        }
+
+        .preference-info h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .preference-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .toggle-switch {
+            width: 50px;
+            height: 26px;
+            background: #f0f0f0;
+            border-radius: 13px;
+            position: relative;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-switch.active {
+            background: #4caf50;
+        }
+
+        .toggle-switch::after {
+            content: '';
+            width: 22px;
+            height: 22px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .toggle-switch.active::after {
+            left: 26px;
+        }
+
+        /* Dietary Tags */
+        .dietary-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .dietary-tag {
+            padding: 0.5rem 1rem;
+            background: #f0f0f0;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .dietary-tag:hover {
+            background: #ffeae4;
+        }
+
+        .dietary-tag.selected {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .dietary-tag i {
+            font-size: 0.8rem;
+        }
+
+        /* Language Selector */
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .language-option {
+            padding: 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .language-option:hover {
+            border-color: #ff6b6b;
+        }
+
+        .language-option.selected {
+            background: #ff6b6b;
+            color: white;
+            border-color: #ff6b6b;
+        }
+
+        /* Danger Zone */
+        .danger-zone {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: #ffebee;
+            border-radius: 10px;
+            border: 1px solid #ffcdd2;
+        }
+
+        .danger-zone h3 {
+            color: #d32f2f;
+            margin-bottom: 1rem;
+        }
+
+        .btn-danger {
+            padding: 1rem 2rem;
+            background: #d32f2f;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-danger:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-badge">3</span>
+            </div>
+            <div class="user-menu">
+                <div class="user-avatar">JD</div>
+                <span>John Doe</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="subscriptions.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="wishlist.html" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Wishlist</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="addresses.html" class="nav-link">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Addresses</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="notifications.html" class="nav-link">
+                    <i class="fas fa-bell"></i>
+                    <span>Notifications</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="profile.html" class="nav-link active">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="login.html" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>My Profile</h1>
+        </div>
+
+        <div class="profile-container">
+            <!-- Profile Sidebar -->
+            <div class="profile-sidebar">
+                <div class="profile-avatar">JD</div>
+                <h2 class="profile-name">John Doe</h2>
+                <p class="profile-email">john.doe@example.com</p>
+                <p class="profile-join">Member since Jan 2026</p>
+                
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value">47</div>
+                        <div class="stat-label">Orders</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">2</div>
+                        <div class="stat-label">Subscriptions</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value">4.8</div>
+                        <div class="stat-label">Rating</div>
+                    </div>
+                </div>
+
+                <div class="badge-container">
+                    <span class="badge gold"><i class="fas fa-crown"></i> Gold Member</span>
+                    <span class="badge"><i class="fas fa-check"></i> Verified</span>
+                    <span class="badge"><i class="fas fa-heart"></i> Foodie</span>
+                </div>
+            </div>
+
+            <!-- Profile Content -->
+            <div class="profile-content">
+                <div class="profile-tabs">
+                    <button class="tab-btn active" onclick="showTab('personal')">Personal Info</button>
+                    <button class="tab-btn" onclick="showTab('preferences')">Preferences</button>
+                    <button class="tab-btn" onclick="showTab('dietary')">Dietary</button>
+                    <button class="tab-btn" onclick="showTab('security')">Security</button>
+                </div>
+
+                <!-- Personal Info Tab -->
+                <div class="tab-pane active" id="personal">
+                    <form id="personalForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>First Name</label>
+                                <input type="text" value="John" disabled>
+                                <button class="btn-edit" style="margin-top: 0.5rem;" onclick="enableEdit('firstName')">Edit</button>
+                            </div>
+                            <div class="form-group">
+                                <label>Last Name</label>
+                                <input type="text" value="Doe" disabled>
+                                <button class="btn-edit" style="margin-top: 0.5rem;" onclick="enableEdit('lastName')">Edit</button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="email" value="john.doe@example.com" disabled>
+                            <button class="btn-edit" style="margin-top: 0.5rem;" onclick="enableEdit('email')">Edit</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" value="+91 98765 43210" disabled>
+                            <button class="btn-edit" style="margin-top: 0.5rem;" onclick="enableEdit('phone')">Edit</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Date of Birth</label>
+                            <input type="date" value="1990-01-01" disabled>
+                            <button class="btn-edit" style="margin-top: 0.5rem;" onclick="enableEdit('dob')">Edit</button>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Gender</label>
+                            <select disabled>
+                                <option>Male</option>
+                                <option>Female</option>
+                                <option>Other</option>
+                            </select>
+                            <button class="btn-edit" style="margin-top: 0.5rem;" onclick="enableEdit('gender')">Edit</button>
+                        </div>
+
+                        <button type="submit" class="btn-save">Save Changes</button>
+                    </form>
+                </div>
+
+                <!-- Preferences Tab -->
+                <div class="tab-pane" id="preferences">
+                    <h3 style="margin-bottom: 1.5rem;">Notification Preferences</h3>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Order Updates</h4>
+                            <p>Get notifications about your order status</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="togglePreference(this)"></div>
+                    </div>
+
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Promotional Emails</h4>
+                            <p>Receive offers and discounts</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)"></div>
+                    </div>
+
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>SMS Notifications</h4>
+                            <p>Get updates via SMS</p>
+                        </div>
+                        <div class="toggle-switch active" onclick="togglePreference(this)"></div>
+                    </div>
+
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>WhatsApp Updates</h4>
+                            <p>Receive order updates on WhatsApp</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)"></div>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1.5rem;">Language Preference</h3>
+                    
+                    <div class="language-grid">
+                        <div class="language-option selected" onclick="selectLanguage(this)">English</div>
+                        <div class="language-option" onclick="selectLanguage(this)">हिन्दी</div>
+                        <div class="language-option" onclick="selectLanguage(this)">मराठी</div>
+                        <div class="language-option" onclick="selectLanguage(this)">தமிழ்</div>
+                        <div class="language-option" onclick="selectLanguage(this)">తెలుగు</div>
+                        <div class="language-option" onclick="selectLanguage(this)">ಕನ್ನಡ</div>
+                        <div class="language-option" onclick="selectLanguage(this)">മലയാളം</div>
+                        <div class="language-option" onclick="selectLanguage(this)">বাংলা</div>
+                        <div class="language-option" onclick="selectLanguage(this)">ગુજરાતી</div>
+                        <div class="language-option" onclick="selectLanguage(this)">ਪੰਜਾਬੀ</div>
+                    </div>
+
+                    <button class="btn-save" style="margin-top: 2rem;">Save Preferences</button>
+                </div>
+
+                <!-- Dietary Tab -->
+                <div class="tab-pane" id="dietary">
+                    <h3 style="margin-bottom: 1.5rem;">Dietary Preferences</h3>
+                    
+                    <div class="dietary-tags">
+                        <span class="dietary-tag selected" onclick="toggleDietary(this)"><i class="fas fa-leaf"></i> Vegetarian</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)"><i class="fas fa-seedling"></i> Vegan</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)"><i class="fas fa-wheat-alt"></i> Gluten-Free</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)"><i class="fas fa-egg"></i> Eggetarian</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)"><i class="fas fa-fish"></i> Pescatarian</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)"><i class="fas fa-pepper-hot"></i> Jain</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)"><i class="fas fa-cow"></i> Lactose-Free</span>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1.5rem;">Allergies & Restrictions</h3>
+                    
+                    <div class="dietary-tags">
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Peanuts</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Tree Nuts</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Dairy</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Eggs</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Soy</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Wheat</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Fish</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Shellfish</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Sesame</span>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1.5rem;">Favorite Cuisines</h3>
+                    
+                    <div class="dietary-tags">
+                        <span class="dietary-tag selected" onclick="toggleDietary(this)">North Indian</span>
+                        <span class="dietary-tag selected" onclick="toggleDietary(this)">South Indian</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Chinese</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Italian</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Maharashtrian</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Gujarati</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Punjabi</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Bengali</span>
+                        <span class="dietary-tag" onclick="toggleDietary(this)">Hyderabadi</span>
+                    </div>
+
+                    <button class="btn-save" style="margin-top: 2rem;">Save Dietary Preferences</button>
+                </div>
+
+                <!-- Security Tab -->
+                <div class="tab-pane" id="security">
+                    <h3 style="margin-bottom: 1.5rem;">Change Password</h3>
+                    
+                    <form id="passwordForm">
+                        <div class="form-group">
+                            <label>Current Password</label>
+                            <input type="password" placeholder="Enter current password">
+                        </div>
+
+                        <div class="form-group">
+                            <label>New Password</label>
+                            <input type="password" placeholder="Enter new password">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Confirm New Password</label>
+                            <input type="password" placeholder="Confirm new password">
+                        </div>
+
+                        <button type="submit" class="btn-save">Update Password</button>
+                    </form>
+
+                    <h3 style="margin: 2rem 0 1.5rem;">Two-Factor Authentication</h3>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Enable 2FA</h4>
+                            <p>Add an extra layer of security to your account</p>
+                        </div>
+                        <div class="toggle-switch" onclick="togglePreference(this)"></div>
+                    </div>
+
+                    <h3 style="margin: 2rem 0 1.5rem;">Active Sessions</h3>
+                    
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Chrome on Windows</h4>
+                            <p>Mumbai, India • Current session</p>
+                        </div>
+                        <button class="btn-edit" style="background: #ffebee; color: #d32f2f;">Logout</button>
+                    </div>
+
+                    <div class="preference-item">
+                        <div class="preference-info">
+                            <h4>Safari on iPhone</h4>
+                            <p>Mumbai, India • Last active 2 hours ago</p>
+                        </div>
+                        <button class="btn-edit">Revoke</button>
+                    </div>
+
+                    <!-- Danger Zone -->
+                    <div class="danger-zone">
+                        <h3>Danger Zone</h3>
+                        <p style="margin-bottom: 1rem;">Once you delete your account, there is no going back. Please be certain.</p>
+                        <button class="btn-danger" onclick="deleteAccount()">Delete Account</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Tab switching
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-pane').forEach(pane => pane.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabId).classList.add('active');
+        }
+
+        // Toggle switch
+        function togglePreference(element) {
+            element.classList.toggle('active');
+        }
+
+        // Toggle dietary tags
+        function toggleDietary(element) {
+            element.classList.toggle('selected');
+        }
+
+        // Select language
+        function selectLanguage(element) {
+            document.querySelectorAll('.language-option').forEach(opt => opt.classList.remove('selected'));
+            element.classList.add('selected');
+        }
+
+        // Enable edit
+        function enableEdit(field) {
+            alert(`Edit ${field} feature coming soon!`);
+        }
+
+        // Delete account
+        function deleteAccount() {
+            if (confirm('Are you absolutely sure you want to delete your account? This action cannot be undone.')) {
+                alert('Account deletion requested. You will receive an email confirmation.');
+            }
+        }
+
+        // Form submissions
+        document.getElementById('personalForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Profile updated successfully!');
+        });
+
+        document.getElementById('passwordForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Password updated successfully!');
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+    </script>
+</body>
+</html>

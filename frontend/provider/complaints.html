@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complaints - Dabba's Provider</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as before */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Stats Cards */
+        .complaint-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-card .label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Filters */
+        .complaint-filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ff6b6b;
+            border-radius: 50px;
+            background: transparent;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Complaints List */
+        .complaints-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+
+        .complaint-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border-left: 4px solid;
+        }
+
+        .complaint-card.high {
+            border-left-color: #f44336;
+        }
+
+        .complaint-card.medium {
+            border-left-color: #ff9800;
+        }
+
+        .complaint-card.low {
+            border-left-color: #4caf50;
+        }
+
+        .complaint-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .complaint-id {
+            font-weight: 600;
+            color: #ff6b6b;
+        }
+
+        .complaint-status {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-resolved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-escalated {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .complaint-customer {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .complaint-customer i {
+            color: #ff6b6b;
+        }
+
+        .complaint-subject {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .complaint-desc {
+            color: #666;
+            margin-bottom: 1rem;
+            line-height: 1.5;
+        }
+
+        .complaint-meta {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .complaint-meta i {
+            color: #ff6b6b;
+            margin-right: 0.3rem;
+        }
+
+        .complaint-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .btn-reply, .btn-resolve, .btn-escalate {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-reply {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-resolve {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .btn-escalate {
+            background: #ffebee;
+            color: #d32f2f;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .modal textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            margin: 1rem 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-send {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="user-menu">
+                <div class="user-avatar">SK</div>
+                <span>Spice Kitchen</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="menu.html" class="nav-link">
+                    <i class="fas fa-utensil-spoon"></i>
+                    <span>Menu Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="earnings.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Earnings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link active">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Complaints Management</h1>
+        </div>
+
+        <!-- Stats -->
+        <div class="complaint-stats">
+            <div class="stat-card">
+                <div class="number">8</div>
+                <div class="label">Total Complaints</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">3</div>
+                <div class="label">Pending</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">4</div>
+                <div class="label">Resolved</div>
+            </div>
+            <div class="stat-card">
+                <div class="number">1</div>
+                <div class="label">Escalated</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="complaint-filters">
+            <button class="filter-btn active" onclick="filterComplaints('all')">All</button>
+            <button class="filter-btn" onclick="filterComplaints('pending')">Pending</button>
+            <button class="filter-btn" onclick="filterComplaints('resolved')">Resolved</button>
+            <button class="filter-btn" onclick="filterComplaints('escalated')">Escalated</button>
+        </div>
+
+        <!-- Complaints List -->
+        <div class="complaints-list" id="complaintsList">
+            <!-- Complaints will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Reply Modal -->
+    <div id="replyModal" class="modal">
+        <div class="modal-content">
+            <h3>Reply to Complaint</h3>
+            <textarea id="replyMessage" rows="4" placeholder="Type your reply..."></textarea>
+            <button class="btn-send" onclick="sendReply()">Send Reply</button>
+        </div>
+    </div>
+
+    <script>
+        // Sample complaints data
+        const complaints = [
+            {
+                id: 'CMP001',
+                customer: 'Rahul Sharma',
+                subject: 'Food Quality Issue',
+                description: 'The food was cold and not fresh. Butter chicken had too much oil.',
+                category: 'food_quality',
+                priority: 'high',
+                status: 'pending',
+                date: '2026-02-24',
+                orderId: 'ORD001'
+            },
+            {
+                id: 'CMP002',
+                customer: 'Priya Patel',
+                subject: 'Delivery Delay',
+                description: 'Order arrived 45 minutes late. Food was cold.',
+                category: 'delivery',
+                priority: 'medium',
+                status: 'pending',
+                date: '2026-02-23',
+                orderId: 'ORD002'
+            },
+            {
+                id: 'CMP003',
+                customer: 'Amit Kumar',
+                subject: 'Wrong Order',
+                description: 'Received chicken biryani instead of veg biryani.',
+                category: 'wrong_order',
+                priority: 'high',
+                status: 'escalated',
+                date: '2026-02-22',
+                orderId: 'ORD003'
+            },
+            {
+                id: 'CMP004',
+                customer: 'Sneha Reddy',
+                subject: 'Missing Items',
+                description: 'Raita and salad were missing from the thali.',
+                category: 'missing_items',
+                priority: 'medium',
+                status: 'resolved',
+                date: '2026-02-21',
+                orderId: 'ORD004'
+            },
+            {
+                id: 'CMP005',
+                customer: 'Vikram Singh',
+                subject: 'Packaging Issue',
+                description: 'Container was leaking. Curry spilled in the bag.',
+                category: 'packaging',
+                priority: 'low',
+                status: 'resolved',
+                date: '2026-02-20',
+                orderId: 'ORD005'
+            }
+        ];
+
+        let currentComplaintId = null;
+
+        // Load complaints
+        function loadComplaints(filter = 'all') {
+            let filtered = complaints;
+            if (filter !== 'all') {
+                filtered = complaints.filter(c => c.status === filter);
+            }
+
+            const list = document.getElementById('complaintsList');
+            list.innerHTML = filtered.map(c => `
+                <div class="complaint-card ${c.priority}">
+                    <div class="complaint-header">
+                        <span class="complaint-id">#${c.id}</span>
+                        <span class="complaint-status status-${c.status}">
+                            ${c.status.charAt(0).toUpperCase() + c.status.slice(1)}
+                        </span>
+                    </div>
+                    <div class="complaint-customer">
+                        <i class="fas fa-user"></i>
+                        <span>${c.customer}</span>
+                    </div>
+                    <div class="complaint-subject">${c.subject}</div>
+                    <div class="complaint-desc">${c.description}</div>
+                    <div class="complaint-meta">
+                        <span><i class="far fa-calendar"></i> ${c.date}</span>
+                        <span><i class="fas fa-tag"></i> ${c.category}</span>
+                        <span><i class="fas fa-flag"></i> ${c.priority} priority</span>
+                    </div>
+                    <div class="complaint-actions">
+                        <button class="btn-reply" onclick="openReplyModal('${c.id}')">
+                            <i class="fas fa-reply"></i> Reply
+                        </button>
+                        ${c.status !== 'resolved' ? `
+                            <button class="btn-resolve" onclick="resolveComplaint('${c.id}')">
+                                <i class="fas fa-check"></i> Resolve
+                            </button>
+                        ` : ''}
+                        ${c.status !== 'escalated' ? `
+                            <button class="btn-escalate" onclick="escalateComplaint('${c.id}')">
+                                <i class="fas fa-exclamation-triangle"></i> Escalate
+                            </button>
+                        ` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Filter complaints
+        function filterComplaints(status) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            loadComplaints(status);
+        }
+
+        // Open reply modal
+        function openReplyModal(complaintId) {
+            currentComplaintId = complaintId;
+            document.getElementById('replyModal').style.display = 'block';
+        }
+
+        // Send reply
+        function sendReply() {
+            const message = document.getElementById('replyMessage').value;
+            if (message) {
+                alert(`Reply sent to complaint #${currentComplaintId}`);
+                document.getElementById('replyModal').style.display = 'none';
+                document.getElementById('replyMessage').value = '';
+            }
+        }
+
+        // Resolve complaint
+        function resolveComplaint(complaintId) {
+            if (confirm('Mark this complaint as resolved?')) {
+                const complaint = complaints.find(c => c.id === complaintId);
+                if (complaint) {
+                    complaint.status = 'resolved';
+                    loadComplaints();
+                    alert('Complaint marked as resolved');
+                }
+            }
+        }
+
+        // Escalate complaint
+        function escalateComplaint(complaintId) {
+            if (confirm('Escalate this complaint to platform owner?')) {
+                const complaint = complaints.find(c => c.id === complaintId);
+                if (complaint) {
+                    complaint.status = 'escalated';
+                    loadComplaints();
+                    alert('Complaint escalated to owner');
+                }
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modal = document.getElementById('replyModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Initialize
+        loadComplaints();
+    </script>
+</body>
+</html>

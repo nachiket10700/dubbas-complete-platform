@@ -1,0 +1,239 @@
+2026-02-24 00:19:20,971 - services.recommendation - INFO - Loaded 8 meals from database
+2026-02-24 00:19:20,974 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 00:19:20,978 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 00:19:20,978 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 00:19:21,010 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-24 00:19:21,010 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 00:20:10,337 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:10] "GET /api/health HTTP/1.1" 200 -
+2026-02-24 00:20:10,379 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:10] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-24 00:20:21,085 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:21] "GET /api/languages HTTP/1.1" 200 -
+2026-02-24 00:20:32,617 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:32] "GET /api/cities HTTP/1.1" 200 -
+2026-02-24 00:20:36,332 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:36] "GET /api/recommendations/popular HTTP/1.1" 200 -
+2026-02-24 00:20:42,418 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:42] "GET /api/recommendations/trending HTTP/1.1" 200 -
+2026-02-24 00:20:47,346 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:20:47] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 00:35:00,738 - services.recommendation - INFO - Loaded 8 meals from database
+2026-02-24 00:35:00,739 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 00:35:00,741 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 00:35:00,741 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 00:35:00,767 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-24 00:35:00,767 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 00:35:20,551 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:35:20] "GET /api/health HTTP/1.1" 200 -
+2026-02-24 00:35:32,120 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 00:35:32] "GET /api/languages HTTP/1.1" 200 -
+2026-02-24 10:36:08,095 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-24 10:36:08,104 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 10:36:08,105 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-24 10:36:08,111 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 10:36:08,120 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 10:36:08,120 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 10:36:08,175 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.8.205:5000
+2026-02-24 10:36:08,176 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 10:36:36,575 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 10:36:36] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-24 10:36:36,605 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 10:36:36] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-24 11:21:52,204 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 11:21:52,213 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 11:21:52,215 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 11:21:52,221 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 11:21:52,238 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 11:21:52,239 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 11:21:52,312 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 11:21:52,313 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 11:22:23,609 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 11:22:23,610 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 11:22:23,611 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 11:22:23,611 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 11:22:23,618 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 11:22:23,620 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 11:22:23,655 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 11:22:23,656 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 12:09:21,806 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 12:09:21,831 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 12:09:21,835 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 12:09:21,853 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 12:09:21,876 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 12:09:21,877 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 12:09:22,140 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 12:09:22,142 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 12:11:15,226 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:11:15] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-24 12:11:15,586 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:11:15] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-24 12:19:56,173 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 12:19:56,179 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 12:19:56,183 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 12:19:56,186 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 12:19:56,280 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 12:19:56,291 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 12:19:56,426 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 12:19:56,428 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 12:20:22,119 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:20:22] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-24 12:21:14,967 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:21:14] "GET /api/health HTTP/1.1" 200 -
+2026-02-24 12:22:26,583 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:22:26] "GET /api/recommendations/popular HTTP/1.1" 200 -
+2026-02-24 12:27:47,180 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 12:27:47,183 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 12:27:47,184 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 12:27:47,185 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 12:27:47,200 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 12:27:47,200 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 12:27:47,275 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 12:27:47,276 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 12:28:11,921 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:28:11] "[33mGET / HTTP/1.1[0m" 404 -
+2026-02-24 12:28:32,472 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:28:32] "GET /api/recommendations/popular HTTP/1.1" 200 -
+2026-02-24 12:30:06,851 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 12:30:06] "[31m[1mGET /api/customer/profile HTTP/1.1[0m" 401 -
+2026-02-24 12:32:44,320 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 12:32:44,327 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 12:32:44,328 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 12:32:44,335 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 12:32:44,341 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 12:32:44,342 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 12:32:44,400 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 12:32:44,400 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 14:53:05,882 - services.recommendation - ERROR - Error loading meals from database: unable to open database file
+2026-02-24 14:53:05,888 - services.recommendation - INFO - Created 10 sample meals
+2026-02-24 14:53:05,889 - services.recommendation - ERROR - Error loading ratings from database: unable to open database file
+2026-02-24 14:53:05,891 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-24 14:53:05,898 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-24 14:53:05,899 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-24 14:53:06,008 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://20.20.10.50:5000
+2026-02-24 14:53:06,009 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-24 14:53:29,434 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:29] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:29,461 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:29] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:44,213 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:44] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:44,224 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:44] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:44,570 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:44] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:44,590 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:44] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:44,887 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:44] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:44,888 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:44] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:45,302 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:45] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:45,303 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:45] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:45,738 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:45] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:45,740 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:45] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:46,120 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:46] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:46,121 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:46] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:46,529 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:46] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:46,531 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:46] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:46,931 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:46] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:46,931 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:46] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:47,355 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:47] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:47,356 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:47] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:47,748 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:47] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:47,750 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:47] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:48,173 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:48] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:48,180 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:48] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:48,573 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:48] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:48,575 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:48] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:48,990 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:48] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:48,991 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:48] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:49,395 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:49] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:49,398 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:49] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:49,812 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:49] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:49,813 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:49] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:50,218 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:50] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:50,220 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:50] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:50,595 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:50] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:50,596 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:50] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:51,032 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:51] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:51,033 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:51] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:51,448 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:51] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:51,451 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:51] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:51,985 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:51] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:51,987 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:51] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:52,249 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:52] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:52,251 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:52] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:52,644 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:52] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:52,645 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:52] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:53,041 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:53] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:53,043 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:53] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:53,455 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:53] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:53,456 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:53] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:53,869 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:53] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:53,872 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:53] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:54,263 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:54] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:54,265 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:54] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:54,684 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:54] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:54,686 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:54] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:55,075 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:55] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:55,077 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:55] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:55,489 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:55] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:55,493 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:55] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:55,930 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:55] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:55,942 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:55] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:56,322 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:56] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:56,324 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:56] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:56,769 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:56] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:56,770 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:56] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:57,190 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:57] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:57,191 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:57] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:57,563 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:57] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:57,566 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:57] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:58,017 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:58] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:58,023 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:58] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:58,406 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:58] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:58,407 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:58] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:58,833 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:58] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:58,839 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:58] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:59,244 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:59] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:59,245 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:59] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:53:59,634 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:59] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:53:59,638 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:53:59] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:00,059 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:00] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:00,061 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:00] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:00,455 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:00] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:00,457 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:00] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:00,846 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:00] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:00,847 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:00] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:01,280 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:01] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:01,307 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:01] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:01,701 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:01] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:01,703 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:01] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:02,063 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:02] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:02,063 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:02] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:02,507 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:02] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:02,514 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:02] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:02,902 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:02] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:02,907 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:02] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:03,312 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:03] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:54:03,314 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:03] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:14,007 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:14] "GET /api/recommendations/popular?limit=8 HTTP/1.1" 200 -
+2026-02-24 14:54:14,009 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:54:14] "GET /api/local-recommendations?city=mumbai HTTP/1.1" 200 -
+2026-02-24 14:55:03,495 - flask-limiter - INFO - ratelimit 50 per 1 hour (127.0.0.1) exceeded at endpoint: get_popular_recommendations
+2026-02-24 14:55:03,498 - flask-limiter - INFO - ratelimit 50 per 1 hour (127.0.0.1) exceeded at endpoint: get_local_recommendations
+2026-02-24 14:55:03,514 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:03] "[31m[1mGET /api/recommendations/popular?limit=8 HTTP/1.1[0m" 429 -
+2026-02-24 14:55:03,515 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:03] "[31m[1mGET /api/local-recommendations?city=mumbai HTTP/1.1[0m" 429 -
+2026-02-24 14:55:07,946 - flask-limiter - INFO - ratelimit 50 per 1 hour (127.0.0.1) exceeded at endpoint: get_popular_recommendations
+2026-02-24 14:55:07,947 - flask-limiter - INFO - ratelimit 50 per 1 hour (127.0.0.1) exceeded at endpoint: get_local_recommendations
+2026-02-24 14:55:07,949 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:07] "[31m[1mGET /api/recommendations/popular?limit=8 HTTP/1.1[0m" 429 -
+2026-02-24 14:55:07,950 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:07] "[31m[1mGET /api/local-recommendations?city=mumbai HTTP/1.1[0m" 429 -

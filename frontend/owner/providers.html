@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Provider Management - Dabba's</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as dashboard */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Provider Stats */
+        .provider-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        /* Filters */
+        .filters {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: 2px solid #ff6b6b;
+            border-radius: 50px;
+            background: transparent;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .search-box {
+            flex: 1;
+            position: relative;
+            max-width: 300px;
+            margin-left: auto;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .search-box i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ff6b6b;
+        }
+
+        /* Providers Table */
+        .providers-table {
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f8f9fc;
+            padding: 1.2rem 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #666;
+        }
+
+        td {
+            padding: 1.2rem 1rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .provider-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .provider-logo {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .provider-details h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .provider-details p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .badge {
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-verified {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .badge-suspended {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .rating {
+            color: gold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 8px;
+            border: none;
+            background: #f0f0f0;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-icon:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-verify {
+            padding: 0.5rem 1rem;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .btn-reject {
+            padding: 0.5rem 1rem;
+            background: #f44336;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            max-width: 500px;
+            width: 90%;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-header h3 {
+            font-size: 1.3rem;
+        }
+
+        .close {
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #999;
+        }
+
+        .provider-detail-item {
+            margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .provider-detail-item strong {
+            display: block;
+            margin-bottom: 0.3rem;
+            color: #666;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .btn-confirm {
+            flex: 1;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-confirm.verify {
+            background: #4caf50;
+            color: white;
+        }
+
+        .btn-confirm.reject {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-confirm.suspend {
+            background: #ff9800;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="user-menu">
+                <div class="user-avatar">AD</div>
+                <span>Admin</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="providers.html" class="nav-link active">
+                    <i class="fas fa-store"></i>
+                    <span>Providers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="customers.html" class="nav-link">
+                    <i class="fas fa-users"></i>
+                    <span>Customers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Provider Management</h1>
+        </div>
+
+        <!-- Provider Stats -->
+        <div class="provider-stats">
+            <div class="stat-card">
+                <div class="stat-number">3,736</div>
+                <div class="stat-label">Total Providers</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">2,847</div>
+                <div class="stat-label">Verified</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">142</div>
+                <div class="stat-label">Pending Verification</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number">4.7</div>
+                <div class="stat-label">Avg Rating</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters">
+            <button class="filter-btn active" onclick="filterProviders('all')">All</button>
+            <button class="filter-btn" onclick="filterProviders('verified')">Verified</button>
+            <button class="filter-btn" onclick="filterProviders('pending')">Pending</button>
+            <button class="filter-btn" onclick="filterProviders('suspended')">Suspended</button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search providers..." id="searchInput">
+            </div>
+        </div>
+
+        <!-- Providers Table -->
+        <div class="providers-table">
+            <table id="providersTable">
+                <thead>
+                    <tr>
+                        <th>Provider</th>
+                        <th>Contact</th>
+                        <th>Cuisine</th>
+                        <th>Orders</th>
+                        <th>Rating</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="providersBody">
+                    <!-- Providers will be loaded here -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Provider Detail Modal -->
+    <div id="providerModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Provider Details</h3>
+                <span class="close" onclick="closeModal()">&times;</span>
+            </div>
+            <div id="providerDetails"></div>
+            <div class="modal-actions" id="modalActions"></div>
+        </div>
+    </div>
+
+    <script>
+        // Sample providers data
+        const providers = [
+            {
+                id: 1,
+                name: 'Spice Kitchen',
+                owner: 'Rajesh Sharma',
+                email: 'contact@spicekitchen.com',
+                phone: '9876543210',
+                cuisine: 'North Indian, Mughlai',
+                address: 'Andheri East, Mumbai',
+                orders: 1234,
+                rating: 4.8,
+                status: 'verified',
+                documents: {
+                    fssai: 'FSSAI-123456',
+                    pan: 'ABCDE1234F',
+                    gst: '27AAECS1234F1Z5'
+                },
+                bankDetails: {
+                    accountHolder: 'Rajesh Sharma',
+                    bank: 'SBI',
+                    account: 'XXXXXX1234',
+                    ifsc: 'SBIN0001234'
+                },
+                joined: '2025-12-15'
+            },
+            {
+                id: 2,
+                name: 'Madras Cafe',
+                owner: 'Lakshmi Rajan',
+                email: 'madras@cafe.com',
+                phone: '9876543211',
+                cuisine: 'South Indian',
+                address: 'T Nagar, Chennai',
+                orders: 2341,
+                rating: 4.9,
+                status: 'verified',
+                documents: {
+                    fssai: 'FSSAI-789012',
+                    pan: 'FGHIJ5678K',
+                    gst: '33AABCM1234F1Z8'
+                },
+                bankDetails: {
+                    accountHolder: 'Lakshmi Rajan',
+                    bank: 'HDFC',
+                    account: 'XXXXXX5678',
+                    ifsc: 'HDFC0001234'
+                },
+                joined: '2026-01-10'
+            },
+            {
+                id: 3,
+                name: 'Punjab Grill',
+                owner: 'Amar Singh',
+                email: 'punjab@grill.com',
+                phone: '9876543212',
+                cuisine: 'Punjabi',
+                address: 'Connaught Place, Delhi',
+                orders: 876,
+                rating: 4.6,
+                status: 'pending',
+                documents: {
+                    fssai: 'FSSAI-345678',
+                    pan: 'KLMNO9012P',
+                    gst: '07AABCS5678F1Z2'
+                },
+                bankDetails: {
+                    accountHolder: 'Amar Singh',
+                    bank: 'ICICI',
+                    account: 'XXXXXX9012',
+                    ifsc: 'ICIC0001234'
+                },
+                joined: '2026-02-20'
+            },
+            {
+                id: 4,
+                name: 'Biryani House',
+                owner: 'Mohammed Ali',
+                email: 'biryani@house.com',
+                phone: '9876543213',
+                cuisine: 'Hyderabadi',
+                address: 'Banjara Hills, Hyderabad',
+                orders: 3456,
+                rating: 4.7,
+                status: 'verified',
+                documents: {
+                    fssai: 'FSSAI-901234',
+                    pan: 'QRSTU3456V',
+                    gst: '36AABCB1234F1Z6'
+                },
+                bankDetails: {
+                    accountHolder: 'Mohammed Ali',
+                    bank: 'Axis',
+                    account: 'XXXXXX3456',
+                    ifsc: 'UTIB0001234'
+                },
+                joined: '2025-11-05'
+            },
+            {
+                id: 5,
+                name: 'Mumbai Tiffin',
+                owner: 'Suresh Patil',
+                email: 'mumbai@tiffin.com',
+                phone: '9876543214',
+                cuisine: 'Maharashtrian',
+                address: 'Pune, Maharashtra',
+                orders: 567,
+                rating: 4.2,
+                status: 'suspended',
+                documents: {
+                    fssai: 'FSSAI-567890',
+                    pan: 'VWXYZ7890W',
+                    gst: '27AABCP1234F1Z9'
+                },
+                bankDetails: {
+                    accountHolder: 'Suresh Patil',
+                    bank: 'Bank of India',
+                    account: 'XXXXXX7890',
+                    ifsc: 'BKID0001234'
+                },
+                joined: '2026-01-25'
+            }
+        ];
+
+        let currentProvider = null;
+        let currentFilter = 'all';
+
+        // Load providers
+        function loadProviders() {
+            let filtered = providers;
+            if (currentFilter !== 'all') {
+                filtered = providers.filter(p => p.status === currentFilter);
+            }
+
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            if (searchTerm) {
+                filtered = filtered.filter(p => 
+                    p.name.toLowerCase().includes(searchTerm) ||
+                    p.owner.toLowerCase().includes(searchTerm) ||
+                    p.cuisine.toLowerCase().includes(searchTerm)
+                );
+            }
+
+            const tbody = document.getElementById('providersBody');
+            tbody.innerHTML = filtered.map(p => {
+                const statusClass = 
+                    p.status === 'verified' ? 'badge-verified' :
+                    p.status === 'pending' ? 'badge-pending' : 'badge-suspended';
+                
+                return `
+                    <tr>
+                        <td>
+                            <div class="provider-info">
+                                <div class="provider-logo">
+                                    <i class="fas fa-store"></i>
+                                </div>
+                                <div class="provider-details">
+                                    <h4>${p.name}</h4>
+                                    <p>${p.owner}</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div>${p.email}</div>
+                            <div style="font-size: 0.85rem; color: #666;">${p.phone}</div>
+                        </td>
+                        <td>${p.cuisine}</td>
+                        <td>${p.orders}</td>
+                        <td>
+                            <span class="rating">★</span> ${p.rating}
+                        </td>
+                        <td>
+                            <span class="badge ${statusClass}">${p.status}</span>
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn-icon" onclick="viewProvider(${p.id})">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                ${p.status === 'pending' ? `
+                                    <button class="btn-icon" onclick="verifyProvider(${p.id})" style="background: #4caf50; color: white;">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="btn-icon" onclick="rejectProvider(${p.id})" style="background: #f44336; color: white;">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                ` : ''}
+                                ${p.status === 'verified' ? `
+                                    <button class="btn-icon" onclick="suspendProvider(${p.id})" style="background: #ff9800; color: white;">
+                                        <i class="fas fa-pause"></i>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        // Filter providers
+        function filterProviders(filter) {
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            currentFilter = filter;
+            loadProviders();
+        }
+
+        // Search
+        document.getElementById('searchInput').addEventListener('input', loadProviders);
+
+        // View provider details
+        function viewProvider(id) {
+            const provider = providers.find(p => p.id === id);
+            if (!provider) return;
+
+            currentProvider = provider;
+            
+            const details = document.getElementById('providerDetails');
+            details.innerHTML = `
+                <div class="provider-detail-item">
+                    <strong>Business Name</strong>
+                    <p>${provider.name}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Owner</strong>
+                    <p>${provider.owner}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Contact</strong>
+                    <p>Email: ${provider.email}<br>Phone: ${provider.phone}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Address</strong>
+                    <p>${provider.address}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Cuisine</strong>
+                    <p>${provider.cuisine}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Documents</strong>
+                    <p>FSSAI: ${provider.documents.fssai}<br>PAN: ${provider.documents.pan}<br>GST: ${provider.documents.gst}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Bank Details</strong>
+                    <p>Account Holder: ${provider.bankDetails.accountHolder}<br>Bank: ${provider.bankDetails.bank}<br>Account: ${provider.bankDetails.account}<br>IFSC: ${provider.bankDetails.ifsc}</p>
+                </div>
+                <div class="provider-detail-item">
+                    <strong>Joined</strong>
+                    <p>${new Date(provider.joined).toLocaleDateString()}</p>
+                </div>
+            `;
+
+            const actions = document.getElementById('modalActions');
+            if (provider.status === 'pending') {
+                actions.innerHTML = `
+                    <button class="btn-confirm verify" onclick="confirmVerify()">Verify Provider</button>
+                    <button class="btn-confirm reject" onclick="confirmReject()">Reject</button>
+                `;
+            } else if (provider.status === 'verified') {
+                actions.innerHTML = `
+                    <button class="btn-confirm suspend" onclick="confirmSuspend()">Suspend Provider</button>
+                `;
+            } else {
+                actions.innerHTML = '';
+            }
+
+            document.getElementById('providerModal').style.display = 'flex';
+        }
+
+        // Close modal
+        function closeModal() {
+            document.getElementById('providerModal').style.display = 'none';
+        }
+
+        // Verify provider
+        function verifyProvider(id) {
+            viewProvider(id);
+        }
+
+        function confirmVerify() {
+            if (currentProvider) {
+                currentProvider.status = 'verified';
+                loadProviders();
+                closeModal();
+                alert(`${currentProvider.name} has been verified successfully!`);
+            }
+        }
+
+        function rejectProvider(id) {
+            viewProvider(id);
+        }
+
+        function confirmReject() {
+            if (currentProvider) {
+                const index = providers.findIndex(p => p.id === currentProvider.id);
+                if (index !== -1) {
+                    providers.splice(index, 1);
+                }
+                loadProviders();
+                closeModal();
+                alert('Provider application rejected');
+            }
+        }
+
+        function suspendProvider(id) {
+            viewProvider(id);
+        }
+
+        function confirmSuspend() {
+            if (currentProvider) {
+                currentProvider.status = 'suspended';
+                loadProviders();
+                closeModal();
+                alert(`${currentProvider.name} has been suspended`);
+            }
+        }
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to logout?')) {
+                localStorage.clear();
+                sessionStorage.clear();
+                window.location.href = 'login.html';
+            }
+        });
+
+        // Initialize
+        loadProviders();
+    </script>
+</body>
+</html>

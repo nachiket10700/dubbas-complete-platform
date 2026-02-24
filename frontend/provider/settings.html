@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Dabba's Provider</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Same navigation and sidebar styles as before */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Settings Container */
+        .settings-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .settings-sidebar {
+            background: #f8f9fc;
+            padding: 2rem 1rem;
+            border-right: 1px solid #f0f0f0;
+        }
+
+        .settings-menu {
+            list-style: none;
+        }
+
+        .settings-item {
+            padding: 1rem;
+            margin-bottom: 0.5rem;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .settings-item:hover {
+            background: #ffebee;
+        }
+
+        .settings-item.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .settings-content {
+            padding: 2rem;
+        }
+
+        .settings-section {
+            display: none;
+        }
+
+        .settings-section.active {
+            display: block;
+        }
+
+        .settings-section h2 {
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input, .form-group select, .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .btn-save {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .time-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+        }
+
+        .day-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem;
+        }
+
+        .bank-details {
+            background: #f8f9fc;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="user-menu">
+                <div class="user-avatar">SK</div>
+                <span>Spice Kitchen</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="menu.html" class="nav-link">
+                    <i class="fas fa-utensil-spoon"></i>
+                    <span>Menu Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="earnings.html" class="nav-link">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Earnings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link active">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Settings</h1>
+        </div>
+
+        <div class="settings-container">
+            <div class="settings-sidebar">
+                <ul class="settings-menu">
+                    <li class="settings-item active" onclick="showSection('profile')">Profile</li>
+                    <li class="settings-item" onclick="showSection('business')">Business Info</li>
+                    <li class="settings-item" onclick="showSection('hours')">Operating Hours</li>
+                    <li class="settings-item" onclick="showSection('delivery')">Delivery Settings</li>
+                    <li class="settings-item" onclick="showSection('payment')">Payment Details</li>
+                    <li class="settings-item" onclick="showSection('notifications')">Notifications</li>
+                    <li class="settings-item" onclick="showSection('security')">Security</li>
+                </ul>
+            </div>
+
+            <div class="settings-content">
+                <!-- Profile Section -->
+                <div id="profile" class="settings-section active">
+                    <h2>Profile Settings</h2>
+                    <div class="form-group">
+                        <label>Owner Name</label>
+                        <input type="text" value="Rajesh Sharma">
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" value="contact@spicekitchen.com">
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="tel" value="9876543210">
+                        </div>
+                        <div class="form-group">
+                            <label>Alternate Phone</label>
+                            <input type="tel" value="9876543211">
+                        </div>
+                    </div>
+                    <button class="btn-save">Save Changes</button>
+                </div>
+
+                <!-- Business Info Section -->
+                <div id="business" class="settings-section">
+                    <h2>Business Information</h2>
+                    <div class="form-group">
+                        <label>Business Name</label>
+                        <input type="text" value="Spice Kitchen">
+                    </div>
+                    <div class="form-group">
+                        <label>Business Address</label>
+                        <textarea rows="3">Shop 5, Andheri East, Mumbai - 400069</textarea>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>City</label>
+                            <select>
+                                <option value="mumbai" selected>Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Pincode</label>
+                            <input type="text" value="400069">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cuisine Specialties</label>
+                        <input type="text" value="North Indian, Mughlai, Punjabi">
+                    </div>
+                    <div class="form-group">
+                        <label>FSSAI License</label>
+                        <input type="text" value="FSSAI-123456-7890">
+                    </div>
+                    <div class="form-group">
+                        <label>GST Number</label>
+                        <input type="text" value="27AAECS1234F1Z5">
+                    </div>
+                    <button class="btn-save">Save Changes</button>
+                </div>
+
+                <!-- Operating Hours Section -->
+                <div id="hours" class="settings-section">
+                    <h2>Operating Hours</h2>
+                    <div class="time-grid">
+                        <div class="day-item">
+                            <input type="checkbox" checked> Monday
+                        </div>
+                        <div>
+                            <select>
+                                <option>09:00 AM</option>
+                                <option>10:00 AM</option>
+                            </select>
+                            to
+                            <select>
+                                <option>09:00 PM</option>
+                                <option>10:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <!-- Add similar for other days -->
+                    <button class="btn-save">Save Hours</button>
+                </div>
+
+                <!-- Delivery Settings -->
+                <div id="delivery" class="settings-section">
+                    <h2>Delivery Settings</h2>
+                    <div class="form-group">
+                        <label>Delivery Radius (km)</label>
+                        <input type="number" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label>Base Delivery Fee (₹)</label>
+                        <input type="number" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Minimum Order Amount (₹)</label>
+                        <input type="number" value="100">
+                    </div>
+                    <div class="form-group">
+                        <label>Free Delivery Above (₹)</label>
+                        <input type="number" value="300">
+                    </div>
+                    <button class="btn-save">Save Settings</button>
+                </div>
+
+                <!-- Payment Details -->
+                <div id="payment" class="settings-section">
+                    <h2>Bank Account Details</h2>
+                    <div class="bank-details">
+                        <div class="form-group">
+                            <label>Account Holder Name</label>
+                            <input type="text" value="Rajesh Sharma">
+                        </div>
+                        <div class="form-group">
+                            <label>Bank Name</label>
+                            <input type="text" value="State Bank of India">
+                        </div>
+                        <div class="form-group">
+                            <label>Account Number</label>
+                            <input type="text" value="12345678901">
+                        </div>
+                        <div class="form-group">
+                            <label>IFSC Code</label>
+                            <input type="text" value="SBIN0001234">
+                        </div>
+                        <div class="form-group">
+                            <label>UPI ID</label>
+                            <input type="text" value="spicekitchen@okhdfcbank">
+                        </div>
+                    </div>
+                    <button class="btn-save">Update Bank Details</button>
+                </div>
+
+                <!-- Notifications -->
+                <div id="notifications" class="settings-section">
+                    <h2>Notification Preferences</h2>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Email Notifications
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> SMS Notifications
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> New Order Alerts
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Payment Updates
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" checked> Complaint Notifications
+                        </label>
+                    </div>
+                    <button class="btn-save">Save Preferences</button>
+                </div>
+
+                <!-- Security -->
+                <div id="security" class="settings-section">
+                    <h2>Security Settings</h2>
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password">
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password">
+                    </div>
+                    <button class="btn-save">Change Password</button>
+                    
+                    <h3 style="margin-top: 2rem;">Two-Factor Authentication</h3>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox"> Enable 2FA
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.settings-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Update active menu item
+            document.querySelectorAll('.settings-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.target.classList.add('active');
+        }
+    </script>
+</body>
+</html>

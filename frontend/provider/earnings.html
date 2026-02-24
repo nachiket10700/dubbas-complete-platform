@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Earnings - Dabba's Provider</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        /* Same navigation and sidebar styles as before */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8f9fc;
+            color: #2d2d2d;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Stats Cards */
+        .earnings-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .amount {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 0.3rem;
+        }
+
+        .stat-card .change {
+            font-size: 0.85rem;
+            color: #4caf50;
+        }
+
+        /* Chart */
+        .chart-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .chart-header select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        /* Transactions Table */
+        .transactions {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+        }
+
+        .transactions h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .transaction-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .transaction-item:last-child {
+            border-bottom: none;
+        }
+
+        .transaction-info h4 {
+            margin-bottom: 0.3rem;
+        }
+
+        .transaction-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .transaction-amount {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ff6b6b;
+        }
+
+        .transaction-status {
+            font-size: 0.85rem;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            background: #d4edda;
+            color: #155724;
+            margin-left: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="user-menu">
+                <div class="user-avatar">SK</div>
+                <span>Spice Kitchen</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-chart-pie"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="menu.html" class="nav-link">
+                    <i class="fas fa-utensil-spoon"></i>
+                    <span>Menu Manager</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="earnings.html" class="nav-link active">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Earnings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="complaints.html" class="nav-link">
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>Complaints</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="page-header">
+            <h1>Earnings</h1>
+            <button class="btn-primary">Download Report</button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="earnings-stats">
+            <div class="stat-card">
+                <h3>Today's Earnings</h3>
+                <div class="amount">₹12,450</div>
+                <span class="change">↑ 12% from yesterday</span>
+            </div>
+            <div class="stat-card">
+                <h3>This Week</h3>
+                <div class="amount">₹84,320</div>
+                <span class="change">↑ 8% from last week</span>
+            </div>
+            <div class="stat-card">
+                <h3>This Month</h3>
+                <div class="amount">₹3,45,890</div>
+                <span class="change">↑ 15% from last month</span>
+            </div>
+            <div class="stat-card">
+                <h3>Pending Payout</h3>
+                <div class="amount">₹42,500</div>
+                <span class="change">Will be settled on 28th</span>
+            </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-container">
+            <div class="chart-header">
+                <h2>Revenue Overview</h2>
+                <select id="chartPeriod">
+                    <option value="week">Last 7 days</option>
+                    <option value="month" selected>Last 30 days</option>
+                    <option value="year">Last 12 months</option>
+                </select>
+            </div>
+            <canvas id="earningsChart" style="height: 300px;"></canvas>
+        </div>
+
+        <!-- Recent Transactions -->
+        <div class="transactions">
+            <h2>Recent Transactions</h2>
+            <div class="transaction-list" id="transactionList">
+                <!-- Transactions will be loaded here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Sample transactions
+        const transactions = [
+            { id: 'TXN001', date: '24 Feb 2026', orders: 12, amount: 4250, status: 'settled' },
+            { id: 'TXN002', date: '23 Feb 2026', orders: 15, amount: 4890, status: 'settled' },
+            { id: 'TXN003', date: '22 Feb 2026', orders: 10, amount: 3450, status: 'settled' },
+            { id: 'TXN004', date: '21 Feb 2026', orders: 18, amount: 5670, status: 'settled' },
+            { id: 'TXN005', date: '20 Feb 2026', orders: 14, amount: 4320, status: 'pending' },
+        ];
+
+        // Load transactions
+        function loadTransactions() {
+            const list = document.getElementById('transactionList');
+            list.innerHTML = transactions.map(t => `
+                <div class="transaction-item">
+                    <div class="transaction-info">
+                        <h4>${t.id}</h4>
+                        <p>${t.date} • ${t.orders} orders</p>
+                    </div>
+                    <div>
+                        <span class="transaction-amount">₹${t.amount}</span>
+                        <span class="transaction-status">${t.status}</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize chart
+        const ctx = document.getElementById('earningsChart').getContext('2d');
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Earnings (₹)',
+                    data: [82500, 92300, 102800, 124500],
+                    borderColor: '#ff6b6b',
+                    backgroundColor: 'rgba(255, 107, 107, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                }
+            }
+        });
+
+        // Update chart based on period
+        document.getElementById('chartPeriod').addEventListener('change', function(e) {
+            const period = e.target.value;
+            let labels, data;
+            
+            if (period === 'week') {
+                labels = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+                data = [12500, 14200, 13800, 15100, 18900, 24500, 19800];
+            } else if (period === 'month') {
+                labels = ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+                data = [82500, 92300, 102800, 124500];
+            } else {
+                labels = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+                data = [320000, 345000, 368000, 392000, 415000, 438000];
+            }
+            
+            chart.data.labels = labels;
+            chart.data.datasets[0].data = data;
+            chart.update();
+        });
+
+        // Initialize
+        loadTransactions();
+    </script>
+</body>
+</html>
