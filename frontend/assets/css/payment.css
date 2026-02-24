@@ -1,0 +1,537 @@
+/* Payments Management Styles */
+
+/* Payment Stats */
+.payment-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+    .payment-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .payment-stats {
+        grid-template-columns: 1fr;
+    }
+}
+
+.stat-card {
+    background: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow-card);
+}
+
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.stat-title {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--light), #ffeae4);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.2rem;
+}
+
+.stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary);
+    margin-bottom: 0.3rem;
+}
+
+.stat-label {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    margin-bottom: 0.3rem;
+}
+
+.stat-change {
+    font-size: 0.85rem;
+    color: var(--success);
+}
+
+.stat-change.negative {
+    color: var(--danger);
+}
+
+/* Tabs */
+.payment-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 2px solid var(--gray);
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 1rem 2rem;
+    background: none;
+    border: none;
+    font-weight: 600;
+    color: var(--gray-dark);
+    cursor: pointer;
+    position: relative;
+    transition: var(--transition);
+}
+
+.tab-btn::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--primary);
+    transition: width 0.3s ease;
+}
+
+.tab-btn:hover::after,
+.tab-btn.active::after {
+    width: 100%;
+}
+
+.tab-btn:hover {
+    color: var(--primary);
+}
+
+.tab-btn.active {
+    color: var(--primary);
+}
+
+.tab-pane {
+    display: none;
+}
+
+.tab-pane.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Wallet Card */
+.wallet-card {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    color: var(--white);
+    margin-bottom: 2rem;
+    box-shadow: 0 10px 30px rgba(102,126,234,0.3);
+}
+
+.wallet-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.wallet-balance {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--white);
+}
+
+.wallet-label {
+    opacity: 0.9;
+    color: var(--white);
+}
+
+.btn-add-money {
+    padding: 0.75rem 1.5rem;
+    background: var(--white);
+    color: #667eea;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-money:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+/* Payment Methods */
+.payment-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.method-card {
+    background: var(--white);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: var(--box-shadow-card);
+    transition: var(--transition);
+    border: 2px solid transparent;
+}
+
+.method-card:hover {
+    border-color: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: var(--box-shadow-hover);
+}
+
+.method-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--light), #ffeae4);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary);
+    font-size: 1.5rem;
+    flex-shrink: 0;
+}
+
+.method-info {
+    flex: 1;
+}
+
+.method-name {
+    font-weight: 600;
+    margin-bottom: 0.3rem;
+    color: var(--dark);
+}
+
+.method-details {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+.method-default {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.8rem;
+    background: rgba(76,175,80,0.1);
+    color: var(--success);
+    border-radius: 50px;
+    display: inline-block;
+    margin-top: 0.3rem;
+}
+
+.method-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    width: 35px;
+    height: 35px;
+    border-radius: 8px;
+    border: none;
+    background: var(--light);
+    color: var(--gray-dark);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-icon:hover {
+    background: var(--primary);
+    color: var(--white);
+}
+
+.add-method-card {
+    background: var(--light);
+    border: 2px dashed var(--primary);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    min-height: 120px;
+}
+
+.add-method-card:hover {
+    background: #ffeae4;
+}
+
+.add-method-card i {
+    font-size: 2rem;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+.add-method-card span {
+    color: var(--primary);
+    font-weight: 500;
+}
+
+/* Transactions Table */
+.transactions-table {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--box-shadow-card);
+}
+
+.transactions-table table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.transactions-table th {
+    background: var(--light);
+    padding: 1.2rem 1rem;
+    text-align: left;
+    font-weight: 600;
+    color: var(--gray-dark);
+    border-bottom: 2px solid var(--gray);
+}
+
+.transactions-table td {
+    padding: 1.2rem 1rem;
+    border-bottom: 1px solid var(--gray);
+}
+
+.transaction-id {
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.payment-status {
+    padding: 0.3rem 1rem;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.status-success {
+    background: rgba(76,175,80,0.1);
+    color: var(--success);
+}
+
+.status-pending {
+    background: rgba(255,193,7,0.1);
+    color: var(--warning);
+}
+
+.status-failed {
+    background: rgba(244,67,54,0.1);
+    color: var(--danger);
+}
+
+.status-refunded {
+    background: rgba(108,117,125,0.1);
+    color: var(--gray-dark);
+}
+
+.badge-provider {
+    background: rgba(33,150,243,0.1);
+    color: var(--info);
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+.badge-customer {
+    background: rgba(76,175,80,0.1);
+    color: var(--success);
+    padding: 0.2rem 0.5rem;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-left: 0.5rem;
+}
+
+/* Payout Section */
+.payout-card {
+    background: var(--white);
+    border-radius: var(--border-radius-lg);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--box-shadow-card);
+}
+
+.payout-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.payout-header h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
+.payout-list {
+    display: grid;
+    gap: 1rem;
+}
+
+.payout-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: var(--light);
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.payout-item:hover {
+    background: #ffeae4;
+}
+
+.payout-info h4 {
+    margin-bottom: 0.3rem;
+    color: var(--dark);
+}
+
+.payout-info p {
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+.payout-amount {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--primary);
+}
+
+.btn-process {
+    padding: 0.5rem 1.5rem;
+    background: linear-gradient(135deg, var(--primary), var(--primary-light));
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius-sm);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-process:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255,107,107,0.3);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.5);
+    z-index: 2000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal.show {
+    display: flex;
+}
+
+.modal-content {
+    background: var(--white);
+    max-width: 500px;
+    width: 90%;
+    padding: 2rem;
+    border-radius: var(--border-radius-lg);
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--gray);
+}
+
+.modal-header h3 {
+    font-size: 1.3rem;
+    margin-bottom: 0;
+}
+
+.modal-close {
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--gray-dark);
+}
+
+.modal-close:hover {
+    color: var(--danger);
+}
+
+.transaction-detail {
+    margin-bottom: 1rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--gray);
+}
+
+.transaction-detail strong {
+    display: block;
+    margin-bottom: 0.3rem;
+    color: var(--gray-dark);
+    font-size: 0.9rem;
+}
+
+.transaction-detail p {
+    color: var(--dark);
+    font-weight: 500;
+}
+
+.btn-refund {
+    width: 100%;
+    padding: 1rem;
+    background: #ff9800;
+    color: var(--white);
+    border: none;
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 1rem;
+    transition: var(--transition);
+}
+
+.btn-refund:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255,152,0,0.3);
+}
