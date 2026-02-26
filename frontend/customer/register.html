@@ -740,334 +740,304 @@
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
+    // Initialize AOS
+    AOS.init({
+        duration: 800,
+        once: true
+    });
 
-        // ============================================
-        // MULTI-STEP FORM
-        // ============================================
-        let currentStep = 1;
-        const totalSteps = 4;
+    // ============================================
+    // MULTI-STEP FORM
+    // ============================================
+    let currentStep = 1;
+    const totalSteps = 4;
 
-        function updateProgress() {
-            for (let i = 1; i <= totalSteps; i++) {
-                const step = document.querySelector(`.progress-step[data-step="${i}"]`);
-                if (i < currentStep) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                    step.innerHTML = '<i class="fas fa-check"></i>';
-                } else if (i === currentStep) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
-                    step.innerHTML = `<span>${i}</span>`;
-                } else {
-                    step.classList.remove('active', 'completed');
-                    step.innerHTML = `<span>${i}</span>`;
-                }
+    function updateProgress() {
+        for (let i = 1; i <= totalSteps; i++) {
+            const step = document.querySelector(`.progress-step[data-step="${i}"]`);
+            if (i < currentStep) {
+                step.classList.add('completed');
+                step.classList.remove('active');
+                step.innerHTML = '<i class="fas fa-check"></i>';
+            } else if (i === currentStep) {
+                step.classList.add('active');
+                step.classList.remove('completed');
+                step.innerHTML = `<span>${i}</span>`;
+            } else {
+                step.classList.remove('active', 'completed');
+                step.innerHTML = `<span>${i}</span>`;
             }
         }
+    }
 
-        function showStep(step) {
-            document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
-            document.getElementById(`step${step}`).classList.add('active');
-            
-            if (step === 1) {
-                document.getElementById('prevBtn').style.display = 'none';
-            } else {
-                document.getElementById('prevBtn').style.display = 'block';
-            }
-            
-            if (step === totalSteps) {
-                document.getElementById('nextBtn').style.display = 'none';
-                document.getElementById('submitBtn').style.display = 'block';
-            } else {
-                document.getElementById('nextBtn').style.display = 'block';
-                document.getElementById('submitBtn').style.display = 'none';
-            }
-            
-            updateProgress();
-            
-            if (step === 3) {
-                startOtpTimer();
-                document.getElementById('phoneDisplay').textContent = document.getElementById('phone').value;
-            }
+    function showStep(step) {
+        document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+        document.getElementById(`step${step}`).classList.add('active');
+        
+        if (step === 1) {
+            document.getElementById('prevBtn').style.display = 'none';
+        } else {
+            document.getElementById('prevBtn').style.display = 'block';
         }
+        
+        if (step === totalSteps) {
+            document.getElementById('nextBtn').style.display = 'none';
+            document.getElementById('submitBtn').style.display = 'block';
+        } else {
+            document.getElementById('nextBtn').style.display = 'block';
+            document.getElementById('submitBtn').style.display = 'none';
+        }
+        
+        updateProgress();
+        
+        if (step === 3) {
+            startOtpTimer();
+            document.getElementById('phoneDisplay').textContent = document.getElementById('phone').value;
+        }
+    }
 
-        window.nextStep = function() {
-            if (currentStep < totalSteps) {
-                if (validateStep(currentStep)) {
-                    currentStep++;
-                    showStep(currentStep);
-                }
-            }
-        };
-
-        window.prevStep = function() {
-            if (currentStep > 1) {
-                currentStep--;
+    window.nextStep = function() {
+        if (currentStep < totalSteps) {
+            if (validateStep(currentStep)) {
+                currentStep++;
                 showStep(currentStep);
             }
-        };
-
-        function validateStep(step) {
-            switch(step) {
-                case 1:
-                    const firstName = document.getElementById('firstName').value;
-                    const lastName = document.getElementById('lastName').value;
-                    const email = document.getElementById('email').value;
-                    const phone = document.getElementById('phone').value;
-                    
-                    if (!firstName || !lastName || !email || !phone) {
-                        showAlert('Please fill all required fields', 'error');
-                        return false;
-                    }
-                    if (!email.includes('@')) {
-                        showAlert('Please enter a valid email', 'error');
-                        return false;
-                    }
-                    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
-                        showAlert('Please enter a valid 10-digit phone number', 'error');
-                        return false;
-                    }
-                    return true;
-                    
-                case 2:
-                    const line1 = document.getElementById('addressLine1').value;
-                    const city = document.getElementById('city').value;
-                    const state = document.getElementById('state').value;
-                    const pincode = document.getElementById('pincode').value;
-                    
-                    if (!line1 || !city || !state || !pincode) {
-                        showAlert('Please fill all required address fields', 'error');
-                        return false;
-                    }
-                    if (pincode.length !== 6 || !/^\d+$/.test(pincode)) {
-                        showAlert('Please enter a valid 6-digit pincode', 'error');
-                        return false;
-                    }
-                    return true;
-                    
-                case 3:
-                    const otpInputs = document.querySelectorAll('.otp-input');
-                    let otp = '';
-                    otpInputs.forEach(input => otp += input.value);
-                    if (otp.length !== 6) {
-                        showAlert('Please enter complete OTP', 'error');
-                        return false;
-                    }
-                    showAlert('OTP verified successfully!', 'success');
-                    return true;
-                    
-                default:
-                    return true;
-            }
         }
+    };
 
-        // ============================================
-        // OTP HANDLING
-        // ============================================
-        let timerInterval;
+    window.prevStep = function() {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    };
+
+    function validateStep(step) {
+        switch(step) {
+            case 1:
+                const firstName = document.getElementById('firstName').value;
+                const lastName = document.getElementById('lastName').value;
+                const email = document.getElementById('email').value;
+                const phone = document.getElementById('phone').value;
+                
+                if (!firstName || !lastName || !email || !phone) {
+                    showAlert('Please fill all required fields', 'error');
+                    return false;
+                }
+                if (!email.includes('@')) {
+                    showAlert('Please enter a valid email', 'error');
+                    return false;
+                }
+                if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+                    showAlert('Please enter a valid 10-digit phone number', 'error');
+                    return false;
+                }
+                return true;
+                
+            case 2:
+                const line1 = document.getElementById('addressLine1').value;
+                const city = document.getElementById('city').value;
+                const state = document.getElementById('state').value;
+                const pincode = document.getElementById('pincode').value;
+                
+                if (!line1 || !city || !state || !pincode) {
+                    showAlert('Please fill all required address fields', 'error');
+                    return false;
+                }
+                if (pincode.length !== 6 || !/^\d+$/.test(pincode)) {
+                    showAlert('Please enter a valid 6-digit pincode', 'error');
+                    return false;
+                }
+                return true;
+                
+            case 3:
+                const otpInputs = document.querySelectorAll('.otp-input');
+                let otp = '';
+                otpInputs.forEach(input => otp += input.value);
+                if (otp.length !== 6) {
+                    showAlert('Please enter complete OTP', 'error');
+                    return false;
+                }
+                showAlert('OTP verified successfully!', 'success');
+                return true;
+                
+            default:
+                return true;
+        }
+    }
+
+    // ============================================
+    // OTP HANDLING
+    // ============================================
+    let timerInterval;
+    
+    function startOtpTimer() {
+        let timeLeft = 120;
+        const timerDisplay = document.getElementById('otpTimer');
+        const resendBtn = document.getElementById('resendOtpBtn');
         
-        function startOtpTimer() {
-            let timeLeft = 120;
-            const timerDisplay = document.getElementById('otpTimer');
-            const resendBtn = document.getElementById('resendOtpBtn');
+        resendBtn.disabled = true;
+        clearInterval(timerInterval);
+        
+        timerInterval = setInterval(() => {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
             
-            resendBtn.disabled = true;
-            clearInterval(timerInterval);
-            
-            timerInterval = setInterval(() => {
-                const minutes = Math.floor(timeLeft / 60);
-                const seconds = timeLeft % 60;
-                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
-                
-                if (timeLeft <= 0) {
-                    clearInterval(timerInterval);
-                    resendBtn.disabled = false;
-                    timerDisplay.textContent = 'OTP expired';
-                }
-                timeLeft--;
-            }, 1000);
-        }
+            if (timeLeft <= 0) {
+                clearInterval(timerInterval);
+                resendBtn.disabled = false;
+                timerDisplay.textContent = 'OTP expired';
+            }
+            timeLeft--;
+        }, 1000);
+    }
 
-        window.resendOtp = function() {
-            showAlert('New OTP sent to your phone!', 'success');
-            startOtpTimer();
+    window.resendOtp = function() {
+        showAlert('New OTP sent to your phone!', 'success');
+        startOtpTimer();
+    };
+
+    document.querySelectorAll('.otp-input').forEach((input, index) => {
+        input.addEventListener('input', function() {
+            if (this.value.length === 1 && index < 5) {
+                document.querySelectorAll('.otp-input')[index + 1].focus();
+            }
+        });
+        
+        input.addEventListener('keydown', function(e) {
+            if (e.key === 'Backspace' && !this.value && index > 0) {
+                document.querySelectorAll('.otp-input')[index - 1].focus();
+            }
+        });
+    });
+
+    // ============================================
+    // LOCATION DETECTION
+    // ============================================
+    document.getElementById('detectLocation').addEventListener('click', function() {
+        if (navigator.geolocation) {
+            showAlert('Detecting your location...', 'info');
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    document.getElementById('city').value = 'Mumbai';
+                    document.getElementById('state').value = 'Maharashtra';
+                    showAlert('Location detected! Please verify your address.', 'success');
+                },
+                (error) => {
+                    showAlert('Unable to detect location. Please enter manually.', 'error');
+                }
+            );
+        } else {
+            showAlert('Geolocation not supported. Please enter address manually.', 'error');
+        }
+    });
+
+    // ============================================
+    // PASSWORD VISIBILITY TOGGLE
+    // ============================================
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordInput.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+    });
+
+    // ============================================
+    // SHOW ALERT FUNCTION
+    // ============================================
+    function showAlert(message, type) {
+        const alertContainer = document.getElementById('alertContainer');
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            info: 'fa-info-circle'
         };
+        
+        alertContainer.innerHTML = `
+            <div class="alert alert-${type}">
+                <i class="fas ${icons[type]}"></i>
+                <span>${message}</span>
+            </div>
+        `;
 
-        document.querySelectorAll('.otp-input').forEach((input, index) => {
-            input.addEventListener('input', function() {
-                if (this.value.length === 1 && index < 5) {
-                    document.querySelectorAll('.otp-input')[index + 1].focus();
-                }
-            });
-            
-            input.addEventListener('keydown', function(e) {
-                if (e.key === 'Backspace' && !this.value && index > 0) {
-                    document.querySelectorAll('.otp-input')[index - 1].focus();
-                }
-            });
-        });
+        setTimeout(() => {
+            alertContainer.innerHTML = '';
+        }, 5000);
+    }
 
-        // ============================================
-        // LOCATION DETECTION
-        // ============================================
-        document.getElementById('detectLocation').addEventListener('click', function() {
-            if (navigator.geolocation) {
-                showAlert('Detecting your location...', 'info');
-                navigator.geolocation.getCurrentPosition(
-                    (position) => {
-                        document.getElementById('city').value = 'Mumbai';
-                        document.getElementById('state').value = 'Maharashtra';
-                        showAlert('Location detected! Please verify your address.', 'success');
-                    },
-                    (error) => {
-                        showAlert('Unable to detect location. Please enter manually.', 'error');
-                    }
-                );
-            } else {
-                showAlert('Geolocation not supported. Please enter address manually.', 'error');
-            }
-        });
-
-        // ============================================
-        // PASSWORD VISIBILITY TOGGLE
-        // ============================================
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        // ============================================
-        // SHOW ALERT FUNCTION
-        // ============================================
-        function showAlert(message, type) {
-            const alertContainer = document.getElementById('alertContainer');
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            alertContainer.innerHTML = `
-                <div class="alert alert-${type}">
-                    <i class="fas ${icons[type]}"></i>
-                    <span>${message}</span>
-                </div>
-            `;
-
-            setTimeout(() => {
-                alertContainer.innerHTML = '';
-            }, 5000);
+    // ============================================
+    // FORM SUBMISSION - DEBUG VERSION
+    // ============================================
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();  // THIS IS CRITICAL - prevents page refresh
+        console.log("🔵 Form submitted - page refresh prevented");
+        
+        // Show that we're working
+        alert("Form submitted! Check console (F12)");
+        
+        // Simple test - just try to connect
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/health');
+            const data = await response.json();
+            console.log("✅ Backend connection test:", data);
+            alert("✅ Backend connected! Status: " + data.status);
+        } catch (error) {
+            console.error("❌ Backend connection failed:", error);
+            alert("❌ Cannot connect to backend! Is it running?");
+            return;
         }
-
-        // ============================================
-        // FORM SUBMISSION - AUTO-LOGIN TO DASHBOARD
-        // ============================================
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            // Final validation
-            if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
-                return;
-            }
-
-            const password = document.getElementById('password').value;
-            const confirmPassword = document.getElementById('confirmPassword').value;
-
-            if (password !== confirmPassword) {
-                showAlert('Passwords do not match!', 'error');
-                return;
-            }
-
-            if (password.length < 8) {
-                showAlert('Password must be at least 8 characters', 'error');
-                return;
-            }
-
-            if (!document.getElementById('terms').checked) {
-                showAlert('Please accept Terms of Service', 'error');
-                return;
-            }
-
-            // Show loading
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="spinner"></span> Creating account...';
-            submitBtn.disabled = true;
-
-            try {
-                // Collect all form data
-                const formData = {
-                    username: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
-                    email: document.getElementById('email').value,
-                    password: password,
-                    phone: document.getElementById('phone').value,
-                    address: {
-                        line1: document.getElementById('addressLine1').value,
-                        line2: document.getElementById('addressLine2').value,
-                        landmark: document.getElementById('landmark').value,
-                        city: document.getElementById('city').value,
-                        state: document.getElementById('state').value,
-                        pincode: document.getElementById('pincode').value,
-                        area: document.getElementById('area').value
-                    },
-                    receiveOffers: document.getElementById('offers').checked
-                };
-
-                console.log('Sending registration data:', formData);
-
-                // Send to backend
-                const response = await fetch('http://127.0.0.1:5000/api/customer/register', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-
-                console.log('Response status:', response.status);
+        
+        // Get form data
+        const formData = {
+            username: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
+            email: document.getElementById('email').value,
+            password: document.getElementById('password').value,
+            phone: document.getElementById('phone').value
+        };
+        
+        console.log("📤 Sending registration:", formData);
+        
+        try {
+            const response = await fetch('http://127.0.0.1:5000/api/customer/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            });
+            
+            console.log("📥 Response status:", response.status);
+            
+            const data = await response.json();
+            console.log("📥 Response data:", data);
+            
+            if (data.success) {
+                alert("✅ Registration successful! Token: " + (data.token ? "Yes" : "No"));
                 
-                const data = await response.json();
-                console.log('Response data:', data);
-
-                if (data.success) {
-                    // ✅ AUTO-LOGIN: Save user data
-                    if (data.token) {
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('userId', data.user_id);
-                        localStorage.setItem('userRole', 'customer');
-                        localStorage.setItem('username', data.username || formData.username);
-                    }
+                if (data.token) {
+                    localStorage.setItem('token', data.token);
+                    localStorage.setItem('userId', data.user_id);
+                    localStorage.setItem('username', data.username);
+                    console.log("🔑 Token saved to localStorage");
                     
-                    showAlert('Account created successfully! Redirecting to dashboard...', 'success');
-                    
-                    // ✅ GO DIRECTLY TO DASHBOARD
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 2000);
-                } else {
-                    showAlert(data.error || 'Registration failed. Please try again.', 'error');
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.disabled = false;
+                    // Force redirect
+                    console.log("➡️ Redirecting to dashboard...");
+                    window.location.href = 'dashboard.html';
                 }
-            } catch (error) {
-                console.error('Registration error:', error);
-                showAlert('Network error. Please check if backend server is running.', 'error');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+            } else {
+                alert("❌ Registration failed: " + (data.error || "Unknown error"));
             }
-        });
+        } catch (error) {
+            console.error("❌ Fetch error:", error);
+            alert("❌ Network error: " + error.message);
+        }
+    });
 
-        // Initialize first step
-        showStep(1);
-    </script>
+    // Initialize first step
+    showStep(1);
+</script>
     
     <!-- JS Files -->
     <script src="../assets/js/main.js"></script>

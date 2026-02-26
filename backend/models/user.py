@@ -9,27 +9,41 @@ import json
 from datetime import datetime
 from typing import Dict, List, Optional
 
+import os
+import sqlite3
+
+
 class User:
-    """Main User model"""
-    
     def __init__(self, db_path=None):
-        # Fix the database path
         if db_path is None:
-            import os
+            # Get absolute path
             backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
             self.db_path = os.path.join(backend_dir, 'database', 'dabbas.db')
         else:
             self.db_path = db_path
-
-    def create_user(self, username: str, email: str, password: str, 
-                    role: str, profile_data: Dict = None, phone: str = None) -> Dict:
-        """Create a new user"""
+        
+        # Debug
+        print(f"📁 User DB: {self.db_path}")
+        print(f"   Exists: {os.path.exists(self.db_path)}")
+    
+   def create_user(self, username, email, password, role, profile_data=None, phone=None):
+    """Create a new user with retry logic for locked database"""
+    max_retries = 3
+    retry_count = 0
+    
+    while retry_count < max_retries:
         try:
             user_id = f"USR{secrets.token_hex(4).upper()}"
             password_hash = hashlib.sha256(password.encode()).hexdigest()
             
-            conn = sqlite3.connect(self.db_path)
+            conn = sqlite3.connect(self.db_path, timeout=10)  # Add timeout
             cursor = conn.cursor()
+            
+            # Check if user exists
+            cursor.execute('SELECT id FROM users WHERE email = ?', (email,))
+            if cursor.fetchone():
+                conn.close()
+                return {'success': False, 'error': 'Email already exists'}
             
             cursor.execute('''
                 INSERT INTO users 
@@ -46,139 +60,51 @@ class User:
             return {
                 'success': True,
                 'user_id': user_id,
-                'message': f'User created successfully as {role}'
+                'message': 'User created successfully'
             }
             
-        except sqlite3.IntegrityError as e:
-            if 'email' in str(e):
-                return {'success': False, 'error': 'Email already exists'}
-            elif 'username' in str(e):
-                return {'success': False, 'error': 'Username already taken'}
+        except sqlite3.OperationalError as e:
+            if "database is locked" in str(e) and retry_count < max_retries - 1:
+                retry_count += 1
+                time.sleep(1)  # Wait 1 second before retry
+                continue
             else:
-                return {'success': False, 'error': 'Database integrity error'}
+                print(f"❌ Database error: {str(e)}")
+                return {'success': False, 'error': str(e)}
         except Exception as e:
+            print(f"❌ Error: {str(e)}")
             return {'success': False, 'error': str(e)}
     
-    def authenticate(self, email: str, password: str) -> Dict:
-        """Authenticate user"""
-        password_hash = hashlib.sha256(password.encode()).hexdigest()
-        
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        
-        cursor.execute('''
-            SELECT id, username, role, status, profile_data, email_verified, phone_verified
-            FROM users 
-            WHERE email = ? AND password_hash = ?
-        ''', (email, password_hash))
-        
-        user = cursor.fetchone()
-        conn.close()
-        
-        if user:
-            return {
-                'success': True,
-                'user_id': user[0],
-                'username': user[1],
-                'role': user[2],
-                'status': user[3],
-                'profile': json.loads(user[4]) if user[4] else {},
-                'email_verified': bool(user[5]),
-                'phone_verified': bool(user[6])
-            }
-        else:
-            return {'success': False, 'error': 'Invalid email or password'}
-    
-    def get_user_by_id(self, user_id: str) -> Optional[Dict]:
-        """Get user by ID"""
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        
-        cursor.execute('''
-            SELECT id, username, email, phone, role, status, profile_data, 
-                   created_at, last_login, email_verified, phone_verified
-            FROM users WHERE id = ?
-        ''', (user_id,))
-        
-        user = cursor.fetchone()
-        conn.close()
-        
-        if user:
-            return {
-                'id': user[0],
-                'username': user[1],
-                'email': user[2],
-                'phone': user[3],
-                'role': user[4],
-                'status': user[5],
-                'profile': json.loads(user[6]) if user[6] else {},
-                'created_at': user[7],
-                'last_login': user[8],
-                'email_verified': bool(user[9]),
-                'phone_verified': bool(user[10])
-            }
-        return None
-    
-    def get_users_by_role(self, role: str) -> List[Dict]:
-        """Get all users with specific role"""
-        conn = sqlite3.connect(self.db_path)
-        cursor = conn.cursor()
-        
-        cursor.execute('''
-            SELECT id, username, email, phone, status, profile_data, created_at
-            FROM users WHERE role = ?
-        ''', (role,))
-        
-        users = cursor.fetchall()
-        conn.close()
-        
-        return [{
-            'id': u[0],
-            'username': u[1],
-            'email': u[2],
-            'phone': u[3],
-            'status': u[4],
-            'profile': json.loads(u[5]) if u[5] else {},
-            'created_at': u[6]
-        } for u in users]
-    
-    def update_user(self, user_id: str, data: Dict) -> Dict:
-        """Update user information"""
+    def authenticate(self, email, password):
         try:
-            allowed_fields = ['username', 'email', 'phone', 'profile_data']
-            updates = []
-            values = []
-            
-            for field in allowed_fields:
-                if field in data:
-                    updates.append(f"{field} = ?")
-                    if field == 'profile_data':
-                        values.append(json.dumps(data[field]))
-                    else:
-                        values.append(data[field])
-            
-            if not updates:
-                return {'success': False, 'error': 'No fields to update'}
-            
-            updates.append("updated_at = ?")
-            values.append(datetime.now())
-            values.append(user_id)
+            password_hash = hashlib.sha256(password.encode()).hexdigest()
             
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
-            cursor.execute(f'''
-                UPDATE users 
-                SET {', '.join(updates)}
-                WHERE id = ?
-            ''', values)
+            cursor.execute('''
+                SELECT id, username, role, status, profile_data 
+                FROM users 
+                WHERE email = ? AND password_hash = ?
+            ''', (email, password_hash))
             
-            conn.commit()
+            user = cursor.fetchone()
             conn.close()
             
-            return {'success': True, 'message': 'User updated successfully'}
-            
+            if user:
+                return {
+                    'success': True,
+                    'user_id': user[0],
+                    'username': user[1],
+                    'role': user[2],
+                    'status': user[3],
+                    'profile': json.loads(user[4]) if user[4] else {}
+                }
+            else:
+                return {'success': False, 'error': 'Invalid email or password'}
+                
         except Exception as e:
+            print(f"❌ Auth error: {str(e)}")
             return {'success': False, 'error': str(e)}
 
 

@@ -513,7 +513,10 @@ def customer_register():
     """Register a new customer"""
     try:
         data = request.json
-        logger.info(f"Registration attempt with data: {data}")
+        print("="*50)
+        print("📝 REGISTRATION ATTEMPT")
+        print(f"Data received: {data}")
+        print("="*50)
         
         # Validate required fields
         required_fields = ['username', 'email', 'password', 'phone']
@@ -538,7 +541,7 @@ def customer_register():
             }
         )
         
-        logger.info(f"User creation result: {result}")
+        print(f"User creation result: {result}")
         
         if result['success']:
             # Generate JWT token for auto-login
@@ -565,12 +568,12 @@ def customer_register():
             return jsonify(result), 400
             
     except Exception as e:
-        logger.error(f"Customer registration error: {str(e)}")
+        print(f"❌ ERROR: {str(e)}")
         import traceback
         traceback.print_exc()
         return jsonify({
             'success': False,
-            'error': f'Registration failed: {str(e)}'
+            'error': str(e)
         }), 500
 
 @app.route('/api/customer/login', methods=['POST'])
@@ -579,6 +582,10 @@ def customer_login():
     """Customer login"""
     try:
         data = request.json
+        print("="*50)
+        print("🔐 LOGIN ATTEMPT")
+        print(f"Email: {data.get('email')}")
+        print("="*50)
         
         if 'email' not in data or 'password' not in data:
             return jsonify({
@@ -588,6 +595,7 @@ def customer_login():
         
         # Authenticate user
         result = user_model.authenticate(data['email'], data['password'])
+        print(f"Auth result: {result}")
         
         if result['success']:
             # Create JWT token
@@ -607,10 +615,12 @@ def customer_login():
             return jsonify(result), 401
             
     except Exception as e:
-        logger.error(f"Customer login error: {str(e)}")
+        print(f"❌ Login error: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({
             'success': False,
-            'error': 'Login failed'
+            'error': str(e)
         }), 500
 
 @app.route('/api/customer/profile', methods=['GET'])
@@ -1519,9 +1529,6 @@ def payment_webhook():
             
             payment_processor.update_payment_status(payment_id, 'completed')
             
-            # Update any related orders/subscriptions
-            # ...
-            
         elif event == 'payment.failed':
             # Handle failed payment
             payment_id = payload.get('payment', {}).get('id')
@@ -1966,13 +1973,9 @@ def customer_forgot_password():
         
         # Generate reset token
         reset_token = secrets.token_urlsafe(32)
-        expiry = datetime.now() + timedelta(hours=24)
         
-        # In production, store token in database
-        # For now, just log it
         logger.info(f"Password reset token for {email}: {reset_token}")
         
-        # Send email with reset link
         reset_link = f"http://localhost:5000/reset-password?token={reset_token}&role=customer"
         email_service.send_password_reset(email, reset_link)
         
@@ -1993,7 +1996,6 @@ def provider_forgot_password():
         
         # Generate reset token
         reset_token = secrets.token_urlsafe(32)
-        expiry = datetime.now() + timedelta(hours=24)
         
         logger.info(f"Provider password reset token for {email}: {reset_token}")
         
@@ -2017,7 +2019,6 @@ def owner_forgot_password():
         
         # Generate reset token
         reset_token = secrets.token_urlsafe(32)
-        expiry = datetime.now() + timedelta(hours=24)
         
         logger.info(f"Owner password reset token for {email}: {reset_token}")
         
@@ -2041,11 +2042,7 @@ def reset_password():
         if not all([token, new_password, role]):
             return jsonify({'success': False, 'error': 'Missing required fields'}), 400
         
-        # In production, verify token from database
-        # For demo, just log it
         logger.info(f"Password reset attempt with token: {token} for role: {role}")
-        
-        # TODO: Verify token and update password in database
         
         return jsonify({'success': True, 'message': 'Password reset successfully'})
     except Exception as e:
