@@ -1940,3 +1940,47 @@ if __name__ == '__main__':
         "success": True,
         "message": "Dabbas Backend Running 🚀"
     }
+    
+    # Forgot Password endpoints
+@app.route('/api/customer/forgot-password', methods=['POST'])
+def customer_forgot_password():
+    data = request.json
+    email = data.get('email')
+    
+    # Generate reset token
+    reset_token = secrets.token_urlsafe(32)
+    expiry = datetime.now() + timedelta(hours=24)
+    
+    # Store in database (you'll need a password_resets table)
+    # db.store_reset_token(email, reset_token, expiry)
+    
+    # Send email with reset link
+    reset_link = f"http://localhost:5000/reset-password?token={reset_token}&role=customer"
+    email_service.send_password_reset(email, reset_link)
+    
+    return jsonify({'success': True, 'message': 'Reset link sent'})
+
+@app.route('/api/provider/forgot-password', methods=['POST'])
+def provider_forgot_password():
+    # Similar to customer but for providers
+    pass
+
+@app.route('/api/owner/forgot-password', methods=['POST'])
+def owner_forgot_password():
+    # Similar to customer but for owners
+    pass
+
+@app.route('/api/reset-password', methods=['POST'])
+def reset_password():
+    data = request.json
+    token = data.get('token')
+    new_password = data.get('password')
+    role = data.get('role')
+    
+    # Verify token
+    # user = db.verify_reset_token(token, role)
+    # if user:
+    #     user.update_password(new_password)
+    #     return jsonify({'success': True})
+    
+    return jsonify({'success': False, 'error': 'Invalid or expired token'})

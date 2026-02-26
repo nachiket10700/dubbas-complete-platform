@@ -525,3 +525,29 @@ class EmailService:
         """
         
         return self.send_email(email, subject, html_content)
+    def send_password_reset(self, email, reset_link):
+     subject = "Reset Your Password - Dabba's"
+     html_content = f"""
+       <html>
+             <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+                <div style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e); padding: 20px; text-align: center;">
+                    <h1 style="color: white; margin: 0;">Dabba's</h1>
+                </div>
+                <div style="padding: 20px;">
+                    <h2>Reset Your Password</h2>
+                    <p>We received a request to reset your password. Click the button below to create a new password:</p>
+                    <div style="text-align: center; margin: 30px 0;">
+                        <a href="{reset_link}" style="background: #ff6b6b; color: white; padding: 12px 30px; text-decoration: none; border-radius: 5px; display: inline-block;">
+                            Reset Password
+                        </a>
+                    </div>
+                    <p>Or copy this link: <br> <small>{reset_link}</small></p>
+                    <p>This link will expire in 24 hours.</p>
+                    <p>If you didn't request this, please ignore this email.</p>
+                    <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
+                    <p style="color: #999; font-size: 12px;">&copy; 2025 Dabba's. All rights reserved.</p>
+                </div>
+             </body>
+        </html>
+        """ 
+        return self.send_email(email, subject, html_content)

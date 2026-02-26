@@ -447,7 +447,7 @@
                         <input type="checkbox" id="rememberMe">
                         <span>Remember me</span>
                     </label>
-                    <a href="#" class="forgot-password">Forgot password?</a>
+                    <a href="/frontend/provider/forgot-password.html" class="forgot-password">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn-login" id="loginBtn">
@@ -623,11 +623,7 @@
             }
         });
 
-        // Forgot Password Handler
-        document.querySelector('.forgot-password').addEventListener('click', function(e) {
-            e.preventDefault();
-            showAlert('Password reset link will be sent to your business email', 'info');
-        });
+        
 
         // Demo login (for testing)
         function demoLogin() {
