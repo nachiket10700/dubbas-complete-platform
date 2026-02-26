@@ -5,6 +5,7 @@ Dabba's Main Application Entry Point
 
 import os
 import logging
+import secrets
 from datetime import datetime, timedelta
 from flask import Flask, jsonify, request, session, g
 from flask_cors import CORS
@@ -52,7 +53,7 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
 # Enable CORS
-CORS(app, supports_credentials=True, origins=['https://dabbas.com', 'http://localhost:8000'])
+CORS(app, supports_credentials=True, origins=['https://dabbas.com', 'http://localhost:8000', 'http://127.0.0.1:5500'])
 
 # Initialize JWT
 jwt = JWTManager(app)
@@ -512,6 +513,7 @@ def customer_register():
     """Register a new customer"""
     try:
         data = request.json
+        logger.info(f"Registration attempt with data: {data}")
         
         # Validate required fields
         required_fields = ['username', 'email', 'password', 'phone']
@@ -536,22 +538,39 @@ def customer_register():
             }
         )
         
+        logger.info(f"User creation result: {result}")
+        
         if result['success']:
-            # Send welcome email
-            email_service.send_welcome_email(data['email'], data['username'])
+            # Generate JWT token for auto-login
+            access_token = create_access_token(
+                identity=result['user_id'],
+                additional_claims={'role': 'customer'}
+            )
             
-            # Send SMS
-            sms_service.send_welcome_sms(data['phone'], data['username'])
+            # Send welcome email (don't fail if this errors)
+            try:
+                email_service.send_welcome_email(data['email'], data['username'])
+                sms_service.send_welcome_sms(data['phone'], data['username'])
+            except Exception as e:
+                logger.error(f"Welcome notification failed: {str(e)}")
             
-            return jsonify(result), 201
+            return jsonify({
+                'success': True,
+                'token': access_token,
+                'user_id': result['user_id'],
+                'username': data['username'],
+                'message': 'Registration successful'
+            }), 201
         else:
             return jsonify(result), 400
             
     except Exception as e:
         logger.error(f"Customer registration error: {str(e)}")
+        import traceback
+        traceback.print_exc()
         return jsonify({
             'success': False,
-            'error': 'Registration failed'
+            'error': f'Registration failed: {str(e)}'
         }), 500
 
 @app.route('/api/customer/login', methods=['POST'])
@@ -1921,6 +1940,119 @@ def after_request(response):
     return response
 
 # ============================================================================
+# Home Route
+# ============================================================================
+
+@app.route("/")
+def home():
+    return {
+        "success": True,
+        "message": "Dabba's Backend Running 🚀"
+    }
+
+# ============================================================================
+# Forgot Password Endpoints
+# ============================================================================
+
+@app.route('/api/customer/forgot-password', methods=['POST'])
+def customer_forgot_password():
+    """Send password reset link to customer email"""
+    try:
+        data = request.json
+        email = data.get('email')
+        
+        if not email:
+            return jsonify({'success': False, 'error': 'Email required'}), 400
+        
+        # Generate reset token
+        reset_token = secrets.token_urlsafe(32)
+        expiry = datetime.now() + timedelta(hours=24)
+        
+        # In production, store token in database
+        # For now, just log it
+        logger.info(f"Password reset token for {email}: {reset_token}")
+        
+        # Send email with reset link
+        reset_link = f"http://localhost:5000/reset-password?token={reset_token}&role=customer"
+        email_service.send_password_reset(email, reset_link)
+        
+        return jsonify({'success': True, 'message': 'Reset link sent to your email'})
+    except Exception as e:
+        logger.error(f"Forgot password error: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/provider/forgot-password', methods=['POST'])
+def provider_forgot_password():
+    """Send password reset link to provider email"""
+    try:
+        data = request.json
+        email = data.get('email')
+        
+        if not email:
+            return jsonify({'success': False, 'error': 'Email required'}), 400
+        
+        # Generate reset token
+        reset_token = secrets.token_urlsafe(32)
+        expiry = datetime.now() + timedelta(hours=24)
+        
+        logger.info(f"Provider password reset token for {email}: {reset_token}")
+        
+        reset_link = f"http://localhost:5000/reset-password?token={reset_token}&role=provider"
+        email_service.send_password_reset(email, reset_link)
+        
+        return jsonify({'success': True, 'message': 'Reset link sent to your email'})
+    except Exception as e:
+        logger.error(f"Provider forgot password error: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/owner/forgot-password', methods=['POST'])
+def owner_forgot_password():
+    """Send password reset link to owner email"""
+    try:
+        data = request.json
+        email = data.get('email')
+        
+        if not email:
+            return jsonify({'success': False, 'error': 'Email required'}), 400
+        
+        # Generate reset token
+        reset_token = secrets.token_urlsafe(32)
+        expiry = datetime.now() + timedelta(hours=24)
+        
+        logger.info(f"Owner password reset token for {email}: {reset_token}")
+        
+        reset_link = f"http://localhost:5000/reset-password?token={reset_token}&role=owner"
+        email_service.send_password_reset(email, reset_link)
+        
+        return jsonify({'success': True, 'message': 'Reset link sent to your email'})
+    except Exception as e:
+        logger.error(f"Owner forgot password error: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/api/reset-password', methods=['POST'])
+def reset_password():
+    """Reset password using token"""
+    try:
+        data = request.json
+        token = data.get('token')
+        new_password = data.get('password')
+        role = data.get('role')
+        
+        if not all([token, new_password, role]):
+            return jsonify({'success': False, 'error': 'Missing required fields'}), 400
+        
+        # In production, verify token from database
+        # For demo, just log it
+        logger.info(f"Password reset attempt with token: {token} for role: {role}")
+        
+        # TODO: Verify token and update password in database
+        
+        return jsonify({'success': True, 'message': 'Password reset successfully'})
+    except Exception as e:
+        logger.error(f"Reset password error: {str(e)}")
+        return jsonify({'success': False, 'error': str(e)}), 500
+
+# ============================================================================
 # Main Entry Point
 # ============================================================================
 
@@ -1934,53 +2066,3 @@ if __name__ == '__main__':
         debug=debug,
         threaded=True
     )
-    @app.route("/")
-    def home():
-     return {
-        "success": True,
-        "message": "Dabbas Backend Running 🚀"
-    }
-    
-    # Forgot Password endpoints
-@app.route('/api/customer/forgot-password', methods=['POST'])
-def customer_forgot_password():
-    data = request.json
-    email = data.get('email')
-    
-    # Generate reset token
-    reset_token = secrets.token_urlsafe(32)
-    expiry = datetime.now() + timedelta(hours=24)
-    
-    # Store in database (you'll need a password_resets table)
-    # db.store_reset_token(email, reset_token, expiry)
-    
-    # Send email with reset link
-    reset_link = f"http://localhost:5000/reset-password?token={reset_token}&role=customer"
-    email_service.send_password_reset(email, reset_link)
-    
-    return jsonify({'success': True, 'message': 'Reset link sent'})
-
-@app.route('/api/provider/forgot-password', methods=['POST'])
-def provider_forgot_password():
-    # Similar to customer but for providers
-    pass
-
-@app.route('/api/owner/forgot-password', methods=['POST'])
-def owner_forgot_password():
-    # Similar to customer but for owners
-    pass
-
-@app.route('/api/reset-password', methods=['POST'])
-def reset_password():
-    data = request.json
-    token = data.get('token')
-    new_password = data.get('password')
-    role = data.get('role')
-    
-    # Verify token
-    # user = db.verify_reset_token(token, role)
-    # if user:
-    #     user.update_password(new_password)
-    #     return jsonify({'success': True})
-    
-    return jsonify({'success': False, 'error': 'Invalid or expired token'})

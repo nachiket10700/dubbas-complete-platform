@@ -12,9 +12,15 @@ from typing import Dict, List, Optional
 class User:
     """Main User model"""
     
-    def __init__(self, db_path='database/dubbas.db'):
-        self.db_path = db_path
-    
+    def __init__(self, db_path=None):
+        # Fix the database path
+        if db_path is None:
+            import os
+            backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            self.db_path = os.path.join(backend_dir, 'database', 'dabbas.db')
+        else:
+            self.db_path = db_path
+
     def create_user(self, username: str, email: str, password: str, 
                     role: str, profile_data: Dict = None, phone: str = None) -> Dict:
         """Create a new user"""
@@ -177,10 +183,13 @@ class User:
 
 
 class CustomerManager:
-    """Manage customer-specific operations"""
-    
-    def __init__(self, db_path='database/dubbas.db'):
-        self.db_path = db_path
+    def __init__(self, db_path=None):
+        if db_path is None:
+            import os
+            backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            self.db_path = os.path.join(backend_dir, 'database', 'dabbas.db')
+        else:
+            self.db_path = db_path
     
     def save_preferences(self, user_id: str, preferences: Dict) -> Dict:
         """Save customer preferences"""
@@ -313,10 +322,13 @@ class CustomerManager:
 
 
 class ProviderManager:
-    """Manage provider-specific operations"""
-    
-    def __init__(self, db_path='database/dubbas.db'):
-        self.db_path = db_path
+    def __init__(self, db_path=None):
+        if db_path is None:
+            import os
+            backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            self.db_path = os.path.join(backend_dir, 'database', 'dabbas.db')
+        else:
+            self.db_path = db_path
     
     def register_provider(self, user_id: str, business_details: Dict) -> Dict:
         """Register a service provider"""
@@ -440,10 +452,13 @@ class ProviderManager:
 
 
 class OwnerManager:
-    """Manage owner/platform operations"""
-    
-    def __init__(self, db_path='database/dubbas.db'):
-        self.db_path = db_path
+    def __init__(self, db_path=None):
+        if db_path is None:
+            import os
+            backend_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+            self.db_path = os.path.join(backend_dir, 'database', 'dabbas.db')
+        else:
+            self.db_path = db_path
     
     def get_platform_stats(self) -> Dict:
         """Get platform statistics"""

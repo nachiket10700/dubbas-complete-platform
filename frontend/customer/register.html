@@ -3,12 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up - Dabba's</title>
+    <title>Register - Dabba's</title>
     
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/customer.css">
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
     <!-- Font Awesome Icons -->
@@ -16,11 +13,10 @@
     
     <!-- AOS Animation Library -->
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-     <!-- ✅ CSS FILES -->
-    <link rel="stylesheet" href="/frontend/assets/css/style.css">
-    <link rel="stylesheet" href="/frontend/assets/css/customer.css">
-    <link rel="stylesheet" href="/frontend/assets/css/complaints.css"> <!-- For complaints page -->
-    <link rel="stylesheet" href="/frontend/assets/css/payments.css">   <!-- For payments page -->
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/customer.css">
     
     <style>
         * {
@@ -38,9 +34,9 @@
             justify-content: center;
             position: relative;
             overflow-x: hidden;
+            padding: 2rem 0;
         }
 
-        /* Background Decoration */
         .bg-circle {
             position: absolute;
             border-radius: 50%;
@@ -68,16 +64,14 @@
             50% { transform: translateY(-30px) rotate(5deg); }
         }
 
-        /* Main Container */
         .register-container {
             width: 100%;
-            max-width: 500px;
-            margin: 2rem;
+            max-width: 700px;
+            margin: 2rem auto;
             position: relative;
             z-index: 10;
         }
 
-        /* Logo */
         .logo {
             text-align: center;
             margin-bottom: 2rem;
@@ -90,7 +84,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
-            letter-spacing: -0.5px;
         }
 
         .logo span {
@@ -99,13 +92,67 @@
             -webkit-text-fill-color: transparent;
         }
 
-        /* Register Card */
+        .progress-bar {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .progress-bar::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: #f0f0f0;
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+
+        .progress-step {
+            width: 40px;
+            height: 40px;
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: #999;
+            position: relative;
+            z-index: 2;
+            background: white;
+        }
+
+        .progress-step.active {
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .progress-step.completed {
+            background: #ff6b6b;
+            border-color: #ff6b6b;
+            color: white;
+        }
+
+        .progress-label {
+            position: absolute;
+            top: 45px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.75rem;
+            color: #666;
+            white-space: nowrap;
+        }
+
         .register-card {
             background: white;
             border-radius: 30px;
-            padding: 3rem 2.5rem;
+            padding: 3rem;
             box-shadow: 0 20px 60px rgba(255, 107, 107, 0.15);
-            backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 107, 107, 0.1);
         }
 
@@ -130,19 +177,27 @@
             color: #ff6b6b;
             text-decoration: none;
             font-weight: 600;
-            transition: 0.3s;
         }
 
-        .register-header p a:hover {
-            color: #ff8e8e;
-            text-decoration: underline;
+        .form-step {
+            display: none;
         }
 
-        /* Form */
+        .form-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
+            margin-bottom: 1rem;
         }
 
         .form-group {
@@ -168,9 +223,12 @@
             left: 1rem;
             color: #ff6b6b;
             font-size: 1.2rem;
+            z-index: 1;
         }
 
-        .input-group input, .input-group select {
+        .input-group input, 
+        .input-group select, 
+        .input-group textarea {
             width: 100%;
             padding: 1rem 1rem 1rem 3rem;
             border: 2px solid #f0f0f0;
@@ -178,6 +236,11 @@
             font-size: 1rem;
             transition: all 0.3s ease;
             font-family: 'Inter', sans-serif;
+        }
+
+        .input-group textarea {
+            min-height: 80px;
+            resize: vertical;
         }
 
         .input-group select {
@@ -188,14 +251,12 @@
             background-size: 16px;
         }
 
-        .input-group input:focus, .input-group select:focus {
+        .input-group input:focus, 
+        .input-group select:focus, 
+        .input-group textarea:focus {
             outline: none;
             border-color: #ff6b6b;
             box-shadow: 0 5px 20px rgba(255, 107, 107, 0.1);
-        }
-
-        .input-group input::placeholder {
-            color: #999;
         }
 
         .input-group .toggle-password {
@@ -203,14 +264,95 @@
             right: 1rem;
             cursor: pointer;
             color: #999;
-            transition: 0.3s;
         }
 
-        .input-group .toggle-password:hover {
+        .address-section {
+            background: #f8f9fc;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .address-section h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .location-detect {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background: white;
+            border: 2px dashed #ff6b6b;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .location-detect:hover {
+            background: #fff5f0;
+        }
+
+        .location-detect i {
+            font-size: 1.5rem;
             color: #ff6b6b;
         }
 
-        /* Terms Checkbox */
+        .otp-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .otp-inputs {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            margin: 1rem 0;
+        }
+
+        .otp-input {
+            width: 50px;
+            height: 60px;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-size: 1.5rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .otp-input:focus {
+            border-color: #ff6b6b;
+            outline: none;
+        }
+
+        .btn-otp {
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 2px solid #ff6b6b;
+            border-radius: 50px;
+            color: #ff6b6b;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-otp:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .timer {
+            text-align: center;
+            color: #ff6b6b;
+            font-weight: 600;
+            margin-top: 0.5rem;
+        }
+
         .terms {
             margin-bottom: 2rem;
         }
@@ -231,43 +373,51 @@
             accent-color: #ff6b6b;
         }
 
-        .terms a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 500;
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
         }
 
-        .terms a:hover {
-            text-decoration: underline;
-        }
-
-        /* Register Button */
+        .btn-prev,
+        .btn-next,
         .btn-register {
-            width: 100%;
+            flex: 1;
             padding: 1.2rem;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            color: white;
             border: none;
             border-radius: 15px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
+        .btn-prev {
+            background: #f0f0f0;
+            color: #666;
+        }
+
+        .btn-prev:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-next,
+        .btn-register {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-next:hover,
         .btn-register:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
         }
 
-        .btn-register:disabled {
-            opacity: 0.7;
-            cursor: not-allowed;
-        }
-
-        /* Alert Messages */
         .alert {
             padding: 1rem;
             border-radius: 10px;
@@ -301,17 +451,6 @@
             border: 1px solid #f5c6cb;
         }
 
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-
-        .alert i {
-            font-size: 1.2rem;
-        }
-
-        /* Loading Spinner */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -327,116 +466,24 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Footer */
         .register-footer {
             text-align: center;
             margin-top: 2rem;
             color: #666;
         }
 
-        .register-footer a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .register-footer a:hover {
-            color: #ff8e8e;
-            text-decoration: underline;
-        }
-
-        /* Language Selector */
-        .language-selector {
-            position: absolute;
-            top: 2rem;
-            right: 2rem;
-            z-index: 100;
-        }
-
-        .lang-btn {
-            padding: 0.8rem 1.5rem;
-            background: white;
-            border: 2px solid #ff6b6b;
-            border-radius: 50px;
-            color: #ff6b6b;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-        }
-
-        .lang-btn:hover {
-            background: #ff6b6b;
-            color: white;
-            transform: translateY(-2px);
-        }
-
-        .lang-dropdown {
-            position: absolute;
-            top: 100%;
-            right: 0;
-            width: 250px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(10px);
-            transition: all 0.3s ease;
-            z-index: 100;
-            max-height: 400px;
-            overflow-y: auto;
-            margin-top: 0.5rem;
-        }
-
-        .language-selector:hover .lang-dropdown {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
-        }
-
-        .lang-dropdown a {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 1rem 1.5rem;
-            text-decoration: none;
-            color: #2d2d2d;
-            transition: all 0.3s ease;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .lang-dropdown a:hover {
-            background: #fff5f0;
-            color: #ff6b6b;
-            padding-left: 2rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .form-row {
-                grid-template-columns: 1fr;
-            }
-
+        @media (max-width: 768px) {
             .register-card {
                 padding: 2rem 1.5rem;
             }
-
-            .register-header h2 {
-                font-size: 1.8rem;
+            .form-row {
+                grid-template-columns: 1fr;
             }
-
-            .language-selector {
-                top: 1rem;
-                right: 1rem;
-            }
-
-            .lang-btn span {
+            .progress-label {
                 display: none;
+            }
+            .btn-group {
+                flex-direction: column;
             }
         }
     </style>
@@ -446,34 +493,31 @@
     <div class="bg-circle circle1"></div>
     <div class="bg-circle circle2"></div>
 
-    <!-- Language Selector -->
-    <div class="language-selector">
-        <button class="lang-btn">
-            <i class="fas fa-globe"></i>
-            <span>English</span>
-        </button>
-        <div class="lang-dropdown">
-            <a href="#" data-lang="en">🇬🇧 English</a>
-            <a href="#" data-lang="hi">🇮🇳 हिन्दी</a>
-            <a href="#" data-lang="mr">🇮🇳 मराठी</a>
-            <a href="#" data-lang="ta">🇮🇳 தமிழ்</a>
-            <a href="#" data-lang="te">🇮🇳 తెలుగు</a>
-            <a href="#" data-lang="kn">🇮🇳 ಕನ್ನಡ</a>
-            <a href="#" data-lang="ml">🇮🇳 മലയാളം</a>
-            <a href="#" data-lang="bn">🇮🇳 বাংলা</a>
-            <a href="#" data-lang="gu">🇮🇳 ગુજરાતી</a>
-            <a href="#" data-lang="pa">🇮🇳 ਪੰਜਾਬੀ</a>
-            <a href="#" data-lang="or">🇮🇳 ଓଡ଼ିଆ</a>
-            <a href="#" data-lang="as">🇮🇳 অসমীয়া</a>
-            <a href="#" data-lang="ur">🇮🇳 اردو</a>
-        </div>
-    </div>
-
     <!-- Register Container -->
     <div class="register-container" data-aos="fade-up">
         <!-- Logo -->
         <div class="logo">
             <a href="/frontend/index.html">Dabba<span>'s</span></a>
+        </div>
+
+        <!-- Progress Bar -->
+        <div class="progress-bar">
+            <div class="progress-step active" data-step="1">
+                <span>1</span>
+                <span class="progress-label">Personal Info</span>
+            </div>
+            <div class="progress-step" data-step="2">
+                <span>2</span>
+                <span class="progress-label">Address</span>
+            </div>
+            <div class="progress-step" data-step="3">
+                <span>3</span>
+                <span class="progress-label">Verify OTP</span>
+            </div>
+            <div class="progress-step" data-step="4">
+                <span>4</span>
+                <span class="progress-label">Password</span>
+            </div>
         </div>
 
         <!-- Register Card -->
@@ -488,106 +532,201 @@
 
             <!-- Register Form -->
             <form id="registerForm">
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="firstName">First Name</label>
-                        <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="firstName" name="firstName" placeholder="John" required>
+                <!-- Step 1: Personal Information -->
+                <div class="form-step active" id="step1">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="firstName">First Name *</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="firstName" placeholder="John" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName">Last Name *</label>
+                            <div class="input-group">
+                                <i class="fas fa-user"></i>
+                                <input type="text" id="lastName" placeholder="Doe" required>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="lastName">Last Name</label>
+                        <label for="email">Email Address *</label>
                         <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="lastName" name="lastName" placeholder="Doe" required>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="email">Email Address</label>
-                    <div class="input-group">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" name="email" placeholder="john@example.com" required>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label for="phone">Phone Number</label>
-                    <div class="input-group">
-                        <i class="fas fa-phone"></i>
-                        <input type="tel" id="phone" name="phone" placeholder="9876543210" required>
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="city">City</label>
-                        <div class="input-group">
-                            <i class="fas fa-city"></i>
-                            <select id="city" name="city" required>
-                                <option value="">Select City</option>
-                                <option value="mumbai">Mumbai</option>
-                                <option value="delhi">Delhi</option>
-                                <option value="bangalore">Bangalore</option>
-                                <option value="chennai">Chennai</option>
-                                <option value="kolkata">Kolkata</option>
-                                <option value="hyderabad">Hyderabad</option>
-                                <option value="pune">Pune</option>
-                                <option value="ahmedabad">Ahmedabad</option>
-                            </select>
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="john@example.com" required>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label for="language">Preferred Language</label>
+                        <label for="phone">Phone Number *</label>
                         <div class="input-group">
-                            <i class="fas fa-language"></i>
-                            <select id="language" name="language" required>
-                                <option value="en">English</option>
-                                <option value="hi">हिन्दी</option>
-                                <option value="mr">मराठी</option>
-                                <option value="ta">தமிழ்</option>
-                                <option value="te">తెలుగు</option>
-                                <option value="kn">ಕನ್ನಡ</option>
-                                <option value="ml">മലയാളം</option>
-                                <option value="bn">বাংলা</option>
-                                <option value="gu">ગુજરાતી</option>
-                                <option value="pa">ਪੰਜਾਬੀ</option>
-                            </select>
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" placeholder="9876543210" required>
                         </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="password" name="password" placeholder="Create a password" required>
-                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                <!-- Step 2: Address Details -->
+                <div class="form-step" id="step2">
+                    <div class="address-section">
+                        <h3><i class="fas fa-map-marker-alt"></i> Address Details</h3>
+                        
+                        <div class="location-detect" id="detectLocation">
+                            <i class="fas fa-location-dot"></i>
+                            <div>
+                                <span>Use my current location</span>
+                                <p style="font-size: 0.85rem; color: #666; margin-top: 0.2rem;">Auto-detect your address</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressLine1">Address Line 1 *</label>
+                            <div class="input-group">
+                                <i class="fas fa-home"></i>
+                                <input type="text" id="addressLine1" placeholder="House/Flat No., Building Name" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="addressLine2">Address Line 2</label>
+                            <div class="input-group">
+                                <i class="fas fa-map-pin"></i>
+                                <input type="text" id="addressLine2" placeholder="Area, Colony, Street (Optional)">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="landmark">Landmark</label>
+                            <div class="input-group">
+                                <i class="fas fa-flag"></i>
+                                <input type="text" id="landmark" placeholder="Near... (Optional)">
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City *</label>
+                                <div class="input-group">
+                                    <i class="fas fa-city"></i>
+                                    <input type="text" id="city" placeholder="e.g., Mumbai" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="state">State *</label>
+                                <div class="input-group">
+                                    <i class="fas fa-map"></i>
+                                    <select id="state" required>
+                                        <option value="">Select State</option>
+                                        <option value="Andhra Pradesh">Andhra Pradesh</option>
+                                        <option value="Delhi">Delhi</option>
+                                        <option value="Gujarat">Gujarat</option>
+                                        <option value="Karnataka">Karnataka</option>
+                                        <option value="Maharashtra">Maharashtra</option>
+                                        <option value="Tamil Nadu">Tamil Nadu</option>
+                                        <option value="Telangana">Telangana</option>
+                                        <option value="West Bengal">West Bengal</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="pincode">Pincode *</label>
+                                <div class="input-group">
+                                    <i class="fas fa-mail-bulk"></i>
+                                    <input type="text" id="pincode" placeholder="400001" maxlength="6" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="area">Area / Locality</label>
+                                <div class="input-group">
+                                    <i class="fas fa-location-arrow"></i>
+                                    <input type="text" id="area" placeholder="e.g., Andheri East">
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password</label>
-                    <div class="input-group">
-                        <i class="fas fa-lock"></i>
-                        <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password" required>
+                <!-- Step 3: OTP Verification -->
+                <div class="form-step" id="step3">
+                    <div class="otp-section">
+                        <h3 style="margin-bottom: 1rem; color: #ff6b6b;">Verify Your Phone</h3>
+                        <p style="color: #666; margin-bottom: 1.5rem;">We've sent an OTP to <span id="phoneDisplay" style="font-weight: 600;">9876543210</span></p>
+                        
+                        <div class="otp-inputs">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                            <input type="text" class="otp-input" maxlength="1" pattern="[0-9]" inputmode="numeric">
+                        </div>
+
+                        <div style="text-align: center; margin: 1.5rem 0;">
+                            <button type="button" class="btn-otp" id="resendOtpBtn" onclick="resendOtp()">Resend OTP</button>
+                        </div>
+
+                        <div class="timer" id="otpTimer">02:00</div>
                     </div>
                 </div>
 
-                <div class="terms">
-                    <label>
-                        <input type="checkbox" id="terms" required>
-                        <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
-                    </label>
+                <!-- Step 4: Password & Terms -->
+                <div class="form-step" id="step4">
+                    <div class="form-group">
+                        <label for="password">Password *</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Create a password" required>
+                            <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #666; margin-top: 0.3rem;">
+                            Min 8 characters with 1 uppercase, 1 number, 1 special character
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password *</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" placeholder="Confirm your password" required>
+                        </div>
+                    </div>
+
+                    <div class="terms">
+                        <label>
+                            <input type="checkbox" id="terms" required>
+                            <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a></span>
+                        </label>
+                    </div>
+
+                    <div class="terms">
+                        <label>
+                            <input type="checkbox" id="offers">
+                            <span>I want to receive updates and offers (optional)</span>
+                        </label>
+                    </div>
                 </div>
 
-                <button type="submit" class="btn-register" id="registerBtn">
-                    <span>Create Account</span>
-                </button>
+                <!-- Navigation Buttons -->
+                <div class="btn-group">
+                    <button type="button" class="btn-prev" id="prevBtn" onclick="prevStep()" style="display: none;">
+                        <i class="fas fa-arrow-left"></i> Previous
+                    </button>
+                    <button type="button" class="btn-next" id="nextBtn" onclick="nextStep()">
+                        Next <i class="fas fa-arrow-right"></i>
+                    </button>
+                    <button type="submit" class="btn-register" id="submitBtn" style="display: none;">
+                        <span>Create Account</span>
+                    </button>
+                </div>
             </form>
 
             <!-- Footer -->
@@ -607,7 +746,196 @@
             once: true
         });
 
-        // Toggle Password Visibility
+        // ============================================
+        // MULTI-STEP FORM
+        // ============================================
+        let currentStep = 1;
+        const totalSteps = 4;
+
+        function updateProgress() {
+            for (let i = 1; i <= totalSteps; i++) {
+                const step = document.querySelector(`.progress-step[data-step="${i}"]`);
+                if (i < currentStep) {
+                    step.classList.add('completed');
+                    step.classList.remove('active');
+                    step.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (i === currentStep) {
+                    step.classList.add('active');
+                    step.classList.remove('completed');
+                    step.innerHTML = `<span>${i}</span>`;
+                } else {
+                    step.classList.remove('active', 'completed');
+                    step.innerHTML = `<span>${i}</span>`;
+                }
+            }
+        }
+
+        function showStep(step) {
+            document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
+            document.getElementById(`step${step}`).classList.add('active');
+            
+            if (step === 1) {
+                document.getElementById('prevBtn').style.display = 'none';
+            } else {
+                document.getElementById('prevBtn').style.display = 'block';
+            }
+            
+            if (step === totalSteps) {
+                document.getElementById('nextBtn').style.display = 'none';
+                document.getElementById('submitBtn').style.display = 'block';
+            } else {
+                document.getElementById('nextBtn').style.display = 'block';
+                document.getElementById('submitBtn').style.display = 'none';
+            }
+            
+            updateProgress();
+            
+            if (step === 3) {
+                startOtpTimer();
+                document.getElementById('phoneDisplay').textContent = document.getElementById('phone').value;
+            }
+        }
+
+        window.nextStep = function() {
+            if (currentStep < totalSteps) {
+                if (validateStep(currentStep)) {
+                    currentStep++;
+                    showStep(currentStep);
+                }
+            }
+        };
+
+        window.prevStep = function() {
+            if (currentStep > 1) {
+                currentStep--;
+                showStep(currentStep);
+            }
+        };
+
+        function validateStep(step) {
+            switch(step) {
+                case 1:
+                    const firstName = document.getElementById('firstName').value;
+                    const lastName = document.getElementById('lastName').value;
+                    const email = document.getElementById('email').value;
+                    const phone = document.getElementById('phone').value;
+                    
+                    if (!firstName || !lastName || !email || !phone) {
+                        showAlert('Please fill all required fields', 'error');
+                        return false;
+                    }
+                    if (!email.includes('@')) {
+                        showAlert('Please enter a valid email', 'error');
+                        return false;
+                    }
+                    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+                        showAlert('Please enter a valid 10-digit phone number', 'error');
+                        return false;
+                    }
+                    return true;
+                    
+                case 2:
+                    const line1 = document.getElementById('addressLine1').value;
+                    const city = document.getElementById('city').value;
+                    const state = document.getElementById('state').value;
+                    const pincode = document.getElementById('pincode').value;
+                    
+                    if (!line1 || !city || !state || !pincode) {
+                        showAlert('Please fill all required address fields', 'error');
+                        return false;
+                    }
+                    if (pincode.length !== 6 || !/^\d+$/.test(pincode)) {
+                        showAlert('Please enter a valid 6-digit pincode', 'error');
+                        return false;
+                    }
+                    return true;
+                    
+                case 3:
+                    const otpInputs = document.querySelectorAll('.otp-input');
+                    let otp = '';
+                    otpInputs.forEach(input => otp += input.value);
+                    if (otp.length !== 6) {
+                        showAlert('Please enter complete OTP', 'error');
+                        return false;
+                    }
+                    showAlert('OTP verified successfully!', 'success');
+                    return true;
+                    
+                default:
+                    return true;
+            }
+        }
+
+        // ============================================
+        // OTP HANDLING
+        // ============================================
+        let timerInterval;
+        
+        function startOtpTimer() {
+            let timeLeft = 120;
+            const timerDisplay = document.getElementById('otpTimer');
+            const resendBtn = document.getElementById('resendOtpBtn');
+            
+            resendBtn.disabled = true;
+            clearInterval(timerInterval);
+            
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    resendBtn.disabled = false;
+                    timerDisplay.textContent = 'OTP expired';
+                }
+                timeLeft--;
+            }, 1000);
+        }
+
+        window.resendOtp = function() {
+            showAlert('New OTP sent to your phone!', 'success');
+            startOtpTimer();
+        };
+
+        document.querySelectorAll('.otp-input').forEach((input, index) => {
+            input.addEventListener('input', function() {
+                if (this.value.length === 1 && index < 5) {
+                    document.querySelectorAll('.otp-input')[index + 1].focus();
+                }
+            });
+            
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Backspace' && !this.value && index > 0) {
+                    document.querySelectorAll('.otp-input')[index - 1].focus();
+                }
+            });
+        });
+
+        // ============================================
+        // LOCATION DETECTION
+        // ============================================
+        document.getElementById('detectLocation').addEventListener('click', function() {
+            if (navigator.geolocation) {
+                showAlert('Detecting your location...', 'info');
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById('city').value = 'Mumbai';
+                        document.getElementById('state').value = 'Maharashtra';
+                        showAlert('Location detected! Please verify your address.', 'success');
+                    },
+                    (error) => {
+                        showAlert('Unable to detect location. Please enter manually.', 'error');
+                    }
+                );
+            } else {
+                showAlert('Geolocation not supported. Please enter address manually.', 'error');
+            }
+        });
+
+        // ============================================
+        // PASSWORD VISIBILITY TOGGLE
+        // ============================================
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
 
@@ -618,25 +946,9 @@
             this.classList.toggle('fa-eye-slash');
         });
 
-        // Password strength indicator
-        const confirmPassword = document.getElementById('confirmPassword');
-        
-        function checkPasswordStrength(password) {
-            let strength = 0;
-            if (password.length >= 8) strength++;
-            if (password.match(/[a-z]+/)) strength++;
-            if (password.match(/[A-Z]+/)) strength++;
-            if (password.match(/[0-9]+/)) strength++;
-            if (password.match(/[$@#&!]+/)) strength++;
-            return strength;
-        }
-
-        passwordInput.addEventListener('input', function() {
-            const strength = checkPasswordStrength(this.value);
-            // You can add visual indicator here
-        });
-
-        // Show Alert Function
+        // ============================================
+        // SHOW ALERT FUNCTION
+        // ============================================
         function showAlert(message, type) {
             const alertContainer = document.getElementById('alertContainer');
             const icons = {
@@ -652,131 +964,113 @@
                 </div>
             `;
 
-            // Auto hide after 5 seconds
             setTimeout(() => {
                 alertContainer.innerHTML = '';
             }, 5000);
         }
 
-        // Handle Registration Form Submission
+        // ============================================
+        // FORM SUBMISSION - AUTO-LOGIN TO DASHBOARD
+        // ============================================
         document.getElementById('registerForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
-            // Get form values
-            const firstName = document.getElementById('firstName').value;
-            const lastName = document.getElementById('lastName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const city = document.getElementById('city').value;
-            const language = document.getElementById('language').value;
-            const password = document.getElementById('password').value;
-            const confirmPasswordValue = document.getElementById('confirmPassword').value;
-            const terms = document.getElementById('terms').checked;
+            // Final validation
+            if (!validateStep(1) || !validateStep(2) || !validateStep(3)) {
+                return;
+            }
 
-            // Validate passwords match
-            if (password !== confirmPasswordValue) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
                 showAlert('Passwords do not match!', 'error');
                 return;
             }
 
-            // Validate password strength
-            if (password.length < 6) {
-                showAlert('Password must be at least 6 characters long', 'error');
+            if (password.length < 8) {
+                showAlert('Password must be at least 8 characters', 'error');
                 return;
             }
 
-            // Validate terms
-            if (!terms) {
-                showAlert('Please accept the Terms of Service', 'error');
+            if (!document.getElementById('terms').checked) {
+                showAlert('Please accept Terms of Service', 'error');
                 return;
             }
 
-            // Get register button and show loading state
-            const registerBtn = document.getElementById('registerBtn');
-            const originalText = registerBtn.innerHTML;
-            registerBtn.innerHTML = '<span class="spinner"></span> Creating account...';
-            registerBtn.disabled = true;
+            // Show loading
+            const submitBtn = document.getElementById('submitBtn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<span class="spinner"></span> Creating account...';
+            submitBtn.disabled = true;
 
             try {
-                // Make API request to register customer
+                // Collect all form data
+                const formData = {
+                    username: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
+                    email: document.getElementById('email').value,
+                    password: password,
+                    phone: document.getElementById('phone').value,
+                    address: {
+                        line1: document.getElementById('addressLine1').value,
+                        line2: document.getElementById('addressLine2').value,
+                        landmark: document.getElementById('landmark').value,
+                        city: document.getElementById('city').value,
+                        state: document.getElementById('state').value,
+                        pincode: document.getElementById('pincode').value,
+                        area: document.getElementById('area').value
+                    },
+                    receiveOffers: document.getElementById('offers').checked
+                };
+
+                console.log('Sending registration data:', formData);
+
+                // Send to backend
                 const response = await fetch('http://127.0.0.1:5000/api/customer/register', {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        username: `${firstName} ${lastName}`,
-                        email: email,
-                        password: password,
-                        phone: phone,
-                        city: city,
-                        language: language
-                    })
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
                 });
 
+                console.log('Response status:', response.status);
+                
                 const data = await response.json();
+                console.log('Response data:', data);
 
                 if (data.success) {
-                    // Show success message
-                    showAlert('Account created successfully! Redirecting to login...', 'success');
-
-                    // Redirect to login page after 2 seconds
+                    // ✅ AUTO-LOGIN: Save user data
+                    if (data.token) {
+                        localStorage.setItem('token', data.token);
+                        localStorage.setItem('userId', data.user_id);
+                        localStorage.setItem('userRole', 'customer');
+                        localStorage.setItem('username', data.username || formData.username);
+                    }
+                    
+                    showAlert('Account created successfully! Redirecting to dashboard...', 'success');
+                    
+                    // ✅ GO DIRECTLY TO DASHBOARD
                     setTimeout(() => {
-                        window.location.href = 'login.html';
+                        window.location.href = 'dashboard.html';
                     }, 2000);
                 } else {
-                    // Show error message
                     showAlert(data.error || 'Registration failed. Please try again.', 'error');
-                    
-                    // Reset button
-                    registerBtn.innerHTML = originalText;
-                    registerBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
                 }
             } catch (error) {
                 console.error('Registration error:', error);
                 showAlert('Network error. Please check if backend server is running.', 'error');
-                
-                // Reset button
-                registerBtn.innerHTML = originalText;
-                registerBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
             }
         });
 
-        // Language Selector
-        document.querySelectorAll('.lang-dropdown a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const lang = this.dataset.lang;
-                const langName = this.textContent.trim();
-                
-                // Update button text
-                document.querySelector('.lang-btn span').textContent = langName;
-                
-                showAlert(`Language changed to ${langName}`, 'info');
-            });
-        });
-
-        // Demo Fill (for testing)
-        function demoFill() {
-            document.getElementById('firstName').value = 'John';
-            document.getElementById('lastName').value = 'Doe';
-            document.getElementById('email').value = 'john@example.com';
-            document.getElementById('phone').value = '9876543210';
-            document.getElementById('city').value = 'mumbai';
-            document.getElementById('language').value = 'en';
-            document.getElementById('password').value = 'password123';
-            document.getElementById('confirmPassword').value = 'password123';
-            document.getElementById('terms').checked = true;
-        }
-
-        // Uncomment below to auto-fill demo data (for testing only)
-        // demoFill();
+        // Initialize first step
+        showStep(1);
     </script>
-     <!-- ✅ JS FILES -->
-    <script src="/frontend/assets/js/main.js"></script>
-    <script src="/frontend/assets/js/customer.js"></script>
-    <script src="/frontend/assets/js/translations.js"></script>
-    <script src="/frontend/assets/js/payment.js"></script>      <!-- For payments page -->
-    <script src="/frontend/assets/js/complaints.js"></script>   <!-- For complaints page -->
+    
+    <!-- JS Files -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/translations.js"></script>
 </body>
 </html>
