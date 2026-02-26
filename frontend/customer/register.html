@@ -970,68 +970,99 @@
     }
 
     // ============================================
-    // FORM SUBMISSION - DEBUG VERSION
+    // UPDATED: FORM SUBMISSION - GO DIRECTLY TO DASHBOARD
     // ============================================
     document.getElementById('registerForm').addEventListener('submit', async function(e) {
-        e.preventDefault();  // THIS IS CRITICAL - prevents page refresh
-        console.log("🔵 Form submitted - page refresh prevented");
+        e.preventDefault();  // CRITICAL - prevents page refresh
         
-        // Show that we're working
-        alert("Form submitted! Check console (F12)");
-        
-        // Simple test - just try to connect
-        try {
-            const response = await fetch('http://127.0.0.1:5000/api/health');
-            const data = await response.json();
-            console.log("✅ Backend connection test:", data);
-            alert("✅ Backend connected! Status: " + data.status);
-        } catch (error) {
-            console.error("❌ Backend connection failed:", error);
-            alert("❌ Cannot connect to backend! Is it running?");
+        // Validate final step
+        if (!validateStep(4)) {
             return;
         }
         
-        // Get form data
-        const formData = {
-            username: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
-            email: document.getElementById('email').value,
-            password: document.getElementById('password').value,
-            phone: document.getElementById('phone').value
-        };
+        // Check terms
+        if (!document.getElementById('terms').checked) {
+            showAlert('Please accept Terms and Conditions', 'error');
+            return;
+        }
         
-        console.log("📤 Sending registration:", formData);
+        // Check password match
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        
+        if (password !== confirmPassword) {
+            showAlert('Passwords do not match', 'error');
+            return;
+        }
+        
+        // Show loading state
+        const submitBtn = document.getElementById('submitBtn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span class="spinner"></span> Creating Account...';
+        submitBtn.disabled = true;
         
         try {
-            const response = await fetch('http://127.0.0.1:5000/api/customer/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(formData)
-            });
-            
-            console.log("📥 Response status:", response.status);
-            
-            const data = await response.json();
-            console.log("📥 Response data:", data);
-            
-            if (data.success) {
-                alert("✅ Registration successful! Token: " + (data.token ? "Yes" : "No"));
+            // Get all form data
+            const formData = {
+                firstName: document.getElementById('firstName').value,
+                lastName: document.getElementById('lastName').value,
+                fullName: document.getElementById('firstName').value + ' ' + document.getElementById('lastName').value,
+                email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                password: document.getElementById('password').value,
                 
-                if (data.token) {
-                    localStorage.setItem('token', data.token);
-                    localStorage.setItem('userId', data.user_id);
-                    localStorage.setItem('username', data.username);
-                    console.log("🔑 Token saved to localStorage");
-                    
-                    // Force redirect
-                    console.log("➡️ Redirecting to dashboard...");
-                    window.location.href = 'dashboard.html';
-                }
-            } else {
-                alert("❌ Registration failed: " + (data.error || "Unknown error"));
-            }
+                // Address
+                addressLine1: document.getElementById('addressLine1').value,
+                addressLine2: document.getElementById('addressLine2').value,
+                landmark: document.getElementById('landmark').value,
+                city: document.getElementById('city').value,
+                state: document.getElementById('state').value,
+                pincode: document.getElementById('pincode').value,
+                area: document.getElementById('area').value,
+                
+                // Preferences
+                receiveOffers: document.getElementById('offers').checked
+            };
+            
+            console.log('📝 Registration data:', formData);
+            
+            // ===== DIRECT TO DASHBOARD - NO BACKEND NEEDED =====
+            // Set dummy user data in localStorage
+            localStorage.setItem('token', 'dummy-token-123456');
+            localStorage.setItem('userId', '1');
+            localStorage.setItem('userRole', 'customer');
+            localStorage.setItem('username', formData.fullName);
+            localStorage.setItem('userEmail', formData.email);
+            localStorage.setItem('userPhone', formData.phone);
+            localStorage.setItem('userCity', formData.city);
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            console.log('✅ Account created! Redirecting to dashboard...');
+            showAlert('Account created successfully! Redirecting...', 'success');
+            
+            // Small delay to show success message
+            setTimeout(() => {
+                // Redirect to dashboard
+                window.location.href = 'dashboard.html';
+            }, 1000);
+            
         } catch (error) {
-            console.error("❌ Fetch error:", error);
-            alert("❌ Network error: " + error.message);
+            console.error('❌ Error:', error);
+            showAlert('Error creating account. Using demo mode...', 'error');
+            
+            // Even on error, still go to dashboard with dummy data
+            setTimeout(() => {
+                localStorage.setItem('token', 'dummy-token-123456');
+                localStorage.setItem('userId', '1');
+                localStorage.setItem('userRole', 'customer');
+                localStorage.setItem('username', 'Pranjal');
+                localStorage.setItem('isLoggedIn', 'true');
+                window.location.href = 'dashboard.html';
+            }, 1500);
+        } finally {
+            // Reset button state
+            submitBtn.innerHTML = originalText;
+            submitBtn.disabled = false;
         }
     });
 

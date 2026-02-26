@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Meals - Dabba's</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/frontend/assets/css/style.css">
+    <link rel="stylesheet" href="/frontend/assets/css/customer.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fefaf5;
+            color: #2d2d2d;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 10px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .location-selector i {
+            color: #ff6b6b;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notifications i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .welcome-message {
+            padding: 1rem;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .welcome-message p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d2d2d;
+        }
+
+        .page-header h1 span {
+            color: #ff6b6b;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-bar i {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-bar button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #ff8e8e;
+            transform: scale(1.05);
+        }
+
+        /* Filters */
+        .filters-section {
+            background: white;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-title {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: #2d2d2d;
+        }
+
+        .filter-title i {
+            color: #ff6b6b;
+        }
+
+        .filter-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .filter-tag {
+            padding: 0.5rem 1.2rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tag:hover, .filter-tag.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .filter-select {
+            padding: 0.5rem 1rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            font-family: 'Inter', sans-serif;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .price-range {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .price-input {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .price-input input {
+            width: 100px;
+            padding: 0.5rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .apply-filters {
+            padding: 0.5rem 2rem;
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .apply-filters:hover {
+            background: #ff8e8e;
+        }
+
+        /* Meals Grid */
+        .meals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .meal-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .meal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.15);
+        }
+
+        .meal-image {
+            height: 180px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            position: relative;
+        }
+
+        .meal-image::before {
+            content: '🍽️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .meal-tag {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #ff6b6b;
+        }
+
+        .meal-tag.veg {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+
+        .meal-tag.non-veg {
+            background: #ffebee;
+            color: #f44336;
+        }
+
+        .meal-content {
+            padding: 1.5rem;
+        }
+
+        .meal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .meal-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .meal-cuisine {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .meal-cuisine i {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+        }
+
+        .meal-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .stars {
+            color: gold;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .meal-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .meal-info i {
+            color: #ff6b6b;
+            margin-right: 0.3rem;
+        }
+
+        .btn-add {
+            width: 100%;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+
+        .page-item {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: white;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .page-item:hover, .page-item.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .search-bar {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="location-selector">
+                <i class="fas fa-location-dot"></i>
+                <span id="selectedCity">Mumbai</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="notifications">
+                <i class="far fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userInitials">P</div>
+                <span id="userName">Pranjal</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="welcome-message">
+            <h3 id="welcomeMessage">Welcome back, Pranjal! 👋</h3>
+            <p id="membershipLevel">Gold Member</p>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="browse-meals.html" class="nav-link active">
+                    <i class="fas fa-utensils"></i>
+                    <span>Browse Meals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="subscriptions.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>My Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="favorites.html" class="nav-link">
+                    <i class="fas fa-heart"></i>
+                    <span>Favorites</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="support.html" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page Header -->
+        <div class="page-header" data-aos="fade-up">
+            <h1>Browse <span>Meals</span> 🍽️</h1>
+            
+            <!-- Search Bar -->
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search for meals, cuisine, restaurant...">
+                <button id="searchBtn">Search</button>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="filters-section" data-aos="fade-up">
+            <div class="filter-title">
+                <i class="fas fa-filter"></i>
+                <span>Filter by</span>
+            </div>
+            
+            <!-- Cuisine Tags -->
+            <div class="filter-tags">
+                <span class="filter-tag active">All</span>
+                <span class="filter-tag">North Indian</span>
+                <span class="filter-tag">South Indian</span>
+                <span class="filter-tag">Chinese</span>
+                <span class="filter-tag">Maharashtrian</span>
+                <span class="filter-tag">Gujarati</span>
+                <span class="filter-tag">Punjabi</span>
+                <span class="filter-tag">Hyderabadi</span>
+                <span class="filter-tag">Street Food</span>
+            </div>
+            
+            <!-- Filter Options -->
+            <div class="filter-row">
+                <select class="filter-select" id="sortBy">
+                    <option value="popular">Sort by: Popular</option>
+                    <option value="rating">Sort by: Rating</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="newest">Newest First</option>
+                </select>
+                
+                <div class="price-range">
+                    <div class="price-input">
+                        <span>Min:</span>
+                        <input type="number" id="minPrice" placeholder="₹0" value="0">
+                    </div>
+                    <span>-</span>
+                    <div class="price-input">
+                        <span>Max:</span>
+                        <input type="number" id="maxPrice" placeholder="₹1000" value="1000">
+                    </div>
+                </div>
+                
+                <button class="apply-filters" id="applyFilters">Apply Filters</button>
+            </div>
+        </div>
+
+        <!-- Meals Grid -->
+        <div id="mealsContainer" class="meals-grid" data-aos="fade-up">
+            <!-- Meals will be loaded here -->
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination" data-aos="fade-up">
+            <div class="page-item active">1</div>
+            <div class="page-item">2</div>
+            <div class="page-item">3</div>
+            <div class="page-item">4</div>
+            <div class="page-item">5</div>
+            <div class="page-item"><i class="fas fa-chevron-right"></i></div>
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Get user info from localStorage
+        const username = localStorage.getItem('username') || 'Pranjal';
+        const firstName = username.split(' ')[0] || 'Pranjal';
+        
+        // Update UI with user name
+        document.getElementById('userName').textContent = firstName;
+        document.getElementById('userInitials').textContent = firstName.charAt(0);
+        document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${firstName}! 👋`;
+
+        // Sample meals data
+        const mealsData = [
+            {
+                id: 1,
+                name: 'Butter Chicken',
+                cuisine: 'North Indian',
+                type: 'non-veg',
+                price: 350,
+                rating: 4.8,
+                reviews: 1234,
+                provider: 'Delhi Darbar',
+                time: '30-40 min',
+                distance: '2.5 km'
+            },
+            {
+                id: 2,
+                name: 'Masala Dosa',
+                cuisine: 'South Indian',
+                type: 'veg',
+                price: 120,
+                rating: 4.9,
+                reviews: 2341,
+                provider: 'Madras Cafe',
+                time: '20-30 min',
+                distance: '1.2 km'
+            },
+            {
+                id: 3,
+                name: 'Vada Pav',
+                cuisine: 'Maharashtrian',
+                type: 'veg',
+                price: 30,
+                rating: 4.7,
+                reviews: 3456,
+                provider: 'Mumbai Tiffin',
+                time: '10-15 min',
+                distance: '0.8 km'
+            },
+            {
+                id: 4,
+                name: 'Hyderabadi Biryani',
+                cuisine: 'Hyderabadi',
+                type: 'non-veg',
+                price: 350,
+                rating: 4.8,
+                reviews: 4567,
+                provider: 'Biryani House',
+                time: '35-45 min',
+                distance: '3.1 km'
+            },
+            {
+                id: 5,
+                name: 'Paneer Tikka',
+                cuisine: 'North Indian',
+                type: 'veg',
+                price: 280,
+                rating: 4.6,
+                reviews: 2345,
+                provider: 'Punjab Grill',
+                time: '25-35 min',
+                distance: '1.8 km'
+            },
+            {
+                id: 6,
+                name: 'Chole Bhature',
+                cuisine: 'North Indian',
+                type: 'veg',
+                price: 120,
+                rating: 4.7,
+                reviews: 1890,
+                provider: 'Amritsar Kulcha',
+                time: '20-25 min',
+                distance: '2.0 km'
+            },
+            {
+                id: 7,
+                name: 'Idli Sambhar',
+                cuisine: 'South Indian',
+                type: 'veg',
+                price: 80,
+                rating: 4.5,
+                reviews: 3210,
+                provider: 'South Indian Express',
+                time: '15-20 min',
+                distance: '1.5 km'
+            },
+            {
+                id: 8,
+                name: 'Chicken 65',
+                cuisine: 'South Indian',
+                type: 'non-veg',
+                price: 220,
+                rating: 4.6,
+                reviews: 1567,
+                provider: 'Chennai Spice',
+                time: '25-30 min',
+                distance: '2.3 km'
+            },
+            {
+                id: 9,
+                name: ' Pav Bhaji',
+                cuisine: 'Street Food',
+                type: 'veg',
+                price: 150,
+                rating: 4.7,
+                reviews: 2789,
+                provider: 'Juhu Beach Stall',
+                time: '20-25 min',
+                distance: '1.1 km'
+            },
+            {
+                id: 10,
+                name: 'Kadhai Paneer',
+                cuisine: 'North Indian',
+                type: 'veg',
+                price: 320,
+                rating: 4.6,
+                reviews: 1456,
+                provider: 'Punjabi Dhaba',
+                time: '30-35 min',
+                distance: '2.7 km'
+            },
+            {
+                id: 11,
+                name: 'Fish Curry',
+                cuisine: 'Bengali',
+                type: 'non-veg',
+                price: 380,
+                rating: 4.8,
+                reviews: 987,
+                provider: 'Bengal Kitchen',
+                time: '30-40 min',
+                distance: '3.5 km'
+            },
+            {
+                id: 12,
+                name: 'Gobi Manchurian',
+                cuisine: 'Chinese',
+                type: 'veg',
+                price: 180,
+                rating: 4.4,
+                reviews: 2134,
+                provider: 'Chinese Wok',
+                time: '20-25 min',
+                distance: '1.9 km'
+            }
+        ];
+
+        // Generate star rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            if (halfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Load meals
+        function loadMeals(meals) {
+            const container = document.getElementById('mealsContainer');
+            
+            container.innerHTML = meals.map(meal => `
+                <div class="meal-card" onclick="viewMealDetails(${meal.id})">
+                    <div class="meal-image">
+                        <span class="meal-tag ${meal.type}">${meal.type === 'veg' ? '🟢 Veg' : '🔴 Non-Veg'}</span>
+                    </div>
+                    <div class="meal-content">
+                        <div class="meal-header">
+                            <h3 class="meal-name">${meal.name}</h3>
+                            <span class="meal-price">₹${meal.price}</span>
+                        </div>
+                        <div class="meal-cuisine">
+                            <i class="fas fa-utensils"></i> ${meal.cuisine}
+                        </div>
+                        <div class="meal-rating">
+                            <div class="stars">
+                                ${generateStars(meal.rating)}
+                            </div>
+                            <span class="rating-count">(${meal.reviews}+ reviews)</span>
+                        </div>
+                        <div class="meal-info">
+                            <span><i class="fas fa-store"></i> ${meal.provider}</span>
+                            <span><i class="fas fa-clock"></i> ${meal.time}</span>
+                            <span><i class="fas fa-map-marker-alt"></i> ${meal.distance}</span>
+                        </div>
+                        <button class="btn-add" onclick="event.stopPropagation(); addToCart(${meal.id})">
+                            <i class="fas fa-plus"></i> Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // View meal details
+        function viewMealDetails(mealId) {
+            window.location.href = `meal-details.html?id=${mealId}`;
+        }
+
+        // Add to cart
+        function addToCart(mealId) {
+            const meal = mealsData.find(m => m.id === mealId);
+            alert(`✅ ${meal.name} added to cart!`);
+            
+            // Here you would actually add to cart in localStorage
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            cart.push({...meal, quantity: 1});
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Filter functionality
+        document.getElementById('applyFilters').addEventListener('click', function() {
+            const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
+            const maxPrice = parseInt(document.getElementById('maxPrice').value) || 1000;
+            const sortBy = document.getElementById('sortBy').value;
+            
+            let filteredMeals = mealsData.filter(meal => 
+                meal.price >= minPrice && meal.price <= maxPrice
+            );
+            
+            // Sort
+            switch(sortBy) {
+                case 'price-low':
+                    filteredMeals.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    filteredMeals.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    filteredMeals.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'popular':
+                    filteredMeals.sort((a, b) => b.reviews - a.reviews);
+                    break;
+            }
+            
+            loadMeals(filteredMeals);
+        });
+
+        // Search functionality
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm.trim() === '') {
+                loadMeals(mealsData);
+                return;
+            }
+            
+            const filteredMeals = mealsData.filter(meal => 
+                meal.name.toLowerCase().includes(searchTerm) ||
+                meal.cuisine.toLowerCase().includes(searchTerm) ||
+                meal.provider.toLowerCase().includes(searchTerm)
+            );
+            
+            loadMeals(filteredMeals);
+            
+            if (filteredMeals.length === 0) {
+                alert('No meals found matching your search.');
+            }
+        });
+
+        // Enter key in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        // Filter tag clicks
+        document.querySelectorAll('.filter-tag').forEach(tag => {
+            tag.addEventListener('click', function() {
+                // Remove active class from all tags
+                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
+                // Add active class to clicked tag
+                this.classList.add('active');
+                
+                const cuisine = this.textContent;
+                
+                if (cuisine === 'All') {
+                    loadMeals(mealsData);
+                } else {
+                    const filteredMeals = mealsData.filter(meal => meal.cuisine === cuisine);
+                    loadMeals(filteredMeals);
+                }
+            });
+        });
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadMeals(mealsData);
+        });
+    </script>
+    
+    <!-- JS Files -->
+    <script src="/frontend/assets/js/main.js"></script>
+    <script src="/frontend/assets/js/customer.js"></script>
+</body>
+</html>
