@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Dabba's</title>
+    
+    <!-- CSS Files -->
+    <link rel="stylesheet" href="/frontend/assets/css/style.css">
+    <link rel="stylesheet" href="/frontend/assets/css/customer.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #fefaf5;
+            color: #2d2d2d;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 10px;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .logo span {
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .location-selector i {
+            color: #ff6b6b;
+        }
+
+        .notifications {
+            position: relative;
+            cursor: pointer;
+        }
+
+        .notifications i {
+            font-size: 1.3rem;
+            color: #666;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff6b6b;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 50%;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            padding: 0.5rem 1rem;
+            background: #f5f5f5;
+            border-radius: 50px;
+        }
+
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 70px;
+            width: 280px;
+            height: calc(100vh - 70px);
+            background: white;
+            border-right: 1px solid #f0f0f0;
+            padding: 2rem 1rem;
+            overflow-y: auto;
+        }
+
+        .welcome-message {
+            padding: 1rem;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .welcome-message p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .nav-menu {
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-bottom: 0.5rem;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link i {
+            width: 20px;
+            color: #ff6b6b;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+        }
+
+        .nav-link:hover i, .nav-link.active i {
+            color: white;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 280px;
+            margin-top: 70px;
+            padding: 2rem;
+        }
+
+        /* Page Header */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .page-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2d2d2d;
+        }
+
+        .page-header h1 span {
+            color: #ff6b6b;
+        }
+
+        .page-header h1 i {
+            color: #ff6b6b;
+            margin-right: 0.5rem;
+        }
+
+        .favorite-stats {
+            display: flex;
+            gap: 1rem;
+            background: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-item i {
+            color: #ff6b6b;
+        }
+
+        /* Search Bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: white;
+            border-radius: 50px;
+            padding: 0.5rem 1rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .search-bar i {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin-right: 0.5rem;
+        }
+
+        .search-bar input {
+            flex: 1;
+            border: none;
+            padding: 0.5rem;
+            font-size: 1rem;
+            outline: none;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .search-bar button {
+            background: #ff6b6b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .search-bar button:hover {
+            background: #ff8e8e;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.6rem 1.5rem;
+            background: white;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .filter-tab:hover, .filter-tab.active {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Favorites Grid */
+        .favorites-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .favorite-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .favorite-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 107, 107, 0.15);
+        }
+
+        .favorite-image {
+            height: 160px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            position: relative;
+        }
+
+        .favorite-image::before {
+            content: '🍽️';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            opacity: 0.3;
+        }
+
+        .favorite-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: white;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .favorite-badge i {
+            color: gold;
+        }
+
+        .favorite-remove {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            width: 35px;
+            height: 35px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #ff6b6b;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .favorite-remove:hover {
+            background: #ff6b6b;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .favorite-content {
+            padding: 1.5rem;
+        }
+
+        .favorite-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
+        .favorite-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .favorite-price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #ff6b6b;
+        }
+
+        .favorite-cuisine {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .favorite-cuisine i {
+            color: #ff6b6b;
+        }
+
+        .favorite-rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .stars {
+            color: gold;
+        }
+
+        .rating-count {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .favorite-provider {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .favorite-provider i {
+            color: #ff6b6b;
+        }
+
+        .favorite-actions {
+            display: flex;
+            gap: 0.8rem;
+        }
+
+        .btn-add {
+            flex: 2;
+            padding: 0.8rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-add:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-view {
+            flex: 1;
+            padding: 0.8rem;
+            background: #f0f0f0;
+            color: #666;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view:hover {
+            background: #e0e0e0;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .empty-icon {
+            font-size: 5rem;
+            color: #ff6b6b;
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-state h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .empty-state p {
+            color: #666;
+            margin-bottom: 2rem;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-browse {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-browse:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        /* Alert Messages */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .sidebar {
+                width: 240px;
+            }
+            .main-content {
+                margin-left: 240px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .favorite-stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <div class="nav-right">
+            <div class="location-selector">
+                <i class="fas fa-location-dot"></i>
+                <span id="selectedCity">Mumbai</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="notifications">
+                <i class="far fa-bell"></i>
+                <span class="notification-badge">3</span>
+            </div>
+            <div class="user-menu" id="userMenu">
+                <div class="user-avatar" id="userInitials">P</div>
+                <span id="userName">Pranjal</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="welcome-message">
+            <h3 id="welcomeMessage">Welcome back, Pranjal! 👋</h3>
+            <p id="membershipLevel">Gold Member</p>
+        </div>
+
+        <ul class="nav-menu">
+            <li class="nav-item">
+                <a href="dashboard.html" class="nav-link">
+                    <i class="fas fa-home"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="browse-meals.html" class="nav-link">
+                    <i class="fas fa-utensils"></i>
+                    <span>Browse Meals</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="subscriptions.html" class="nav-link">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>My Subscriptions</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="favorites.html" class="nav-link active">
+                    <i class="fas fa-heart"></i>
+                    <span>Favorites</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="payments.html" class="nav-link">
+                    <i class="fas fa-credit-card"></i>
+                    <span>Payments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="support.html" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="#" class="nav-link" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        <!-- Page Header -->
+        <div class="page-header" data-aos="fade-up">
+            <h1>
+                <i class="fas fa-heart"></i> My <span>Favorites</span>
+            </h1>
+            
+            <div class="favorite-stats">
+                <div class="stat-item">
+                    <i class="fas fa-heart"></i>
+                    <span id="favoriteCount">12</span> Items
+                </div>
+                <div class="stat-item">
+                    <i class="fas fa-store"></i>
+                    <span id="restaurantCount">8</span> Restaurants
+                </div>
+            </div>
+        </div>
+
+        <!-- Search Bar -->
+        <div class="search-bar" data-aos="fade-up">
+            <i class="fas fa-search"></i>
+            <input type="text" id="searchInput" placeholder="Search in favorites...">
+            <button id="searchBtn">Search</button>
+        </div>
+
+        <!-- Filter Tabs -->
+        <div class="filter-tabs" data-aos="fade-up">
+            <span class="filter-tab active" onclick="filterFavorites('all')">All</span>
+            <span class="filter-tab" onclick="filterFavorites('veg')">Veg</span>
+            <span class="filter-tab" onclick="filterFavorites('non-veg')">Non-Veg</span>
+            <span class="filter-tab" onclick="filterFavorites('north-indian')">North Indian</span>
+            <span class="filter-tab" onclick="filterFavorites('south-indian')">South Indian</span>
+            <span class="filter-tab" onclick="filterFavorites('street-food')">Street Food</span>
+        </div>
+
+        <!-- Favorites Grid Container -->
+        <div id="favoritesContainer" class="favorites-grid" data-aos="fade-up">
+            <!-- Favorites will be loaded here -->
+        </div>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Get user info from localStorage
+        const username = localStorage.getItem('username') || 'Pranjal';
+        const firstName = username.split(' ')[0] || 'Pranjal';
+        
+        // Update UI with user name
+        document.getElementById('userName').textContent = firstName;
+        document.getElementById('userInitials').textContent = firstName.charAt(0);
+        document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${firstName}! 👋`;
+
+        // Sample favorites data
+        let favoritesData = [
+            {
+                id: 1,
+                name: 'Butter Chicken',
+                cuisine: 'North Indian',
+                type: 'non-veg',
+                price: 350,
+                rating: 4.8,
+                reviews: 1234,
+                provider: 'Delhi Darbar',
+                providerId: 101,
+                dateAdded: '2026-02-20'
+            },
+            {
+                id: 2,
+                name: 'Masala Dosa',
+                cuisine: 'South Indian',
+                type: 'veg',
+                price: 120,
+                rating: 4.9,
+                reviews: 2341,
+                provider: 'Madras Cafe',
+                providerId: 102,
+                dateAdded: '2026-02-18'
+            },
+            {
+                id: 3,
+                name: 'Vada Pav',
+                cuisine: 'Street Food',
+                type: 'veg',
+                price: 30,
+                rating: 4.7,
+                reviews: 3456,
+                provider: 'Mumbai Tiffin',
+                providerId: 103,
+                dateAdded: '2026-02-15'
+            },
+            {
+                id: 4,
+                name: 'Hyderabadi Biryani',
+                cuisine: 'Hyderabadi',
+                type: 'non-veg',
+                price: 350,
+                rating: 4.8,
+                reviews: 4567,
+                provider: 'Biryani House',
+                providerId: 104,
+                dateAdded: '2026-02-10'
+            },
+            {
+                id: 5,
+                name: 'Paneer Tikka',
+                cuisine: 'North Indian',
+                type: 'veg',
+                price: 280,
+                rating: 4.6,
+                reviews: 2345,
+                provider: 'Punjab Grill',
+                providerId: 105,
+                dateAdded: '2026-02-05'
+            },
+            {
+                id: 6,
+                name: 'Chole Bhature',
+                cuisine: 'North Indian',
+                type: 'veg',
+                price: 120,
+                rating: 4.7,
+                reviews: 1890,
+                provider: 'Amritsar Kulcha',
+                providerId: 106,
+                dateAdded: '2026-02-01'
+            },
+            {
+                id: 7,
+                name: 'Idli Sambhar',
+                cuisine: 'South Indian',
+                type: 'veg',
+                price: 80,
+                rating: 4.5,
+                reviews: 3210,
+                provider: 'South Indian Express',
+                providerId: 107,
+                dateAdded: '2026-01-28'
+            },
+            {
+                id: 8,
+                name: 'Chicken 65',
+                cuisine: 'South Indian',
+                type: 'non-veg',
+                price: 220,
+                rating: 4.6,
+                reviews: 1567,
+                provider: 'Chennai Spice',
+                providerId: 108,
+                dateAdded: '2026-01-25'
+            },
+            {
+                id: 9,
+                name: 'Pav Bhaji',
+                cuisine: 'Street Food',
+                type: 'veg',
+                price: 150,
+                rating: 4.7,
+                reviews: 2789,
+                provider: 'Juhu Beach Stall',
+                providerId: 109,
+                dateAdded: '2026-01-20'
+            },
+            {
+                id: 10,
+                name: 'Kadhai Paneer',
+                cuisine: 'North Indian',
+                type: 'veg',
+                price: 320,
+                rating: 4.6,
+                reviews: 1456,
+                provider: 'Punjabi Dhaba',
+                providerId: 110,
+                dateAdded: '2026-01-15'
+            },
+            {
+                id: 11,
+                name: 'Fish Curry',
+                cuisine: 'Bengali',
+                type: 'non-veg',
+                price: 380,
+                rating: 4.8,
+                reviews: 987,
+                provider: 'Bengal Kitchen',
+                providerId: 111,
+                dateAdded: '2026-01-10'
+            },
+            {
+                id: 12,
+                name: 'Gobi Manchurian',
+                cuisine: 'Chinese',
+                type: 'veg',
+                price: 180,
+                rating: 4.4,
+                reviews: 2134,
+                provider: 'Chinese Wok',
+                providerId: 112,
+                dateAdded: '2026-01-05'
+            }
+        ];
+
+        // Generate star rating
+        function generateStars(rating) {
+            const fullStars = Math.floor(rating);
+            const halfStar = rating % 1 >= 0.5;
+            let stars = '';
+            
+            for (let i = 0; i < fullStars; i++) {
+                stars += '<i class="fas fa-star"></i>';
+            }
+            if (halfStar) {
+                stars += '<i class="fas fa-star-half-alt"></i>';
+            }
+            const emptyStars = 5 - Math.ceil(rating);
+            for (let i = 0; i < emptyStars; i++) {
+                stars += '<i class="far fa-star"></i>';
+            }
+            
+            return stars;
+        }
+
+        // Load favorites
+        function loadFavorites(favorites = favoritesData) {
+            const container = document.getElementById('favoritesContainer');
+            
+            if (favorites.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-heart-broken"></i>
+                        </div>
+                        <h2>No favorites yet</h2>
+                        <p>You haven't added any meals to your favorites. Browse meals and click the heart icon to save them here!</p>
+                        <a href="browse-meals.html" class="btn-browse">
+                            <i class="fas fa-utensils"></i> Browse Meals
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = favorites.map(meal => `
+                <div class="favorite-card" data-id="${meal.id}" data-type="${meal.type}" data-cuisine="${meal.cuisine.toLowerCase()}">
+                    <div class="favorite-image">
+                        <span class="favorite-badge">
+                            <i class="fas fa-star"></i> ${meal.rating}
+                        </span>
+                        <div class="favorite-remove" onclick="event.stopPropagation(); removeFromFavorites(${meal.id})">
+                            <i class="fas fa-trash"></i>
+                        </div>
+                    </div>
+                    <div class="favorite-content">
+                        <div class="favorite-header">
+                            <h3 class="favorite-name">${meal.name}</h3>
+                            <span class="favorite-price">₹${meal.price}</span>
+                        </div>
+                        <div class="favorite-cuisine">
+                            <i class="fas fa-utensils"></i> ${meal.cuisine}
+                            <span style="margin-left: auto; font-size: 0.8rem; color: ${meal.type === 'veg' ? '#4caf50' : '#f44336'}">
+                                ${meal.type === 'veg' ? '🟢 Veg' : '🔴 Non-Veg'}
+                            </span>
+                        </div>
+                        <div class="favorite-rating">
+                            <div class="stars">
+                                ${generateStars(meal.rating)}
+                            </div>
+                            <span class="rating-count">(${meal.reviews}+ reviews)</span>
+                        </div>
+                        <div class="favorite-provider">
+                            <i class="fas fa-store"></i> ${meal.provider}
+                            <span style="margin-left: auto; font-size: 0.8rem; color: #999;">
+                                Added: ${meal.dateAdded}
+                            </span>
+                        </div>
+                        <div class="favorite-actions">
+                            <button class="btn-add" onclick="event.stopPropagation(); addToCart(${meal.id})">
+                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            </button>
+                            <button class="btn-view" onclick="event.stopPropagation(); viewMealDetails(${meal.id})">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            // Update stats
+            updateStats();
+        }
+
+        // Update statistics
+        function updateStats() {
+            document.getElementById('favoriteCount').textContent = favoritesData.length;
+            
+            const uniqueProviders = [...new Set(favoritesData.map(meal => meal.providerId))];
+            document.getElementById('restaurantCount').textContent = uniqueProviders.length;
+        }
+
+        // Remove from favorites
+        window.removeFromFavorites = function(mealId) {
+            favoritesData = favoritesData.filter(meal => meal.id !== mealId);
+            loadFavorites();
+            showAlert('Removed from favorites!', 'success');
+        };
+
+        // Add to cart
+        window.addToCart = function(mealId) {
+            const meal = favoritesData.find(m => m.id === mealId);
+            
+            // Get existing cart from localStorage
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            // Check if item already in cart
+            const existingItem = cart.find(item => item.id === mealId);
+            if (existingItem) {
+                existingItem.quantity += 1;
+                showAlert(`Added another ${meal.name} to cart!`, 'success');
+            } else {
+                cart.push({...meal, quantity: 1});
+                showAlert(`${meal.name} added to cart!`, 'success');
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+        };
+
+        // View meal details
+        window.viewMealDetails = function(mealId) {
+            window.location.href = `meal-details.html?id=${mealId}`;
+        };
+
+        // Filter favorites
+        window.filterFavorites = function(filter) {
+            // Update active tab
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            let filtered = favoritesData;
+            
+            switch(filter) {
+                case 'veg':
+                    filtered = favoritesData.filter(meal => meal.type === 'veg');
+                    break;
+                case 'non-veg':
+                    filtered = favoritesData.filter(meal => meal.type === 'non-veg');
+                    break;
+                case 'north-indian':
+                    filtered = favoritesData.filter(meal => meal.cuisine === 'North Indian');
+                    break;
+                case 'south-indian':
+                    filtered = favoritesData.filter(meal => meal.cuisine === 'South Indian');
+                    break;
+                case 'street-food':
+                    filtered = favoritesData.filter(meal => meal.cuisine === 'Street Food');
+                    break;
+                default:
+                    filtered = favoritesData;
+            }
+            
+            loadFavorites(filtered);
+        };
+
+        // Search functionality
+        document.getElementById('searchBtn').addEventListener('click', function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            
+            if (searchTerm.trim() === '') {
+                loadFavorites(favoritesData);
+                return;
+            }
+            
+            const filtered = favoritesData.filter(meal => 
+                meal.name.toLowerCase().includes(searchTerm) ||
+                meal.cuisine.toLowerCase().includes(searchTerm) ||
+                meal.provider.toLowerCase().includes(searchTerm)
+            );
+            
+            loadFavorites(filtered);
+            
+            if (filtered.length === 0) {
+                showAlert('No matches found in your favorites', 'info');
+            }
+        });
+
+        // Enter key in search
+        document.getElementById('searchInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                document.getElementById('searchBtn').click();
+            }
+        });
+
+        // Show Alert Function
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas ${icons[type]}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 3000);
+        }
+
+        // Handle logout
+        document.getElementById('logoutBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.clear();
+            sessionStorage.clear();
+            window.location.href = 'login.html';
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadFavorites();
+            showAlert(`You have ${favoritesData.length} favorite items`, 'info');
+        });
+    </script>
+    
+    <!-- JS Files -->
+    <script src="/frontend/assets/js/main.js"></script>
+    <script src="/frontend/assets/js/customer.js"></script>
+    <script src="/frontend/assets/js/translations.js"></script>
+</body>
+</html>

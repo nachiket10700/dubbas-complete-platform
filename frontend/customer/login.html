@@ -136,7 +136,7 @@
             text-decoration: underline;
         }
 
-        /* 🔴 CHANGED: Role Selector with improved styling */
+        /* Role Selector */
         .role-selector {
             display: flex;
             gap: 0.5rem;
@@ -173,7 +173,7 @@
             box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
         }
 
-        /* 🔴 NEW: Role indicator message */
+        /* Role message */
         .role-message {
             text-align: center;
             margin-bottom: 1rem;
@@ -247,7 +247,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
         }
 
         .remember-me {
@@ -270,8 +270,15 @@
             font-weight: 500;
         }
 
+        /* 🔴 NEW: Button Group for Login and Continue */
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
         .btn-login {
-            width: 100%;
+            flex: 1;
             padding: 1.2rem;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
@@ -282,12 +289,43 @@
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
         }
 
         .btn-login:hover {
             transform: translateY(-3px);
             box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        /* 🔴 NEW: Continue Button */
+        .btn-continue {
+            flex: 1;
+            padding: 1.2rem;
+            background: white;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
+            border-radius: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .btn-continue:hover {
+            background: #fff5f0;
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.2);
+        }
+
+        .btn-continue i {
+            font-size: 1.2rem;
         }
 
         .social-login {
@@ -497,6 +535,10 @@
             .lang-btn span {
                 display: none;
             }
+            
+            .btn-group {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -532,7 +574,7 @@
                 <p id="signupText">Don't have an account? <a href="register.html" id="signupLink">Sign up here</a></p>
             </div>
 
-            <!-- 🔴 CHANGED: Role Selector with icons -->
+            <!-- Role Selector -->
             <div class="role-selector">
                 <button class="role-btn active" data-role="customer">
                     <i class="fas fa-user"></i> Customer
@@ -545,7 +587,7 @@
                 </button>
             </div>
 
-            <!-- 🔴 NEW: Role message indicator -->
+            <!-- Role message indicator -->
             <div id="roleMessage" class="role-message">
                 You are logging in as <span id="selectedRoleName">Customer</span>
             </div>
@@ -580,9 +622,15 @@
                     <a href="/frontend/customer/forgot-password.html" class="forgot-password">Forgot password?</a>
                 </div>
 
-                <button type="submit" class="btn-login" id="loginBtn">
-                    <span>Login</span>
-                </button>
+                <!-- 🔴 NEW: Button Group with Login and Continue -->
+                <div class="btn-group">
+                    <button type="submit" class="btn-login" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </button>
+                    <button type="button" class="btn-continue" id="continueBtn">
+                        <i class="fas fa-arrow-right"></i> Continue
+                    </button>
+                </div>
             </form>
 
             <!-- Social Login -->
@@ -623,7 +671,7 @@
             this.classList.toggle('fa-eye-slash');
         });
 
-        // 🔴 CHANGED: Role Selection with redirection for Provider and Owner
+        // Role Selection with redirection for Provider and Owner
         const roleBtns = document.querySelectorAll('.role-btn');
         let selectedRole = 'customer';
         const roleMessage = document.getElementById('roleMessage');
@@ -634,7 +682,7 @@
             btn.addEventListener('click', function() {
                 const role = this.dataset.role;
                 
-                // 🔴 NEW: Redirect to specific login pages for Provider and Owner
+                // Redirect to specific login pages for Provider and Owner
                 if (role === 'provider') {
                     window.location.href = '/frontend/provider/login.html';
                     return;
@@ -684,70 +732,96 @@
             }, 5000);
         }
 
-        // Handle Login Form Submission (only for Customer)
-        document.getElementById('loginForm').addEventListener('submit', async function(e) {
+        // ===== FUNCTION TO SAVE USER DATA AND GO TO DASHBOARD =====
+        function goToDashboard(showMessage = true) {
+            const email = document.getElementById('email').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+            
+            // Extract name from email (for display)
+            let userName = 'Pranjal';
+            if (email && email.includes('@')) {
+                const namePart = email.split('@')[0];
+                // Capitalize first letter
+                userName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+            }
+            
+            // Save user data to localStorage/sessionStorage
+            const userData = {
+                token: 'dummy-token-' + Math.random().toString(36).substr(2, 9),
+                userId: '1',
+                userRole: 'customer',
+                username: userName,
+                userEmail: email || 'pranjal@example.com',
+                isLoggedIn: 'true'
+            };
+            
+            if (rememberMe) {
+                localStorage.setItem('token', userData.token);
+                localStorage.setItem('userId', userData.userId);
+                localStorage.setItem('userRole', userData.userRole);
+                localStorage.setItem('username', userData.username);
+                localStorage.setItem('userEmail', userData.userEmail);
+                localStorage.setItem('isLoggedIn', 'true');
+            } else {
+                sessionStorage.setItem('token', userData.token);
+                sessionStorage.setItem('userId', userData.userId);
+                sessionStorage.setItem('userRole', userData.userRole);
+                sessionStorage.setItem('username', userData.username);
+                sessionStorage.setItem('userEmail', userData.userEmail);
+                sessionStorage.setItem('isLoggedIn', 'true');
+            }
+            
+            if (showMessage) {
+                showAlert('Welcome! Redirecting to dashboard...', 'success');
+            }
+            
+            setTimeout(() => {
+                window.location.href = 'dashboard.html';
+            }, 1000);
+        }
+
+        // ===== HANDLE LOGIN FORM SUBMISSION =====
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
-            // Only proceed if role is customer (should always be true on this page)
+            // Only proceed if role is customer
             if (selectedRole !== 'customer') {
                 return;
             }
-
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
 
             const loginBtn = document.getElementById('loginBtn');
             const originalText = loginBtn.innerHTML;
             loginBtn.innerHTML = '<span class="spinner"></span> Logging in...';
             loginBtn.disabled = true;
 
-            try {
-                // API endpoint for customer login
-                const endpoint = 'http://127.0.0.1:5000/api/customer/login';
-
-                const response = await fetch(endpoint, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    })
-                });
-
-                const data = await response.json();
-
-                if (data.success) {
-                    if (rememberMe) {
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('userId', data.user_id);
-                        localStorage.setItem('userRole', 'customer');
-                        localStorage.setItem('username', data.username);
-                    } else {
-                        sessionStorage.setItem('token', data.token);
-                        sessionStorage.setItem('userId', data.user_id);
-                        sessionStorage.setItem('userRole', 'customer');
-                        sessionStorage.setItem('username', data.username);
-                    }
-
-                    showAlert('Login successful! Redirecting...', 'success');
-
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1500);
-                } else {
-                    showAlert(data.error || 'Invalid email or password', 'error');
-                    loginBtn.innerHTML = originalText;
-                    loginBtn.disabled = false;
-                }
-            } catch (error) {
-                console.error('Login error:', error);
-                showAlert('Network error. Please check if backend server is running.', 'error');
+            // Simulate login process
+            setTimeout(() => {
+                goToDashboard(true);
                 loginBtn.innerHTML = originalText;
                 loginBtn.disabled = false;
+            }, 1000);
+        });
+
+        // ===== 🔴 NEW: HANDLE CONTINUE BUTTON CLICK =====
+        document.getElementById('continueBtn').addEventListener('click', function() {
+            // Only proceed if role is customer
+            if (selectedRole !== 'customer') {
+                return;
             }
+            
+            const continueBtn = document.getElementById('continueBtn');
+            const originalText = continueBtn.innerHTML;
+            continueBtn.innerHTML = '<span class="spinner"></span> Please wait...';
+            continueBtn.disabled = true;
+            
+            // Go to dashboard directly
+            goToDashboard(true);
+            
+            // Reset button (though redirect will happen)
+            setTimeout(() => {
+                continueBtn.innerHTML = originalText;
+                continueBtn.disabled = false;
+            }, 2000);
         });
 
         // Language Selector
@@ -761,7 +835,12 @@
             });
         });
 
-        
+        // Pre-fill with demo credentials (optional)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Uncomment to pre-fill with demo data
+            // document.getElementById('email').value = 'pranjal@example.com';
+            // document.getElementById('password').value = 'password123';
+        });
     </script>
     
     <!-- JS FILES -->
