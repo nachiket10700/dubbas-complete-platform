@@ -14,8 +14,8 @@
      <!-- ✅ CSS FILES -->
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
     <link rel="stylesheet" href="/frontend/assets/css/customer.css">
-    <link rel="stylesheet" href="/frontend/assets/css/complaints.css"> <!-- For complaints page -->
-    <link rel="stylesheet" href="/frontend/assets/css/payments.css">   <!-- For payments page -->
+    <link rel="stylesheet" href="/frontend/assets/css/complaints.css">
+    <link rel="stylesheet" href="/frontend/assets/css/payments.css">
     
     <style>
         * {
@@ -193,11 +193,7 @@
             transition: all 0.3s ease;
         }
 
-        .filter-btn.active {
-            background: #ff6b6b;
-            color: white;
-        }
-
+        .filter-btn.active,
         .filter-btn:hover {
             background: #ff6b6b;
             color: white;
@@ -216,6 +212,11 @@
             border: 2px solid #f0f0f0;
             border-radius: 50px;
             font-size: 1rem;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #ff6b6b;
         }
 
         .search-box i {
@@ -264,6 +265,7 @@
         .order-date {
             color: #666;
             font-size: 0.9rem;
+            margin-left: 1rem;
         }
 
         .order-status {
@@ -324,6 +326,7 @@
 
         .provider-info h3 {
             margin-bottom: 0.3rem;
+            font-size: 1.1rem;
         }
 
         .provider-info p {
@@ -333,6 +336,9 @@
 
         .order-items {
             margin-bottom: 1rem;
+            background: #f8f9fc;
+            padding: 1rem;
+            border-radius: 10px;
         }
 
         .order-item {
@@ -340,17 +346,17 @@
             justify-content: space-between;
             padding: 0.5rem 0;
             color: #666;
+            border-bottom: 1px dashed #e0e0e0;
         }
 
-        .order-item .item-name {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+        .order-item:last-child {
+            border-bottom: none;
         }
 
         .item-quantity {
             color: #ff6b6b;
             font-weight: 600;
+            margin-right: 0.5rem;
         }
 
         .order-total {
@@ -364,6 +370,7 @@
 
         .total-amount {
             color: #ff6b6b;
+            font-size: 1.2rem;
         }
 
         .order-actions {
@@ -427,7 +434,6 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             z-index: 2000;
-            overflow-y: auto;
         }
 
         .modal-content {
@@ -437,6 +443,8 @@
             padding: 2rem;
             border-radius: 20px;
             position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .close {
@@ -446,6 +454,10 @@
             font-size: 2rem;
             cursor: pointer;
             color: #999;
+        }
+
+        .close:hover {
+            color: #ff6b6b;
         }
 
         .tracking-timeline {
@@ -502,11 +514,6 @@
             font-size: 0.9rem;
         }
 
-        .timeline-time {
-            font-size: 0.8rem;
-            color: #999;
-        }
-
         /* Rating Stars */
         .rating-stars {
             display: flex;
@@ -515,6 +522,7 @@
             font-size: 2rem;
             color: #ffc107;
             cursor: pointer;
+            justify-content: center;
         }
 
         .rating-stars i {
@@ -566,7 +574,22 @@
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
 
-        /* Responsive */
+        .delivery-address {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #f8f9fc;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .delivery-address i {
+            color: #ff6b6b;
+        }
+
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -591,13 +614,13 @@
     <nav class="navbar">
         <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
         <div class="nav-right">
-            <div class="cart-icon">
+            <div class="cart-icon" onclick="window.location.href='cart.html'">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge">3</span>
+                <span class="cart-badge" id="cartCount">0</span>
             </div>
             <div class="user-menu">
-                <div class="user-avatar">JD</div>
-                <span>John Doe</span>
+                <div class="user-avatar" id="userInitials">P</div>
+                <span id="userName">Pranjal</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
         </div>
@@ -613,9 +636,9 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="orders.html" class="nav-link active">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>My Orders</span>
+                <a href="browse-meals.html" class="nav-link">
+                    <i class="fas fa-utensils"></i>
+                    <span>Browse Meals</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -625,9 +648,15 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="wishlist.html" class="nav-link">
+                <a href="orders.html" class="nav-link active">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Orders</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="favorites.html" class="nav-link">
                     <i class="fas fa-heart"></i>
-                    <span>Wishlist</span>
+                    <span>Favorites</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -637,31 +666,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="addresses.html" class="nav-link">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Addresses</span>
+                <a href="support.html" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="complaints.html" class="nav-link">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>Complaints</span>
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="notifications.html" class="nav-link">
-                    <i class="fas fa-bell"></i>
-                    <span>Notifications</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="profile.html" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="login.html" class="nav-link" id="logoutBtn">
+                <a href="#" class="nav-link" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
@@ -679,19 +696,23 @@
         <div class="order-filters">
             <button class="filter-btn active" onclick="filterOrders('all')">All Orders</button>
             <button class="filter-btn" onclick="filterOrders('pending')">Pending</button>
+            <button class="filter-btn" onclick="filterOrders('confirmed')">Confirmed</button>
             <button class="filter-btn" onclick="filterOrders('preparing')">Preparing</button>
             <button class="filter-btn" onclick="filterOrders('out-for-delivery')">Out for Delivery</button>
             <button class="filter-btn" onclick="filterOrders('delivered')">Delivered</button>
             <button class="filter-btn" onclick="filterOrders('cancelled')">Cancelled</button>
             <div class="search-box">
                 <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search orders..." id="searchInput">
+                <input type="text" placeholder="Search orders..." id="searchInput" onkeyup="searchOrders()">
             </div>
         </div>
 
         <!-- Orders Grid -->
         <div class="orders-grid" id="ordersGrid">
-            <!-- Orders will be loaded here -->
+            <div style="text-align: center; padding: 2rem;">
+                <div class="spinner"></div>
+                <p>Loading orders...</p>
+            </div>
         </div>
     </main>
 
@@ -700,9 +721,7 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Track Order</h2>
-            <div class="tracking-timeline" id="trackingTimeline">
-                <!-- Timeline will be loaded here -->
-            </div>
+            <div class="tracking-timeline" id="trackingTimeline"></div>
         </div>
     </div>
 
@@ -711,147 +730,205 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Rate Your Experience</h2>
-            <div class="rating-stars">
+            <div class="rating-stars" id="ratingStars">
                 <i class="far fa-star" data-rating="1"></i>
                 <i class="far fa-star" data-rating="2"></i>
                 <i class="far fa-star" data-rating="3"></i>
                 <i class="far fa-star" data-rating="4"></i>
                 <i class="far fa-star" data-rating="5"></i>
             </div>
-            <textarea placeholder="Share your feedback..." rows="4" style="width: 100%; padding: 1rem; border: 2px solid #f0f0f0; border-radius: 10px; margin: 1rem 0;"></textarea>
+            <textarea id="ratingFeedback" placeholder="Share your feedback..." rows="4" style="width: 100%; padding: 1rem; border: 2px solid #f0f0f0; border-radius: 10px; margin: 1rem 0;"></textarea>
             <button class="btn-track" style="width: 100%;" onclick="submitRating()">Submit Rating</button>
         </div>
     </div>
 
     <script>
-        // Sample orders data
+        // Get user info
+        const username = localStorage.getItem('username') || 'Pranjal';
+        const firstName = username.split(' ')[0] || 'Pranjal';
+        
+        // Update UI
+        document.getElementById('userName').textContent = firstName;
+        document.getElementById('userInitials').textContent = firstName.charAt(0);
+
+        // Sample orders data - SIMPLE AND CLEAN
         const orders = [
+            // PENDING ORDERS (2)
             {
-                id: 'ORD001',
-                date: '24 Feb 2026',
-                time: '10:30 AM',
-                status: 'delivered',
-                provider: 'Spice Kitchen',
-                providerCuisine: 'North Indian',
+                id: 'ORD006',
+                date: '27 Feb 2026',
+                time: '09:15 AM',
+                status: 'pending',
+                provider: 'Delhi Darbar',
                 items: [
                     { name: 'Butter Chicken', quantity: 1, price: 350 },
-                    { name: 'Garlic Naan', quantity: 2, price: 60 },
-                    { name: 'Dal Makhani', quantity: 1, price: 180 }
+                    { name: 'Garlic Naan', quantity: 2, price: 60 }
                 ],
-                total: 650,
-                address: 'Andheri East, Mumbai',
-                tracking: [
-                    { status: 'Order Placed', time: '10:30 AM', completed: true },
-                    { status: 'Order Confirmed', time: '10:35 AM', completed: true },
-                    { status: 'Preparing', time: '10:40 AM', completed: true },
-                    { status: 'Out for Delivery', time: '11:15 AM', completed: true },
-                    { status: 'Delivered', time: '11:45 AM', completed: true }
-                ]
+                total: 470,
+                address: 'Andheri East, Mumbai'
             },
             {
+                id: 'ORD007',
+                date: '27 Feb 2026',
+                time: '08:30 AM',
+                status: 'pending',
+                provider: 'Madras Cafe',
+                items: [
+                    { name: 'Masala Dosa', quantity: 2, price: 120 },
+                    { name: 'Filter Coffee', quantity: 2, price: 30 }
+                ],
+                total: 300,
+                address: 'Bandra West, Mumbai'
+            },
+
+            // CONFIRMED ORDERS (1)
+            {
+                id: 'ORD008',
+                date: '26 Feb 2026',
+                time: '07:45 PM',
+                status: 'confirmed',
+                provider: 'Biryani House',
+                items: [
+                    { name: 'Hyderabadi Biryani', quantity: 1, price: 320 }
+                ],
+                total: 320,
+                address: 'Juhu, Mumbai'
+            },
+
+            // PREPARING ORDERS (2)
+            {
+                id: 'ORD003',
+                date: '26 Feb 2026',
+                time: '01:15 PM',
+                status: 'preparing',
+                provider: 'Punjab Grill',
+                items: [
+                    { name: 'Paneer Tikka', quantity: 1, price: 280 },
+                    { name: 'Butter Naan', quantity: 2, price: 50 }
+                ],
+                total: 380,
+                address: 'Powai, Mumbai'
+            },
+            {
+                id: 'ORD009',
+                date: '26 Feb 2026',
+                time: '11:30 AM',
+                status: 'preparing',
+                provider: 'Mumbai Tiffin',
+                items: [
+                    { name: 'Vada Pav', quantity: 4, price: 30 }
+                ],
+                total: 120,
+                address: 'Dadar, Mumbai'
+            },
+
+            // OUT FOR DELIVERY (2)
+            {
                 id: 'ORD002',
-                date: '23 Feb 2026',
+                date: '26 Feb 2026',
                 time: '07:45 PM',
                 status: 'out-for-delivery',
                 provider: 'Madras Cafe',
-                providerCuisine: 'South Indian',
                 items: [
-                    { name: 'Masala Dosa', quantity: 2, price: 120 },
-                    { name: 'Idli Sambar', quantity: 1, price: 80 },
-                    { name: 'Filter Coffee', quantity: 2, price: 30 }
+                    { name: 'Masala Dosa', quantity: 2, price: 120 }
                 ],
-                total: 380,
-                address: 'Bandra West, Mumbai',
-                tracking: [
-                    { status: 'Order Placed', time: '07:45 PM', completed: true },
-                    { status: 'Order Confirmed', time: '07:50 PM', completed: true },
-                    { status: 'Preparing', time: '07:55 PM', completed: true },
-                    { status: 'Out for Delivery', time: '08:30 PM', completed: true },
-                    { status: 'Delivered', time: '', completed: false }
-                ]
+                total: 240,
+                address: 'Bandra West, Mumbai'
             },
             {
-                id: 'ORD003',
-                date: '22 Feb 2026',
-                time: '01:15 PM',
-                status: 'preparing',
-                provider: 'Biryani House',
-                providerCuisine: 'Hyderabadi',
+                id: 'ORD010',
+                date: '26 Feb 2026',
+                time: '06:15 PM',
+                status: 'out-for-delivery',
+                provider: 'Spice Kitchen',
                 items: [
-                    { name: 'Hyderabadi Biryani', quantity: 1, price: 320 },
-                    { name: 'Mirchi ka Salan', quantity: 1, price: 80 },
-                    { name: 'Raita', quantity: 1, price: 40 }
+                    { name: 'Chicken Tikka', quantity: 1, price: 300 }
                 ],
-                total: 440,
-                address: 'Juhu, Mumbai',
-                tracking: [
-                    { status: 'Order Placed', time: '01:15 PM', completed: true },
-                    { status: 'Order Confirmed', time: '01:20 PM', completed: true },
-                    { status: 'Preparing', time: '01:25 PM', completed: true },
-                    { status: 'Out for Delivery', time: '', completed: false },
-                    { status: 'Delivered', time: '', completed: false }
-                ]
+                total: 300,
+                address: 'Andheri West, Mumbai'
             },
+
+            // DELIVERED ORDERS (3)
             {
-                id: 'ORD004',
-                date: '21 Feb 2026',
-                time: '08:30 PM',
-                status: 'cancelled',
-                provider: 'Punjab Grill',
-                providerCuisine: 'Punjabi',
+                id: 'ORD001',
+                date: '25 Feb 2026',
+                time: '10:30 AM',
+                status: 'delivered',
+                provider: 'Spice Kitchen',
                 items: [
-                    { name: 'Paneer Tikka', quantity: 1, price: 280 },
-                    { name: 'Butter Naan', quantity: 2, price: 50 },
-                    { name: 'Veg Kolhapuri', quantity: 1, price: 220 }
+                    { name: 'Butter Chicken', quantity: 1, price: 350 }
                 ],
-                total: 600,
-                address: 'Powai, Mumbai',
-                tracking: [
-                    { status: 'Order Placed', time: '08:30 PM', completed: true },
-                    { status: 'Order Confirmed', time: '08:35 PM', completed: true },
-                    { status: 'Cancelled', time: '08:40 PM', completed: true }
-                ]
+                total: 350,
+                address: 'Andheri East, Mumbai'
             },
             {
                 id: 'ORD005',
-                date: '20 Feb 2026',
+                date: '24 Feb 2026',
                 time: '12:00 PM',
                 status: 'delivered',
                 provider: 'Mumbai Tiffin',
-                providerCuisine: 'Maharashtrian',
                 items: [
-                    { name: 'Vada Pav', quantity: 4, price: 30 },
-                    { name: 'Misal Pav', quantity: 2, price: 80 },
-                    { name: 'Pav Bhaji', quantity: 1, price: 120 }
+                    { name: 'Vada Pav', quantity: 4, price: 30 }
                 ],
-                total: 400,
-                address: 'Dadar, Mumbai',
-                tracking: [
-                    { status: 'Order Placed', time: '12:00 PM', completed: true },
-                    { status: 'Order Confirmed', time: '12:05 PM', completed: true },
-                    { status: 'Preparing', time: '12:10 PM', completed: true },
-                    { status: 'Out for Delivery', time: '12:30 PM', completed: true },
-                    { status: 'Delivered', time: '12:50 PM', completed: true }
-                ]
+                total: 120,
+                address: 'Dadar, Mumbai'
+            },
+            {
+                id: 'ORD011',
+                date: '23 Feb 2026',
+                time: '08:00 PM',
+                status: 'delivered',
+                provider: 'Biryani House',
+                items: [
+                    { name: 'Chicken Biryani', quantity: 1, price: 320 }
+                ],
+                total: 320,
+                address: 'Juhu, Mumbai'
+            },
+
+            // CANCELLED ORDERS (2)
+            {
+                id: 'ORD004',
+                date: '22 Feb 2026',
+                time: '08:30 PM',
+                status: 'cancelled',
+                provider: 'Punjab Grill',
+                items: [
+                    { name: 'Paneer Tikka', quantity: 1, price: 280 }
+                ],
+                total: 280,
+                address: 'Powai, Mumbai'
+            },
+            {
+                id: 'ORD012',
+                date: '21 Feb 2026',
+                time: '07:30 PM',
+                status: 'cancelled',
+                provider: 'Chinese Wok',
+                items: [
+                    { name: 'Gobi Manchurian', quantity: 1, price: 180 }
+                ],
+                total: 180,
+                address: 'Malad, Mumbai'
             }
         ];
 
         let currentOrderId = null;
+        let currentRating = 0;
 
-        // Load orders
-        function loadOrders(filter = 'all', search = '') {
-            let filteredOrders = orders;
+        // Load orders function
+        function loadOrders(filter = 'all') {
+            console.log('Loading orders with filter:', filter);
             
-            if (filter !== 'all') {
-                filteredOrders = orders.filter(o => o.status === filter);
+            let filteredOrders = [];
+            
+            if (filter === 'all') {
+                filteredOrders = orders;
+            } else {
+                filteredOrders = orders.filter(order => order.status === filter);
             }
             
-            if (search) {
-                filteredOrders = filteredOrders.filter(o => 
-                    o.id.toLowerCase().includes(search.toLowerCase()) ||
-                    o.provider.toLowerCase().includes(search.toLowerCase())
-                );
-            }
+            console.log('Found', filteredOrders.length, 'orders');
 
             const grid = document.getElementById('ordersGrid');
             
@@ -859,9 +936,9 @@
                 grid.innerHTML = `
                     <div class="empty-state">
                         <i class="fas fa-shopping-bag"></i>
-                        <h3>No orders found</h3>
-                        <p>Looks like you haven't placed any orders yet</p>
-                        <a href="dashboard.html" class="btn-order">Browse Meals</a>
+                        <h3>No ${filter === 'all' ? '' : filter} orders found</h3>
+                        <p>Looks like you haven't placed any ${filter === 'all' ? '' : filter} orders yet</p>
+                        <a href="browse-meals.html" class="btn-order">Browse Meals</a>
                     </div>
                 `;
                 return;
@@ -885,14 +962,13 @@
                         </div>
                         <div class="provider-info">
                             <h3>${order.provider}</h3>
-                            <p>${order.providerCuisine}</p>
                         </div>
                     </div>
 
                     <div class="order-items">
                         ${order.items.map(item => `
                             <div class="order-item">
-                                <span class="item-name">
+                                <span>
                                     <span class="item-quantity">${item.quantity}x</span>
                                     ${item.name}
                                 </span>
@@ -904,6 +980,11 @@
                     <div class="order-total">
                         <span>Total</span>
                         <span class="total-amount">₹${order.total}</span>
+                    </div>
+
+                    <div class="delivery-address">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>${order.address}</span>
                     </div>
 
                     <div class="order-actions">
@@ -927,72 +1008,174 @@
         }
 
         // Filter orders
-        function filterOrders(status) {
-            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+        window.filterOrders = function(status) {
+            console.log('Filter clicked:', status);
+            
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
             event.target.classList.add('active');
-            loadOrders(status, document.getElementById('searchInput').value);
-        }
+            
+            // Load filtered orders
+            loadOrders(status);
+        };
 
         // Search orders
-        document.getElementById('searchInput').addEventListener('input', function(e) {
-            const activeFilter = document.querySelector('.filter-btn.active').textContent.toLowerCase().replace(' orders', '');
-            loadOrders(activeFilter === 'all' ? 'all' : activeFilter, e.target.value);
-        });
+        window.searchOrders = function() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const activeFilter = document.querySelector('.filter-btn.active').textContent.toLowerCase();
+            
+            let status = 'all';
+            if (activeFilter.includes('pending')) status = 'pending';
+            else if (activeFilter.includes('confirmed')) status = 'confirmed';
+            else if (activeFilter.includes('preparing')) status = 'preparing';
+            else if (activeFilter.includes('out')) status = 'out-for-delivery';
+            else if (activeFilter.includes('delivered')) status = 'delivered';
+            else if (activeFilter.includes('cancelled')) status = 'cancelled';
+            
+            let filteredByStatus = status === 'all' ? orders : orders.filter(o => o.status === status);
+            
+            const searched = filteredByStatus.filter(o => 
+                o.id.toLowerCase().includes(searchTerm) ||
+                o.provider.toLowerCase().includes(searchTerm)
+            );
+            
+            const grid = document.getElementById('ordersGrid');
+            
+            if (searched.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <i class="fas fa-search"></i>
+                        <h3>No results found</h3>
+                        <p>No orders match your search "${searchTerm}"</p>
+                    </div>
+                `;
+            } else {
+                grid.innerHTML = searched.map(order => `
+                    <div class="order-card">
+                        <div class="order-header">
+                            <div>
+                                <span class="order-id">#${order.id}</span>
+                                <span class="order-date">${order.date} • ${order.time}</span>
+                            </div>
+                            <span class="order-status status-${order.status}">
+                                ${order.status.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')}
+                            </span>
+                        </div>
+                        
+                        <div class="order-provider">
+                            <div class="provider-logo">
+                                <i class="fas fa-utensils"></i>
+                            </div>
+                            <div class="provider-info">
+                                <h3>${order.provider}</h3>
+                            </div>
+                        </div>
+
+                        <div class="order-items">
+                            ${order.items.map(item => `
+                                <div class="order-item">
+                                    <span>
+                                        <span class="item-quantity">${item.quantity}x</span>
+                                        ${item.name}
+                                    </span>
+                                    <span>₹${item.price * item.quantity}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+
+                        <div class="order-total">
+                            <span>Total</span>
+                            <span class="total-amount">₹${order.total}</span>
+                        </div>
+
+                        <div class="delivery-address">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>${order.address}</span>
+                        </div>
+
+                        <div class="order-actions">
+                            <button class="btn-track" onclick="trackOrder('${order.id}')">
+                                <i class="fas fa-map-marker-alt"></i> Track
+                            </button>
+                            <button class="btn-reorder" onclick="reorder('${order.id}')">
+                                <i class="fas fa-redo-alt"></i> Reorder
+                            </button>
+                            ${order.status === 'delivered' ? `
+                                <button class="btn-rate" onclick="rateOrder('${order.id}')">
+                                    <i class="fas fa-star"></i> Rate
+                                </button>
+                            ` : ''}
+                            <button class="btn-complaint" onclick="fileComplaint('${order.id}')">
+                                <i class="fas fa-exclamation-circle"></i> Report
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        };
 
         // Track order
-        function trackOrder(orderId) {
-            const order = orders.find(o => o.id === orderId);
-            if (!order) return;
-
-            const timeline = document.getElementById('trackingTimeline');
-            timeline.innerHTML = order.tracking.map(t => `
-                <div class="timeline-item">
-                    <div class="timeline-icon ${t.completed ? 'completed' : 'pending'}">
-                        <i class="fas ${t.completed ? 'fa-check' : 'fa-clock'}"></i>
-                    </div>
-                    <div class="timeline-content">
-                        <h4>${t.status}</h4>
-                        <p>${t.time || 'In progress'}</p>
-                        <span class="timeline-time">${t.time ? new Date(`2026-01-01 ${t.time}`).toLocaleTimeString() : ''}</span>
-                    </div>
-                </div>
-            `).join('');
-
-            document.getElementById('trackingModal').style.display = 'block';
-        }
+        window.trackOrder = function(orderId) {
+            alert(`Tracking order #${orderId} - Feature coming soon!`);
+        };
 
         // Reorder
-        function reorder(orderId) {
-            alert(`Reorder placed for order #${orderId}! Items added to cart.`);
-        }
+        window.reorder = function(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            
+            order.items.forEach(item => {
+                cart.push({
+                    id: Date.now() + Math.random(),
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity
+                });
+            });
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cartCount').textContent = cart.length;
+            alert(`✅ Items from order #${orderId} added to cart!`);
+        };
 
         // Rate order
-        let currentRating = 0;
-        
-        function rateOrder(orderId) {
+        window.rateOrder = function(orderId) {
             currentOrderId = orderId;
             document.getElementById('rateModal').style.display = 'block';
             
-            // Setup star rating
-            document.querySelectorAll('.rating-stars i').forEach(star => {
-                star.addEventListener('click', function() {
-                    currentRating = this.dataset.rating;
-                    document.querySelectorAll('.rating-stars i').forEach(s => {
-                        s.className = s.dataset.rating <= currentRating ? 'fas fa-star' : 'far fa-star';
-                    });
+            // Reset stars
+            document.querySelectorAll('#ratingStars i').forEach(star => {
+                star.className = 'far fa-star';
+            });
+            currentRating = 0;
+        };
+
+        // Star rating click
+        document.querySelectorAll('#ratingStars i').forEach(star => {
+            star.addEventListener('click', function() {
+                currentRating = this.dataset.rating;
+                document.querySelectorAll('#ratingStars i').forEach(s => {
+                    s.className = s.dataset.rating <= currentRating ? 'fas fa-star' : 'far fa-star';
                 });
             });
-        }
+        });
 
-        function submitRating() {
+        // Submit rating
+        window.submitRating = function() {
+            if (currentRating === 0) {
+                alert('Please select a rating');
+                return;
+            }
             alert(`Thank you for rating order #${currentOrderId}!`);
             document.getElementById('rateModal').style.display = 'none';
-        }
+        };
 
         // File complaint
-        function fileComplaint(orderId) {
-            window.location.href = `complaints.html?order=${orderId}`;
-        }
+        window.fileComplaint = function(orderId) {
+            alert(`Complaint filed for order #${orderId}`);
+        };
 
         // Close modals
         document.querySelectorAll('.close').forEach(btn => {
@@ -1011,18 +1194,14 @@
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
             localStorage.clear();
-            sessionStorage.clear();
             window.location.href = 'login.html';
         });
 
         // Initialize
-        loadOrders();
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded, loading all orders');
+            loadOrders('all');
+        });
     </script>
-     <!-- ✅ JS FILES -->
-    <script src="/frontend/assets/js/main.js"></script>
-    <script src="/frontend/assets/js/customer.js"></script>
-    <script src="/frontend/assets/js/translations.js"></script>
-    <script src="/frontend/assets/js/payment.js"></script>      <!-- For payments page -->
-    <script src="/frontend/assets/js/complaints.js"></script>   <!-- For complaints page -->
 </body>
 </html>
