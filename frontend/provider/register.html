@@ -3,21 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Your Business - Dabba's</title>
+    <title>Provider Registration - Dabba's</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- ✅ CSS FILES -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
-    <link rel="stylesheet" href="/frontend/assets/css/provider.css">
-    <link rel="stylesheet" href="/frontend/assets/css/complaints.css"> <!-- For complaints page -->
+    
     <style>
         * {
             margin: 0;
@@ -27,165 +23,51 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #1a2a3a, #2c3e50);
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow-x: hidden;
+            padding: 2rem;
         }
 
-        /* Animated Background */
-        .bg-circles {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .circle {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            animation: float 20s infinite;
-        }
-
-        .circle1 {
-            width: 400px;
-            height: 400px;
-            top: -100px;
-            right: -100px;
-            animation-delay: 0s;
-        }
-
-        .circle2 {
-            width: 300px;
-            height: 300px;
-            bottom: -50px;
-            left: -50px;
-            animation-delay: -5s;
-        }
-
-        .circle3 {
-            width: 200px;
-            height: 200px;
-            bottom: 50%;
-            right: 20%;
-            animation-delay: -10s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(10deg); }
-        }
-
-        /* Main Container */
         .register-container {
             width: 100%;
-            max-width: 700px;
-            margin: 2rem;
-            position: relative;
-            z-index: 10;
+            max-width: 600px;
         }
 
-        /* Logo */
         .logo {
             text-align: center;
             margin-bottom: 2rem;
         }
 
         .logo a {
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            background: linear-gradient(135deg, #fff, #f0f0f0);
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
-            letter-spacing: -0.5px;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
 
         .logo span {
-            background: linear-gradient(135deg, #ffd700, #ffa500);
+            background: linear-gradient(135deg, #4ecdc4, #45b7af);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
         .logo small {
             display: block;
-            color: rgba(255,255,255,0.9);
-            font-size: 1rem;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
             margin-top: 0.5rem;
-            font-weight: 400;
         }
 
-        /* Progress Bar */
-        .progress-bar {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 2rem;
-            position: relative;
-        }
-
-        .progress-bar::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: rgba(255,255,255,0.2);
-            transform: translateY(-50%);
-            z-index: 1;
-        }
-
-        .progress-step {
-            width: 40px;
-            height: 40px;
-            background: rgba(255,255,255,0.2);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            position: relative;
-            z-index: 2;
-            transition: all 0.3s ease;
-        }
-
-        .progress-step.active {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            box-shadow: 0 0 20px rgba(255,107,107,0.5);
-        }
-
-        .progress-step.completed {
-            background: #4caf50;
-        }
-
-        .progress-label {
-            position: absolute;
-            top: 50px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 0.8rem;
-            white-space: nowrap;
-            opacity: 0.7;
-        }
-
-        /* Register Card */
         .register-card {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 30px;
+            background: white;
+            border-radius: 20px;
             padding: 2.5rem;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
         }
 
         .register-header {
@@ -195,60 +77,27 @@
 
         .register-header h2 {
             font-size: 2rem;
-            font-weight: 700;
-            color: #2d2d2d;
             margin-bottom: 0.5rem;
         }
 
         .register-header p {
             color: #666;
-            font-size: 1rem;
-        }
-
-        .register-header p a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 600;
         }
 
         .provider-badge {
             display: inline-block;
-            padding: 0.5rem 1.5rem;
+            padding: 0.3rem 1rem;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
             border-radius: 50px;
-            font-size: 0.9rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            box-shadow: 0 5px 15px rgba(255,107,107,0.3);
-        }
-
-        /* Form Steps */
-        .form-step {
-            display: none;
-        }
-
-        .form-step.active {
-            display: block;
-            animation: slideIn 0.5s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
+            font-size: 0.8rem;
+            margin-bottom: 1rem;
         }
 
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 1rem;
-            margin-bottom: 1rem;
         }
 
         .form-group {
@@ -259,22 +108,18 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #2d2d2d;
-            font-size: 0.95rem;
         }
 
         .input-group {
             position: relative;
-            display: flex;
-            align-items: center;
         }
 
         .input-group i {
             position: absolute;
             left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
             color: #ff6b6b;
-            font-size: 1.2rem;
-            z-index: 1;
         }
 
         .input-group input,
@@ -283,26 +128,10 @@
             width: 100%;
             padding: 1rem 1rem 1rem 3rem;
             border: 2px solid #f0f0f0;
-            border-radius: 15px;
+            border-radius: 10px;
             font-size: 1rem;
+            font-family: inherit;
             transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
-            background: white;
-        }
-
-        .input-group textarea {
-            padding: 1rem;
-            padding-left: 3rem;
-            resize: vertical;
-            min-height: 100px;
-        }
-
-        .input-group select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right 1rem center;
-            padding-right: 2.5rem;
         }
 
         .input-group input:focus,
@@ -310,166 +139,49 @@
         .input-group textarea:focus {
             outline: none;
             border-color: #ff6b6b;
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.1);
+            box-shadow: 0 5px 20px rgba(255,107,107,0.1);
         }
 
-        /* Document Upload */
-        .upload-area {
-            border: 2px dashed #ff6b6b;
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
-            background: #fff5f0;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        textarea {
+            resize: vertical;
+            min-height: 80px;
         }
 
-        .upload-area:hover {
-            background: #ffeae4;
-            border-color: #ff8e8e;
-        }
-
-        .upload-area i {
-            font-size: 3rem;
-            color: #ff6b6b;
-            margin-bottom: 1rem;
-        }
-
-        .upload-area p {
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-
-        .upload-area small {
-            color: #999;
-            font-size: 0.8rem;
-        }
-
-        .file-list {
-            margin-top: 1rem;
-        }
-
-        .file-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 0.5rem;
-            background: #f8f9fc;
-            border-radius: 8px;
-            margin-bottom: 0.5rem;
-        }
-
-        .file-item i {
-            font-size: 1rem;
-            margin-right: 0.5rem;
-            color: #4caf50;
-        }
-
-        .file-item .remove-file {
-            color: #f44336;
-            cursor: pointer;
-        }
-
-        /* Checkbox Group */
-        .checkbox-group {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 1rem;
-            margin-top: 0.5rem;
-        }
-
-        .checkbox-group label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-weight: normal;
-            cursor: pointer;
-        }
-
-        .checkbox-group input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #ff6b6b;
-        }
-
-        /* Terms */
-        .terms {
-            margin: 1.5rem 0;
-        }
-
-        .terms label {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #666;
-            cursor: pointer;
-        }
-
-        .terms input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            accent-color: #ff6b6b;
-        }
-
-        .terms a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        /* Buttons */
-        .btn-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .btn-prev,
-        .btn-next,
-        .btn-submit {
-            flex: 1;
-            padding: 1rem;
+        .btn-register {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
             border: none;
-            border-radius: 15px;
-            font-size: 1rem;
+            border-radius: 10px;
+            font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
+            margin-top: 1rem;
         }
 
-        .btn-prev {
-            background: #f0f0f0;
-            color: #666;
-        }
-
-        .btn-prev:hover {
-            background: #e0e0e0;
-        }
-
-        .btn-next,
-        .btn-submit {
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            color: white;
+        .btn-register:hover {
+            transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
 
-        .btn-next:hover,
-        .btn-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
-        }
-
-        .btn-next:disabled,
-        .btn-submit:disabled {
+        .btn-register:disabled {
             opacity: 0.7;
             cursor: not-allowed;
         }
 
-        /* Alert */
+        .login-link {
+            text-align: center;
+            margin-top: 1.5rem;
+        }
+
+        .login-link a {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
         .alert {
             padding: 1rem;
             border-radius: 10px;
@@ -477,10 +189,10 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            animation: slideDown 0.3s ease;
+            animation: slideIn 0.3s ease;
         }
 
-        @keyframes slideDown {
+        @keyframes slideIn {
             from {
                 opacity: 0;
                 transform: translateY(-10px);
@@ -509,11 +221,6 @@
             border: 1px solid #bee5eb;
         }
 
-        .alert i {
-            font-size: 1.2rem;
-        }
-
-        /* Spinner */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -522,653 +229,296 @@
             border-radius: 50%;
             border-top-color: white;
             animation: spin 1s ease-in-out infinite;
+            margin-right: 0.5rem;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Footer */
-        .register-footer {
-            text-align: center;
-            margin-top: 2rem;
-            color: rgba(255,255,255,0.8);
-        }
-
-        .register-footer a {
-            color: white;
-            text-decoration: none;
+        .status-badge {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
             font-weight: 600;
+            background: #ffebee;
+            color: #ff6b6b;
+            margin-left: 0.5rem;
         }
 
-        .register-footer a:hover {
-            text-decoration: underline;
-        }
-
-        /* Responsive */
         @media (max-width: 768px) {
-            .register-container {
-                margin: 1rem;
-            }
-
-            .register-card {
-                padding: 1.5rem;
-            }
-
             .form-row {
                 grid-template-columns: 1fr;
-            }
-
-            .progress-label {
-                display: none;
-            }
-
-            .btn-group {
-                flex-direction: column;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Animated Background -->
-    <div class="bg-circles">
-        <div class="circle circle1"></div>
-        <div class="circle circle2"></div>
-        <div class="circle circle3"></div>
-    </div>
-
-    <!-- Main Container -->
-    <div class="register-container" data-aos="fade-up">
-        <!-- Logo -->
+    <div class="register-container">
         <div class="logo">
             <a href="/frontend/index.html">Dabba<span>'s</span></a>
-            <small>Partner Registration Portal</small>
+            <small>Partner Registration</small>
         </div>
 
-        <!-- Progress Bar -->
-        <div class="progress-bar">
-            <div class="progress-step active" data-step="1">
-                <span>1</span>
-                <span class="progress-label">Business Info</span>
-            </div>
-            <div class="progress-step" data-step="2">
-                <span>2</span>
-                <span class="progress-label">Documents</span>
-            </div>
-            <div class="progress-step" data-step="3">
-                <span>3</span>
-                <span class="progress-label">Bank Details</span>
-            </div>
-            <div class="progress-step" data-step="4">
-                <span>4</span>
-                <span class="progress-label">Review</span>
-            </div>
-        </div>
-
-        <!-- Register Card -->
         <div class="register-card">
             <div class="register-header">
-                <span class="provider-badge">
-                    <i class="fas fa-store"></i> Become a Partner
-                </span>
+                <span class="provider-badge">🍽️ Become a Food Partner</span>
                 <h2>Register Your Business</h2>
-                <p>Already have an account? <a href="login.html">Sign in here</a></p>
+                <p>Already have an account? <a href="login.html">Sign in</a></p>
             </div>
 
-            <!-- Alert Container -->
             <div id="alertContainer"></div>
 
-            <!-- Registration Form -->
+            <!-- Backend Status Indicator -->
+            <div id="backendStatus" style="margin-bottom: 1rem; padding: 0.5rem; border-radius: 5px; text-align: center; background: #f8f9fc; display: none;"></div>
+
             <form id="registerForm">
-                <!-- Step 1: Business Information -->
-                <div class="form-step active" id="step1">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Business Name *</label>
-                            <div class="input-group">
-                                <i class="fas fa-store"></i>
-                                <input type="text" id="businessName" placeholder="e.g., Spice Kitchen" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Owner Name *</label>
-                            <div class="input-group">
-                                <i class="fas fa-user"></i>
-                                <input type="text" id="ownerName" placeholder="Full name" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Email *</label>
-                            <div class="input-group">
-                                <i class="fas fa-envelope"></i>
-                                <input type="email" id="email" placeholder="contact@business.com" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Phone *</label>
-                            <div class="input-group">
-                                <i class="fas fa-phone"></i>
-                                <input type="tel" id="phone" placeholder="9876543210" required>
-                            </div>
-                        </div>
-                    </div>
-
+                <div class="form-row">
                     <div class="form-group">
-                        <label>Business Address *</label>
+                        <label>Business Name *</label>
                         <div class="input-group">
-                            <i class="fas fa-map-marker-alt"></i>
-                            <textarea id="address" placeholder="Full address" required></textarea>
+                            <i class="fas fa-store"></i>
+                            <input type="text" id="businessName" placeholder="e.g., Spice Kitchen" required>
                         </div>
                     </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>City *</label>
-                            <div class="input-group">
-                                <i class="fas fa-city"></i>
-                                <select id="city" required>
-                                    <option value="">Select City</option>
-                                    <option value="mumbai">Mumbai</option>
-                                    <option value="delhi">Delhi</option>
-                                    <option value="bangalore">Bangalore</option>
-                                    <option value="chennai">Chennai</option>
-                                    <option value="kolkata">Kolkata</option>
-                                    <option value="hyderabad">Hyderabad</option>
-                                    <option value="pune">Pune</option>
-                                    <option value="ahmedabad">Ahmedabad</option>
-                                    <option value="jaipur">Jaipur</option>
-                                    <option value="lucknow">Lucknow</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Pincode *</label>
-                            <div class="input-group">
-                                <i class="fas fa-mail-bulk"></i>
-                                <input type="text" id="pincode" placeholder="400001" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Cuisine Type *</label>
-                            <div class="input-group">
-                                <i class="fas fa-utensils"></i>
-                                <select id="cuisine" required>
-                                    <option value="">Select Cuisine</option>
-                                    <option value="north-indian">North Indian</option>
-                                    <option value="south-indian">South Indian</option>
-                                    <option value="maharashtrian">Maharashtrian</option>
-                                    <option value="gujarati">Gujarati</option>
-                                    <option value="punjabi">Punjabi</option>
-                                    <option value="bengali">Bengali</option>
-                                    <option value="hyderabadi">Hyderabadi</option>
-                                    <option value="multi-cuisine">Multi-Cuisine</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Years in Business</label>
-                            <div class="input-group">
-                                <i class="fas fa-calendar"></i>
-                                <input type="number" id="yearsInBusiness" placeholder="5" min="0">
-                            </div>
-                        </div>
-                    </div>
-
                     <div class="form-group">
-                        <label>Delivery Radius (km) *</label>
+                        <label>Owner Name *</label>
                         <div class="input-group">
-                            <i class="fas fa-truck"></i>
-                            <input type="number" id="deliveryRadius" placeholder="10" min="1" required>
+                            <i class="fas fa-user"></i>
+                            <input type="text" id="ownerName" placeholder="Full name" required>
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 2: Documents -->
-                <div class="form-step" id="step2">
+                <div class="form-row">
                     <div class="form-group">
-                        <label>FSSAI License *</label>
+                        <label>Email *</label>
                         <div class="input-group">
-                            <i class="fas fa-certificate"></i>
-                            <input type="text" id="fssai" placeholder="FSSAI license number" required>
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" id="email" placeholder="your@restaurant.com" required>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <label>Phone *</label>
+                        <div class="input-group">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" id="phone" placeholder="9876543210" required>
+                        </div>
+                    </div>
+                </div>
 
+                <div class="form-group">
+                    <label>Business Address *</label>
+                    <div class="input-group">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <textarea id="businessAddress" placeholder="Full address" required></textarea>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>City *</label>
+                        <div class="input-group">
+                            <i class="fas fa-city"></i>
+                            <select id="city" required>
+                                <option value="">Select City</option>
+                                <option value="mumbai">Mumbai</option>
+                                <option value="delhi">Delhi</option>
+                                <option value="bangalore">Bangalore</option>
+                                <option value="chennai">Chennai</option>
+                                <option value="kolkata">Kolkata</option>
+                                <option value="hyderabad">Hyderabad</option>
+                                <option value="pune">Pune</option>
+                                <option value="ahmedabad">Ahmedabad</option>
+                                <option value="jaipur">Jaipur</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Cuisine Type *</label>
+                        <div class="input-group">
+                            <i class="fas fa-utensils"></i>
+                            <select id="cuisine" required>
+                                <option value="">Select Cuisine</option>
+                                <option value="north-indian">North Indian</option>
+                                <option value="south-indian">South Indian</option>
+                                <option value="maharashtrian">Maharashtrian</option>
+                                <option value="punjabi">Punjabi</option>
+                                <option value="gujarati">Gujarati</option>
+                                <option value="bengali">Bengali</option>
+                                <option value="hyderabadi">Hyderabadi</option>
+                                <option value="multi-cuisine">Multi-Cuisine</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Password *</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" placeholder="Minimum 6 characters" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm Password *</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="confirmPassword" placeholder="Re-enter password" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
                         <label>GST Number (Optional)</label>
                         <div class="input-group">
                             <i class="fas fa-file-invoice"></i>
-                            <input type="text" id="gst" placeholder="GSTIN">
+                            <input type="text" id="gst" placeholder="27AAECS1234F1Z5">
                         </div>
                     </div>
-
                     <div class="form-group">
-                        <label>PAN Card *</label>
+                        <label>FSSAI License (Optional)</label>
                         <div class="input-group">
-                            <i class="fas fa-id-card"></i>
-                            <input type="text" id="pan" placeholder="PAN number" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Upload Documents</label>
-                        <div class="upload-area" id="uploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Drag & drop files here or click to upload</p>
-                            <small>Supported: PDF, JPG, PNG (Max 5MB each)</small>
-                            <input type="file" id="fileInput" multiple style="display: none;" accept=".pdf,.jpg,.jpeg,.png">
-                        </div>
-                        <div class="file-list" id="fileList"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Business Hours</label>
-                        <div class="form-row">
-                            <div class="input-group">
-                                <i class="fas fa-clock"></i>
-                                <select id="openTime">
-                                    <option value="08:00">8:00 AM</option>
-                                    <option value="09:00">9:00 AM</option>
-                                    <option value="10:00">10:00 AM</option>
-                                    <option value="11:00">11:00 AM</option>
-                                </select>
-                            </div>
-                            <div class="input-group">
-                                <i class="fas fa-clock"></i>
-                                <select id="closeTime">
-                                    <option value="20:00">8:00 PM</option>
-                                    <option value="21:00">9:00 PM</option>
-                                    <option value="22:00">10:00 PM</option>
-                                    <option value="23:00">11:00 PM</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Operating Days</label>
-                        <div class="checkbox-group">
-                            <label><input type="checkbox" value="mon" checked> Monday</label>
-                            <label><input type="checkbox" value="tue" checked> Tuesday</label>
-                            <label><input type="checkbox" value="wed" checked> Wednesday</label>
-                            <label><input type="checkbox" value="thu" checked> Thursday</label>
-                            <label><input type="checkbox" value="fri" checked> Friday</label>
-                            <label><input type="checkbox" value="sat" checked> Saturday</label>
-                            <label><input type="checkbox" value="sun"> Sunday</label>
+                            <i class="fas fa-certificate"></i>
+                            <input type="text" id="fssai" placeholder="FSSAI-123456">
                         </div>
                     </div>
                 </div>
 
-                <!-- Step 3: Bank Details -->
-                <div class="form-step" id="step3">
-                    <div class="form-group">
-                        <label>Account Holder Name *</label>
-                        <div class="input-group">
-                            <i class="fas fa-user"></i>
-                            <input type="text" id="accountHolder" placeholder="As per bank records" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Bank Name *</label>
-                        <div class="input-group">
-                            <i class="fas fa-university"></i>
-                            <input type="text" id="bankName" placeholder="e.g., State Bank of India" required>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Account Number *</label>
-                            <div class="input-group">
-                                <i class="fas fa-credit-card"></i>
-                                <input type="text" id="accountNumber" placeholder="Your account number" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Confirm Account Number *</label>
-                            <div class="input-group">
-                                <i class="fas fa-credit-card"></i>
-                                <input type="text" id="confirmAccountNumber" placeholder="Re-enter account number" required>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>IFSC Code *</label>
-                            <div class="input-group">
-                                <i class="fas fa-code"></i>
-                                <input type="text" id="ifsc" placeholder="SBIN0001234" required>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>UPI ID (Optional)</label>
-                            <div class="input-group">
-                                <i class="fas fa-mobile-alt"></i>
-                                <input type="text" id="upi" placeholder="business@okhdfcbank">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Step 4: Review & Submit -->
-                <div class="form-step" id="step4">
-                    <div class="form-group">
-                        <h3 style="margin-bottom: 1rem;">Review Your Information</h3>
-                        <div style="background: #f8f9fc; padding: 1.5rem; border-radius: 15px;">
-                            <h4>Business Details</h4>
-                            <p><strong>Business Name:</strong> <span id="reviewBusinessName"></span></p>
-                            <p><strong>Owner Name:</strong> <span id="reviewOwnerName"></span></p>
-                            <p><strong>Email:</strong> <span id="reviewEmail"></span></p>
-                            <p><strong>Phone:</strong> <span id="reviewPhone"></span></p>
-                            <p><strong>Address:</strong> <span id="reviewAddress"></span></p>
-                            <p><strong>City:</strong> <span id="reviewCity"></span></p>
-                            <p><strong>Cuisine:</strong> <span id="reviewCuisine"></span></p>
-                            
-                            <h4 style="margin-top: 1rem;">Documents</h4>
-                            <p><strong>FSSAI:</strong> <span id="reviewFssai"></span></p>
-                            <p><strong>PAN:</strong> <span id="reviewPan"></span></p>
-                            
-                            <h4 style="margin-top: 1rem;">Bank Details</h4>
-                            <p><strong>Bank:</strong> <span id="reviewBank"></span></p>
-                            <p><strong>Account:</strong> <span id="reviewAccount"></span></p>
-                            <p><strong>IFSC:</strong> <span id="reviewIfsc"></span></p>
-                        </div>
-                    </div>
-
-                    <div class="terms">
-                        <label>
-                            <input type="checkbox" id="terms" required>
-                            <span>I confirm that all information provided is correct and agree to the <a href="#">Terms of Service</a> and <a href="#">Partner Agreement</a></span>
-                        </label>
-                    </div>
-                </div>
-
-                <!-- Navigation Buttons -->
-                <div class="btn-group">
-                    <button type="button" class="btn-prev" id="prevBtn" onclick="prevStep()">
-                        <i class="fas fa-arrow-left"></i> Previous
-                    </button>
-                    <button type="button" class="btn-next" id="nextBtn" onclick="nextStep()">
-                        Next <i class="fas fa-arrow-right"></i>
-                    </button>
-                    <button type="submit" class="btn-submit" id="submitBtn" style="display: none;">
-                        <span>Submit Application</span>
-                    </button>
-                </div>
+                <button type="submit" class="btn-register" id="registerBtn">
+                    Register Business
+                </button>
             </form>
-        </div>
 
-        <!-- Footer -->
-        <div class="register-footer">
-            <p><a href="/frontend/index.html"><i class="fas fa-arrow-left"></i> Back to Home</a></p>
+            <div class="login-link">
+                <p>Already registered? <a href="login.html">Login here</a></p>
+            </div>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-
-        // Multi-step form
-        let currentStep = 1;
-        const totalSteps = 4;
-
-        function updateProgress() {
-            for (let i = 1; i <= totalSteps; i++) {
-                const step = document.querySelector(`.progress-step[data-step="${i}"]`);
-                if (i < currentStep) {
-                    step.classList.add('completed');
-                    step.classList.remove('active');
-                    step.innerHTML = '<i class="fas fa-check"></i>';
-                } else if (i === currentStep) {
-                    step.classList.add('active');
-                    step.classList.remove('completed');
-                    step.innerHTML = `<span>${i}</span>`;
-                } else {
-                    step.classList.remove('active', 'completed');
-                    step.innerHTML = `<span>${i}</span>`;
-                }
-            }
-        }
-
-        function showStep(step) {
-            document.querySelectorAll('.form-step').forEach(el => el.classList.remove('active'));
-            document.getElementById(`step${step}`).classList.add('active');
-            
-            // Show/hide buttons
-            if (step === 1) {
-                document.getElementById('prevBtn').style.display = 'none';
-            } else {
-                document.getElementById('prevBtn').style.display = 'block';
-            }
-            
-            if (step === totalSteps) {
-                document.getElementById('nextBtn').style.display = 'none';
-                document.getElementById('submitBtn').style.display = 'block';
-                updateReview();
-            } else {
-                document.getElementById('nextBtn').style.display = 'block';
-                document.getElementById('submitBtn').style.display = 'none';
-            }
-            
-            updateProgress();
-        }
-
-        function nextStep() {
-            if (currentStep < totalSteps) {
-                // Validate current step
-                if (!validateStep(currentStep)) {
-                    showAlert('Please fill all required fields', 'error');
-                    return;
-                }
-                currentStep++;
-                showStep(currentStep);
-            }
-        }
-
-        function prevStep() {
-            if (currentStep > 1) {
-                currentStep--;
-                showStep(currentStep);
-            }
-        }
-
-        function validateStep(step) {
-            switch(step) {
-                case 1:
-                    return document.getElementById('businessName').value &&
-                           document.getElementById('ownerName').value &&
-                           document.getElementById('email').value &&
-                           document.getElementById('phone').value &&
-                           document.getElementById('address').value &&
-                           document.getElementById('city').value &&
-                           document.getElementById('pincode').value &&
-                           document.getElementById('cuisine').value;
-                case 2:
-                    return document.getElementById('fssai').value &&
-                           document.getElementById('pan').value;
-                case 3:
-                    return document.getElementById('accountHolder').value &&
-                           document.getElementById('bankName').value &&
-                           document.getElementById('accountNumber').value &&
-                           document.getElementById('confirmAccountNumber').value &&
-                           document.getElementById('ifsc').value &&
-                           document.getElementById('accountNumber').value === document.getElementById('confirmAccountNumber').value;
-                default:
-                    return true;
-            }
-        }
-
-        function updateReview() {
-            document.getElementById('reviewBusinessName').textContent = document.getElementById('businessName').value;
-            document.getElementById('reviewOwnerName').textContent = document.getElementById('ownerName').value;
-            document.getElementById('reviewEmail').textContent = document.getElementById('email').value;
-            document.getElementById('reviewPhone').textContent = document.getElementById('phone').value;
-            document.getElementById('reviewAddress').textContent = document.getElementById('address').value;
-            document.getElementById('reviewCity').textContent = document.getElementById('city').options[document.getElementById('city').selectedIndex].text;
-            document.getElementById('reviewCuisine').textContent = document.getElementById('cuisine').options[document.getElementById('cuisine').selectedIndex].text;
-            document.getElementById('reviewFssai').textContent = document.getElementById('fssai').value;
-            document.getElementById('reviewPan').textContent = document.getElementById('pan').value;
-            document.getElementById('reviewBank').textContent = document.getElementById('bankName').value;
-            document.getElementById('reviewAccount').textContent = 'XXXX' + document.getElementById('accountNumber').value.slice(-4);
-            document.getElementById('reviewIfsc').textContent = document.getElementById('ifsc').value;
-        }
-
-        // File upload handling
-        const uploadArea = document.getElementById('uploadArea');
-        const fileInput = document.getElementById('fileInput');
-        const fileList = document.getElementById('fileList');
-        let uploadedFiles = [];
-
-        uploadArea.addEventListener('click', () => fileInput.click());
-        
-        uploadArea.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadArea.style.background = '#ffeae4';
-        });
-
-        uploadArea.addEventListener('dragleave', () => {
-            uploadArea.style.background = '#fff5f0';
-        });
-
-        uploadArea.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadArea.style.background = '#fff5f0';
-            handleFiles(e.dataTransfer.files);
-        });
-
-        fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
-        });
-
-        function handleFiles(files) {
-            for (let file of files) {
-                if (file.size > 5 * 1024 * 1024) {
-                    showAlert(`${file.name} is too large (max 5MB)`, 'error');
-                    continue;
-                }
-                
-                uploadedFiles.push(file);
-                const fileItem = document.createElement('div');
-                fileItem.className = 'file-item';
-                fileItem.innerHTML = `
-                    <div>
-                        <i class="fas ${file.type.startsWith('image/') ? 'fa-file-image' : 'fa-file-pdf'}"></i>
-                        ${file.name}
-                    </div>
-                    <span class="remove-file" onclick="removeFile('${file.name}')">
-                        <i class="fas fa-times"></i>
-                    </span>
-                `;
-                fileList.appendChild(fileItem);
-            }
-        }
-
-        window.removeFile = function(filename) {
-            uploadedFiles = uploadedFiles.filter(f => f.name !== filename);
-            const items = document.querySelectorAll('.file-item');
-            items.forEach(item => {
-                if (item.textContent.includes(filename)) {
-                    item.remove();
-                }
-            });
+<script>
+    // Show alert function
+    function showAlert(message, type) {
+        const alertContainer = document.getElementById('alertContainer');
+        const icons = {
+            success: 'fa-check-circle',
+            error: 'fa-exclamation-circle',
+            info: 'fa-info-circle'
         };
+        
+        alertContainer.innerHTML = `
+            <div class="alert alert-${type}">
+                <i class="fas ${icons[type]}"></i>
+                <span>${message}</span>
+            </div>
+        `;
 
-        // Show alert function
-        function showAlert(message, type) {
-            const alertContainer = document.getElementById('alertContainer');
-            const icons = {
-                success: 'fa-check-circle',
-                error: 'fa-exclamation-circle',
-                info: 'fa-info-circle'
-            };
-            
-            alertContainer.innerHTML = `
-                <div class="alert alert-${type}">
-                    <i class="fas ${icons[type]}"></i>
-                    <span>${message}</span>
-                </div>
-            `;
+        setTimeout(() => {
+            alertContainer.innerHTML = '';
+        }, 5000);
+    }
 
-            setTimeout(() => {
-                alertContainer.innerHTML = '';
-            }, 5000);
+    // Handle registration form submission
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Get form values
+        const businessName = document.getElementById('businessName').value.trim();
+        const ownerName = document.getElementById('ownerName').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const phone = document.getElementById('phone').value.trim();
+        const businessAddress = document.getElementById('businessAddress').value.trim();
+        const city = document.getElementById('city').value;
+        const cuisine = document.getElementById('cuisine').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirmPassword').value;
+        const gst = document.getElementById('gst').value.trim();
+        const fssai = document.getElementById('fssai').value.trim();
+
+        // Validation
+        if (!businessName || !ownerName || !email || !phone || !businessAddress || !city || !cuisine || !password) {
+            showAlert('Please fill all required fields', 'error');
+            return;
         }
 
-        // Form submission
-        document.getElementById('registerForm').addEventListener('submit', async function(e) {
-            e.preventDefault();
+        // Email validation
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            showAlert('Please enter a valid email address', 'error');
+            return;
+        }
 
-            if (!document.getElementById('terms').checked) {
-                showAlert('Please accept the Terms of Service', 'error');
-                return;
-            }
+        // Phone validation
+        const phoneRegex = /^\d{10}$/;
+        if (!phoneRegex.test(phone)) {
+            showAlert('Please enter a valid 10-digit phone number', 'error');
+            return;
+        }
 
-            const submitBtn = document.getElementById('submitBtn');
-            const originalText = submitBtn.innerHTML;
-            submitBtn.innerHTML = '<span class="spinner"></span> Submitting...';
-            submitBtn.disabled = true;
+        if (password !== confirmPassword) {
+            showAlert('Passwords do not match', 'error');
+            return;
+        }
 
-            try {
-                // Collect form data
-                const formData = {
-                    businessName: document.getElementById('businessName').value,
-                    ownerName: document.getElementById('ownerName').value,
-                    email: document.getElementById('email').value,
-                    phone: document.getElementById('phone').value,
-                    address: document.getElementById('address').value,
-                    city: document.getElementById('city').value,
-                    pincode: document.getElementById('pincode').value,
-                    cuisine: document.getElementById('cuisine').value,
-                    yearsInBusiness: document.getElementById('yearsInBusiness').value,
-                    deliveryRadius: document.getElementById('deliveryRadius').value,
-                    fssai: document.getElementById('fssai').value,
-                    gst: document.getElementById('gst').value,
-                    pan: document.getElementById('pan').value,
-                    openTime: document.getElementById('openTime').value,
-                    closeTime: document.getElementById('closeTime').value,
-                    accountHolder: document.getElementById('accountHolder').value,
-                    bankName: document.getElementById('bankName').value,
-                    accountNumber: document.getElementById('accountNumber').value,
-                    ifsc: document.getElementById('ifsc').value,
-                    upi: document.getElementById('upi').value
-                };
+        if (password.length < 6) {
+            showAlert('Password must be at least 6 characters', 'error');
+            return;
+        }
 
-                // Simulate API call
-                await new Promise(resolve => setTimeout(resolve, 2000));
+        // Show loading
+        const registerBtn = document.getElementById('registerBtn');
+        const originalText = registerBtn.innerHTML;
+        registerBtn.innerHTML = '<span class="spinner"></span> Registering...';
+        registerBtn.disabled = true;
 
-                showAlert('Application submitted successfully! We will review and get back to you within 48 hours.', 'success');
+        try {
+            // 🔴 FIXED: Send all required fields including username
+            const response = await fetch('http://127.0.0.1:5000/api/provider/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: ownerName,           // Add username field
+                    businessName: businessName,
+                    ownerName: ownerName,
+                    email: email,
+                    phone: phone,
+                    businessAddress: businessAddress,
+                    city: city,
+                    cuisine: cuisine,
+                    password: password,
+                    gst: gst,
+                    fssai: fssai
+                })
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                showAlert('Registration successful! Redirecting to login...', 'success');
+                
+                // Store email for login page
+                localStorage.setItem('registeredEmail', email);
                 
                 setTimeout(() => {
                     window.location.href = 'login.html';
-                }, 3000);
-
-            } catch (error) {
-                showAlert('Submission failed. Please try again.', 'error');
-                submitBtn.innerHTML = originalText;
-                submitBtn.disabled = false;
+                }, 2000);
+            } else {
+                showAlert(data.error || 'Registration failed', 'error');
+                registerBtn.innerHTML = originalText;
+                registerBtn.disabled = false;
             }
-        });
-
-        // Initialize
-        showStep(1);
-    </script>
-      <!-- ✅ JS FILES -->
-    <script src="/frontend/assets/js/main.js"></script>
-    <script src="/frontend/assets/js/provider.js"></script>
-    <script src="/frontend/assets/js/translations.js"></script>
-    <script src="/frontend/assets/js/complaints.js"></script>   <!-- For complaints page -->
+        } catch (error) {
+            console.error('Registration error:', error);
+            showAlert('Network error. Please try again.', 'error');
+            registerBtn.innerHTML = originalText;
+            registerBtn.disabled = false;
+        }
+    });
+</script>
 </body>
 </html>
