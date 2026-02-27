@@ -237,3 +237,407 @@
 2026-02-24 14:55:07,947 - flask-limiter - INFO - ratelimit 50 per 1 hour (127.0.0.1) exceeded at endpoint: get_local_recommendations
 2026-02-24 14:55:07,949 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:07] "[31m[1mGET /api/recommendations/popular?limit=8 HTTP/1.1[0m" 429 -
 2026-02-24 14:55:07,950 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:07] "[31m[1mGET /api/local-recommendations?city=mumbai HTTP/1.1[0m" 429 -
+2026-02-26 21:55:40,643 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 21:55:40,648 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 21:55:40,649 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 21:55:40,654 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 21:55:40,658 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 21:55:40,659 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 21:55:40,698 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 21:55:40,699 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 21:56:14,931 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 21:56:14] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 21:56:14,977 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 21:56:14] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-26 21:56:18,969 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 21:56:18] "GET /api/languages HTTP/1.1" 200 -
+2026-02-26 21:56:22,227 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 21:56:22] "GET /api/recommendations/popular HTTP/1.1" 200 -
+2026-02-26 21:57:30,024 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 21:57:30] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 21:57:39,353 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 21:57:39] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:06:41,447 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:06:41,448 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:06:41,449 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:06:41,449 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:06:41,452 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:06:41,452 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:06:41,479 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 22:06:41,480 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 22:07:10,373 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:07:10] "[31m[1mGET /api/customer/register HTTP/1.1[0m" 405 -
+2026-02-26 22:15:40,811 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:15:40] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:18:18,569 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:18:18] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:18:18,655 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:18:18] "[33mGET /favicon.ico HTTP/1.1[0m" 404 -
+2026-02-26 22:19:23,879 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:19:23] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:19:26,928 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:19:26] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:19:28,930 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:19:28] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:19:29,277 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:19:29] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:19:37,006 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:19:37] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:20:20,031 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:20:20] "[31m[1mGET /api/customer/register HTTP/1.1[0m" 405 -
+2026-02-26 22:24:14,161 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:24:14,162 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:24:14,162 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:24:14,163 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:24:14,166 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:24:14,166 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:24:14,194 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 22:24:14,195 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 22:24:43,473 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:24:43] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:38:53,915 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:38:53,916 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:38:53,916 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:38:53,917 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:38:53,923 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:38:53,923 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:38:53,950 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 22:38:53,951 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 22:41:07,814 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:41:07] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:41:07,829 - __main__ - INFO - Registration attempt with data: {'username': 'Pranjal Vakte', 'email': 'waktepranjal@gmail.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'ghdyt', 'line2': 'tdysyrt', 'landmark': 'fdrysytdjj', 'city': 'nashik', 'state': 'Maharashtra', 'pincode': '154782', 'area': 'east'}, 'receiveOffers': True}
+2026-02-26 22:41:07,835 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 22:41:07,838 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:41:07] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 22:41:10,242 - __main__ - INFO - Registration attempt with data: {'username': 'Pranjal Vakte', 'email': 'waktepranjal@gmail.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'ghdyt', 'line2': 'tdysyrt', 'landmark': 'fdrysytdjj', 'city': 'nashik', 'state': 'Maharashtra', 'pincode': '154782', 'area': 'east'}, 'receiveOffers': True}
+2026-02-26 22:41:10,246 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 22:41:10,248 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:41:10] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 22:54:08,315 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:54:08] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:54:08,329 - __main__ - INFO - Registration attempt with data: {'username': 'Pranjal Vakte', 'email': 'waktepranjal@gmail.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'ghdyt', 'line2': 'tdysyrt', 'landmark': 'fdrysytdjj', 'city': 'nashik', 'state': 'Maharashtra', 'pincode': '154782', 'area': 'east'}, 'receiveOffers': True}
+2026-02-26 22:54:08,335 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 22:54:08,338 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:54:08] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 22:54:16,582 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:54:16] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 22:54:16,586 - __main__ - INFO - Registration attempt with data: {'username': 'Pranjal Vakte', 'email': 'waktepranjal@gmail.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'ghdyt', 'line2': 'tdysyrt', 'landmark': 'fdrysytdjj', 'city': 'nashik', 'state': 'Maharashtra', 'pincode': '154782', 'area': 'east'}, 'receiveOffers': True}
+2026-02-26 22:54:16,588 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 22:54:16,589 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:54:16] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 22:58:45,184 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:58:45,187 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:58:45,189 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:58:45,191 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:58:45,197 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:58:45,197 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:58:45,226 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 22:58:45,226 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 23:00:01,637 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:00:01] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:00:01,654 - __main__ - INFO - Registration attempt with data: {'username': 'Pranjal Vakte', 'email': 'test@example.com', 'password': 'password123', 'phone': '8010336706', 'address': {'line1': 'trtg', 'line2': 'hgfyt', 'landmark': 'gcyrhed', 'city': 'Mumbai', 'state': 'Maharashtra', 'pincode': '423111', 'area': ''}, 'receiveOffers': True}
+2026-02-26 23:00:01,659 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 23:00:01,663 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:00:01] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 23:00:03,653 - __main__ - INFO - Registration attempt with data: {'username': 'Pranjal Vakte', 'email': 'test@example.com', 'password': 'password123', 'phone': '8010336706', 'address': {'line1': 'trtg', 'line2': 'hgfyt', 'landmark': 'gcyrhed', 'city': 'Mumbai', 'state': 'Maharashtra', 'pincode': '423111', 'area': ''}, 'receiveOffers': True}
+2026-02-26 23:00:03,655 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 23:00:03,656 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:00:03] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 23:09:14,045 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 23:09:14,047 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 23:09:14,048 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 23:09:14,049 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 23:09:14,054 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 23:09:14,054 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 23:09:14,109 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 23:09:14,109 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 23:11:48,648 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:48] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:11:51,282 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:51] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:12:17,370 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:12:17] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:13:20,160 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:13:20] "GET / HTTP/1.1" 200 -
+2026-02-26 23:23:39,666 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:23:39] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 23:26:47,675 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:26:47] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 23:26:57,106 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:26:57] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 23:27:22,014 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:27:22] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 23:30:14,657 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:30:14] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:30:14,664 - __main__ - INFO - Registration attempt with data: {'username': 'ugttdghftdg jhydyhfv', 'email': 'test@example.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'hgst', 'line2': 'hfyt', 'landmark': 'ytyed', 'city': 'Mumbai', 'state': 'Maharashtra', 'pincode': '451323', 'area': ''}, 'receiveOffers': True}
+2026-02-26 23:30:14,668 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 23:30:14,670 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:30:14] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 23:37:27,707 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:37:27] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:37:27,720 - __main__ - INFO - Registration attempt with data: {'username': 'ugttdghftdg jhydyhfv', 'email': 'test@example.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'hgst', 'line2': 'hfyt', 'landmark': 'ytyed', 'city': 'Mumbai', 'state': 'Maharashtra', 'pincode': '451323', 'area': ''}, 'receiveOffers': True}
+2026-02-26 23:37:27,726 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 23:37:27,730 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:37:27] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-26 23:47:02,359 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 23:47:02,360 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 23:47:02,361 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 23:47:02,362 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 23:47:02,366 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 23:47:02,367 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 23:47:02,407 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-26 23:47:02,408 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 23:47:21,498 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:47:21] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 23:53:30,723 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:53:30] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-26 23:53:30,733 - __main__ - INFO - Registration attempt with data: {'username': 'ugttdghftdg jhydyhfv', 'email': 'test@example.com', 'password': '123456789', 'phone': '8010336706', 'address': {'line1': 'hgst', 'line2': 'hfyt', 'landmark': 'ytyed', 'city': 'Mumbai', 'state': 'Maharashtra', 'pincode': '451323', 'area': ''}, 'receiveOffers': True}
+2026-02-26 23:53:30,739 - __main__ - INFO - User creation result: {'success': False, 'error': 'no such table: users'}
+2026-02-26 23:53:30,742 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:53:30] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:02:28,489 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:02:28,492 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:02:28,493 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:02:28,494 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:02:28,499 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:02:28,499 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:02:28,557 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-27 00:02:28,558 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-27 00:02:40,098 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:02:40] "GET /api/health HTTP/1.1" 200 -
+2026-02-27 00:15:16,686 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:15:16,687 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:15:16,688 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:15:16,689 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:15:16,695 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:15:16,695 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:16:14,050 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:16:14,051 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:16:14,052 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:16:14,053 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:16:14,058 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:16:14,058 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:16:34,874 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:16:34,875 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:16:34,876 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:16:34,877 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:16:34,880 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:16:34,880 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:20:48,810 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:20:48,811 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:20:48,811 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:20:48,812 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:20:48,817 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:20:48,817 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:38:28,892 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:38:28,894 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:38:28,894 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:38:28,895 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:38:28,910 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:38:28,911 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:38:28,959 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-27 00:38:28,960 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-27 00:39:44,528 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:39:44] "GET /api/health HTTP/1.1" 200 -
+2026-02-27 00:40:23,506 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:40:23] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:40:23,726 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:40:23] "[35m[1mPOST /api/customer/register HTTP/1.1[0m" 201 -
+2026-02-27 00:41:00,568 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:41:00] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:41:00,595 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:41:00] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:41:09,250 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:41:09] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:41:09,274 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:41:09] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:41:36,997 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:41:36] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:41:37,021 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:41:37] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:42:23,701 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:42:23] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:42:29,427 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:42:29] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:42:36,650 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:42:36] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:42:42,378 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:42:42] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:44:58,674 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-27 00:44:58,675 - services.recommendation - INFO - Created 10 sample meals
+2026-02-27 00:44:58,676 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-27 00:44:58,677 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-27 00:44:58,680 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-27 00:44:58,680 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-27 00:44:58,705 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.3:5000
+2026-02-27 00:44:58,705 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-27 00:48:07,956 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:48:07] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:48:08,170 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:48:08] "[35m[1mPOST /api/customer/register HTTP/1.1[0m" 201 -
+2026-02-27 00:49:43,870 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:49:43] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:49:43,903 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:49:43] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:50:07,604 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:50:07] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:50:07,806 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:50:07] "[35m[1mPOST /api/customer/register HTTP/1.1[0m" 201 -
+2026-02-27 00:54:50,686 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:54:50] "GET /api/health HTTP/1.1" 200 -
+2026-02-27 00:54:53,084 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:54:53] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:54:53,118 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:54:53] "[31m[1mPOST /api/customer/register HTTP/1.1[0m" 400 -
+2026-02-27 00:55:21,520 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:55:21] "GET /api/health HTTP/1.1" 200 -
+2026-02-27 00:55:22,600 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:55:22] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 00:55:22,745 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:55:22] "[35m[1mPOST /api/customer/register HTTP/1.1[0m" 201 -
+2026-02-27 00:56:36,615 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:36,619 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "[33mOPTIONS /api/mess/nearby HTTP/1.1[0m" 404 -
+2026-02-27 00:56:36,645 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:36,877 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:36,880 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:36,882 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:36,887 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:36,922 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:36,926 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:36] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:37,195 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:37,215 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:37,219 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:37,382 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:37,531 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:37,535 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 00:56:37,697 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 00:56:37,850 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 00:56:37] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:55,086 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:55,093 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:55,366 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:55,367 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:55,368 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:55,370 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:55,393 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:55,394 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:55,695 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:55,702 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:55,703 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:55,877 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:55] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:56,026 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:56] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:56,026 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:56] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:10:56,200 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:56] "GET /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:10:56,349 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:10:56] "GET /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:12:16,133 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:12:16] "GET /api/health HTTP/1.1" 200 -
+2026-02-27 01:12:17,306 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:12:17] "OPTIONS /api/customer/register HTTP/1.1" 200 -
+2026-02-27 01:12:17,416 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:12:17] "[35m[1mPOST /api/customer/register HTTP/1.1[0m" 201 -
+2026-02-27 01:23:31,891 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:31] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:23:31,898 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:31] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:23:32,206 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:23:32,210 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:23:32,212 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:23:32,213 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:23:32,214 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:23:32,216 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:23:32,534 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:23:32,535 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:23:32,537 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:23:32,862 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:23:32,864 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:32] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:23:33,186 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:33] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:23:33,187 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:33] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:23:33,500 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:23:33] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:25:18,672 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:25:18,681 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:25:18,983 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:25:18,985 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:25:18,988 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:25:18,989 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:25:18,991 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:25:18,994 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:18] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:25:19,316 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:25:19,317 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:25:19,320 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:25:19,649 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:25:19,651 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:25:19,965 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:25:19,968 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:19] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:25:20,283 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:25:20] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:33:37,404 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:33:37] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:33:37,407 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:33:37] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:33:37,664 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:33:37] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:33:37,729 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:33:37] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:34:18,882 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:34:18] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:34:19,190 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:34:19] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:34:19,192 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:34:19] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:34:19,510 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:34:19] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:36:03,333 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:36:03] "[33mOPTIONS /api/payment/transactions?limit=10 HTTP/1.1[0m" 404 -
+2026-02-27 01:36:03,336 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:36:03] "[33mOPTIONS /api/payment/methods HTTP/1.1[0m" 404 -
+2026-02-27 01:36:07,584 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:36:07] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:36:07,899 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:36:07] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:36:07,902 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:36:07] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:36:08,217 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:36:08] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:41:15,793 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:41:15] "[33mOPTIONS /api/payment/methods HTTP/1.1[0m" 404 -
+2026-02-27 01:41:15,797 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:41:15] "[33mOPTIONS /api/payment/transactions?limit=10 HTTP/1.1[0m" 404 -
+2026-02-27 01:41:57,268 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:41:57] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:41:57,584 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:41:57] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:41:57,588 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:41:57] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:41:57,916 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:41:57] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:46:34,903 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:46:34] "[33mOPTIONS /api/payment/methods HTTP/1.1[0m" 404 -
+2026-02-27 01:46:34,906 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:46:34] "[33mOPTIONS /api/payment/transactions?limit=10 HTTP/1.1[0m" 404 -
+2026-02-27 01:53:44,535 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:44] "[33mOPTIONS /api/payment/methods HTTP/1.1[0m" 404 -
+2026-02-27 01:53:44,539 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:44] "[33mOPTIONS /api/payment/transactions?limit=10 HTTP/1.1[0m" 404 -
+2026-02-27 01:53:48,310 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:48] "[33mOPTIONS /api/payment/methods HTTP/1.1[0m" 404 -
+2026-02-27 01:53:48,616 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:48] "[33mOPTIONS /api/payment/transactions?limit=10 HTTP/1.1[0m" 404 -
+2026-02-27 01:53:52,204 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:52] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:53:52,207 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:52] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
+2026-02-27 01:53:52,465 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:52] "[31m[1mGET /api/customer/orders?limit=3 HTTP/1.1[0m" 422 -
+2026-02-27 01:53:52,520 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:53:52] "[31m[1mGET /api/customer/subscriptions HTTP/1.1[0m" 422 -
+2026-02-27 01:54:00,652 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:54:00] "OPTIONS /api/customer/orders?limit=3 HTTP/1.1" 200 -
+2026-02-27 01:54:00,969 - werkzeug - INFO - 127.0.0.1 - - [27/Feb/2026 01:54:00] "OPTIONS /api/customer/subscriptions HTTP/1.1" 200 -
