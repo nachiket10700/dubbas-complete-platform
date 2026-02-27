@@ -51,8 +51,8 @@ app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(days=7)
 # Apply proxy fix for production
 app.wsgi_app = ProxyFix(app.wsgi_app, x_for=1, x_proto=1, x_host=1, x_prefix=1)
 
-# Enable CORS
-CORS(app, supports_credentials=True, origins=['https://dabbas.com', 'http://localhost:8000'])
+#Enable CORS for all routes and allow frontend origin
+CORS(app, origins=['http://127.0.0.1:5500', 'http://localhost:5500', 'http://192.168.1.5:5500'])
 
 # Initialize JWT
 jwt = JWTManager(app)
@@ -61,10 +61,9 @@ jwt = JWTManager(app)
 limiter = Limiter(
     app=app,
     key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"],
-    storage_uri="redis://redis:6379/0" if os.getenv('REDIS_URL') else "memory://"
+    default_limits=["10000 per day", "1000 per hour"],  # Very high limits
+    storage_uri="memory://"
 )
-
 # ============================================================================
 # Import Models and Services
 # ============================================================================
@@ -1984,3 +1983,175 @@ def reset_password():
     #     return jsonify({'success': True})
     
     return jsonify({'success': False, 'error': 'Invalid or expired token'})
+# Provider Registration Endpoint
+@app.route('/api/provider/register', methods=['POST'])
+def provider_register():
+    try:
+        data = request.json
+        
+        # Validate required fields
+        required_fields = ['businessName', 'ownerName', 'email', 'password', 'phone', 'businessAddress', 'city', 'cuisine']
+        for field in required_fields:
+            if field not in data:
+                return jsonify({'success': False, 'error': f'Missing required field: {field}'}), 400
+        
+        # Check if provider already exists
+        conn = sqlite3.connect('database/dabbas.db')
+        cursor = conn.cursor()
+        
+        cursor.execute('SELECT email FROM providers WHERE email = ?', (data['email'],))
+        if cursor.fetchone():
+            conn.close()
+            return jsonify({'success': False, 'error': 'Email already registered'}), 400
+        
+        # Hash password
+        import hashlib
+        password_hash = hashlib.sha256(data['password'].encode()).hexdigest()
+        
+        # Generate provider ID
+        import secrets
+        provider_id = f"PROV{secrets.token_hex(4).upper()}"
+        
+        # Insert into users table first
+        cursor.execute('''
+            INSERT INTO users (id, username, email, password_hash, role, status, created_at)
+            VALUES (?, ?, ?, ?, ?, ?, ?)
+        ''', (provider_id, data['ownerName'], data['email'], password_hash, 'provider', 'pending', datetime.now()))
+        
+        # Insert into providers table
+        cursor.execute('''
+            INSERT INTO providers (
+                user_id, business_name, owner_name, email, phone, 
+                business_address, city, cuisine, gst_number, fssai_license,
+                opening_time, closing_time, status, created_at
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        ''', (
+            provider_id,
+            data['businessName'],
+            data['ownerName'],
+            data['email'],
+            data['phone'],
+            data['businessAddress'],
+            data['city'],
+            data['cuisine'],
+            data.get('gst', ''),
+            data.get('fssai', ''),
+            data.get('openTime', '09:00'),
+            data.get('closeTime', '21:00'),
+            'pending',
+            datetime.now()
+        ))
+        
+        conn.commit()
+        conn.close()
+        
+        # Send welcome email (optional)
+        # email_service.send_provider_welcome(data['email'], data['businessName'])
+        
+        return jsonify({
+            'success': True,
+            'message': 'Provider registered successfully. Pending verification.',
+            'provider_id': provider_id
+        }), 201
+        
+    except Exception as e:
+        print(f"Provider registration error: {str(e)}")
+        return jsonify({'success': False, 'error': 'Registration failed'}), 500
+
+# Provider Login Endpoint
+@app.route('/api/provider/login', methods=['POST'])
+def provider_login():
+    try:
+        data = request.json
+        email = data.get('email')
+        password = data.get('password')
+        
+        if not email or not password:
+            return jsonify({'success': False, 'error': 'Email and password required'}), 400
+        
+        # Hash password
+        import hashlib
+        password_hash = hashlib.sha256(password.encode()).hexdigest()
+        
+        conn = sqlite3.connect('database/dabbas.db')
+        cursor = conn.cursor()
+        
+        # Check credentials
+        cursor.execute('''
+            SELECT u.id, u.username, u.role, u.status, p.business_name, p.owner_name
+            FROM users u
+            LEFT JOIN providers p ON u.id = p.user_id
+            WHERE u.email = ? AND u.password_hash = ? AND u.role = 'provider'
+        ''', (email, password_hash))
+        
+        user = cursor.fetchone()
+        conn.close()
+        
+        if user:
+            # Generate JWT token (simplified for demo)
+            import secrets
+            token = secrets.token_hex(16)
+            
+            # Update last login
+            # (you can add this later)
+            
+            return jsonify({
+                'success': True,
+                'token': token,
+                'user_id': user[0],
+                'username': user[4] or user[1],  # business_name or owner_name
+                'business_name': user[4],
+                'role': user[2],
+                'status': user[3]
+            })
+        else:
+            return jsonify({'success': False, 'error': 'Invalid email or password'}), 401
+            
+    except Exception as e:
+        print(f"Provider login error: {str(e)}")
+        return jsonify({'success': False, 'error': 'Login failed'}), 500
+
+# Get Provider Profile
+@app.route('/api/provider/profile', methods=['GET'])
+@jwt_required()
+def get_provider_profile():
+    try:
+        user_id = get_jwt_identity()
+        
+        conn = sqlite3.connect('database/dabbas.db')
+        cursor = conn.cursor()
+        
+        cursor.execute('''
+            SELECT p.*, u.email, u.status
+            FROM providers p
+            JOIN users u ON p.user_id = u.id
+            WHERE p.user_id = ?
+        ''', (user_id,))
+        
+        provider = cursor.fetchone()
+        conn.close()
+        
+        if provider:
+            return jsonify({
+                'success': True,
+                'profile': {
+                    'business_name': provider[1],
+                    'owner_name': provider[2],
+                    'email': provider[3],
+                    'phone': provider[4],
+                    'business_address': provider[5],
+                    'city': provider[6],
+                    'cuisine': provider[7],
+                    'gst_number': provider[8],
+                    'fssai_license': provider[9],
+                    'opening_time': provider[10],
+                    'closing_time': provider[11],
+                    'status': provider[13]
+                }
+            })
+        else:
+            return jsonify({'success': False, 'error': 'Provider not found'}), 404
+            
+    except Exception as e:
+        print(f"Get profile error: {str(e)}")
+        return jsonify({'success': False, 'error': 'Failed to load profile'}), 500

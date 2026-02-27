@@ -525,11 +525,11 @@ class EmailService:
         """
         
         return self.send_email(email, subject, html_content)
-    def send_password_reset(self, email, reset_link):
-     subject = "Reset Your Password - Dabba's"
-     html_content = f"""
-       <html>
-             <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
+        def send_password_reset(self, email, reset_link):
+                subject = "Reset Your Password - Dabba's"
+                html_content = f"""
+                <html>
+            <body style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
                 <div style="background: linear-gradient(135deg, #ff6b6b, #ff8e8e); padding: 20px; text-align: center;">
                     <h1 style="color: white; margin: 0;">Dabba's</h1>
                 </div>
@@ -547,7 +547,7 @@ class EmailService:
                     <hr style="border: none; border-top: 1px solid #eee; margin: 20px 0;">
                     <p style="color: #999; font-size: 12px;">&copy; 2025 Dabba's. All rights reserved.</p>
                 </div>
-             </body>
+            </body>
         </html>
-        """ 
-        return self.send_email(email, subject, html_content)
+        """
+                return self.send_email(email, subject, html_content)

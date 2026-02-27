@@ -6,18 +6,14 @@
     <title>Provider Login - Dabba's</title>
     
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <!-- ✅ CSS FILES -->
+    <!-- CSS Files -->
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
-    <link rel="stylesheet" href="/frontend/assets/css/provider.css">
-    <link rel="stylesheet" href="/frontend/assets/css/complaints.css"> <!-- For complaints page -->
+    
     <style>
         * {
             margin: 0;
@@ -32,48 +28,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative;
-            overflow-x: hidden;
         }
 
-        /* Background Decoration */
-        .bg-circle {
-            position: absolute;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(78, 205, 196, 0.1));
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .circle1 {
-            width: 300px;
-            height: 300px;
-            top: -150px;
-            left: -150px;
-        }
-
-        .circle2 {
-            width: 400px;
-            height: 400px;
-            bottom: -200px;
-            right: -200px;
-            animation-delay: -3s;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(0deg); }
-            50% { transform: translateY(-30px) rotate(5deg); }
-        }
-
-        /* Main Container */
         .login-container {
             width: 100%;
             max-width: 450px;
             margin: 2rem;
-            position: relative;
-            z-index: 10;
         }
 
-        /* Logo */
         .logo {
             text-align: center;
             margin-bottom: 2rem;
@@ -86,7 +48,6 @@
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             text-decoration: none;
-            letter-spacing: -0.5px;
         }
 
         .logo span {
@@ -102,46 +63,27 @@
             margin-top: 0.5rem;
         }
 
-        /* Login Card */
         .login-card {
             background: white;
-            border-radius: 30px;
-            padding: 3rem 2.5rem;
+            border-radius: 20px;
+            padding: 2.5rem;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 107, 107, 0.1);
         }
 
         .login-header {
             text-align: center;
-            margin-bottom: 2.5rem;
+            margin-bottom: 2rem;
         }
 
         .login-header h2 {
-            font-size: 2.2rem;
-            font-weight: 700;
-            color: #2d2d2d;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
         }
 
         .login-header p {
             color: #666;
-            font-size: 1rem;
         }
 
-        .login-header p a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .login-header p a:hover {
-            color: #ff8e8e;
-            text-decoration: underline;
-        }
-
-        /* Badge */
         .provider-badge {
             display: inline-block;
             padding: 0.3rem 1rem;
@@ -149,11 +91,9 @@
             color: white;
             border-radius: 50px;
             font-size: 0.8rem;
-            font-weight: 600;
             margin-bottom: 1rem;
         }
 
-        /* Form */
         .form-group {
             margin-bottom: 1.5rem;
         }
@@ -162,32 +102,17 @@
             display: block;
             margin-bottom: 0.5rem;
             font-weight: 500;
-            color: #2d2d2d;
-            font-size: 0.95rem;
         }
 
         .input-group {
             position: relative;
-            display: flex;
-            align-items: center;
         }
 
         .input-group i {
             position: absolute;
             left: 1rem;
-            color: #ff6b6b;
-            font-size: 1.2rem;
-        }
-
-        .input-group .toggle-password {
-            left: auto;
-            right: 1rem;
-            cursor: pointer;
-            color: #999;
-            transition: 0.3s;
-        }
-
-        .input-group .toggle-password:hover {
+            top: 50%;
+            transform: translateY(-50%);
             color: #ff6b6b;
         }
 
@@ -195,23 +120,15 @@
             width: 100%;
             padding: 1rem 1rem 1rem 3rem;
             border: 2px solid #f0f0f0;
-            border-radius: 15px;
+            border-radius: 10px;
             font-size: 1rem;
-            transition: all 0.3s ease;
-            font-family: 'Inter', sans-serif;
         }
 
         .input-group input:focus {
             outline: none;
             border-color: #ff6b6b;
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.1);
         }
 
-        .input-group input::placeholder {
-            color: #999;
-        }
-
-        /* Form Options */
         .form-options {
             display: flex;
             justify-content: space-between;
@@ -223,48 +140,31 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            cursor: pointer;
             color: #666;
-        }
-
-        .remember-me input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-            accent-color: #ff6b6b;
         }
 
         .forgot-password {
             color: #ff6b6b;
             text-decoration: none;
-            font-weight: 500;
-            transition: 0.3s;
         }
 
-        .forgot-password:hover {
-            color: #ff8e8e;
-            text-decoration: underline;
-        }
-
-        /* Login Button */
         .btn-login {
             width: 100%;
             padding: 1.2rem;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
             border: none;
-            border-radius: 15px;
+            border-radius: 10px;
             font-size: 1.1rem;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
             margin-bottom: 1.5rem;
         }
 
         .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
 
         .btn-login:disabled {
@@ -272,37 +172,18 @@
             cursor: not-allowed;
         }
 
-        /* Register Link */
         .register-link {
             text-align: center;
-            margin: 1.5rem 0;
-            padding-top: 1.5rem;
             border-top: 1px solid #f0f0f0;
+            padding-top: 1.5rem;
         }
 
-        .register-link p {
-            color: #666;
-            margin-bottom: 1rem;
-        }
-
-        .btn-register {
-            display: inline-block;
-            padding: 0.8rem 2rem;
-            background: transparent;
-            border: 2px solid #ff6b6b;
-            border-radius: 50px;
+        .register-link a {
             color: #ff6b6b;
-            font-weight: 600;
             text-decoration: none;
-            transition: all 0.3s ease;
+            font-weight: 600;
         }
 
-        .btn-register:hover {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        /* Alert Messages */
         .alert {
             padding: 1rem;
             border-radius: 10px;
@@ -310,43 +191,18 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            animation: slideIn 0.3s ease;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
 
         .alert-success {
             background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
         }
 
         .alert-error {
             background: #f8d7da;
             color: #721c24;
-            border: 1px solid #f5c6cb;
         }
 
-        .alert-info {
-            background: #d1ecf1;
-            color: #0c5460;
-            border: 1px solid #bee5eb;
-        }
-
-        .alert i {
-            font-size: 1.2rem;
-        }
-
-        /* Loading Spinner */
         .spinner {
             display: inline-block;
             width: 20px;
@@ -355,90 +211,43 @@
             border-radius: 50%;
             border-top-color: white;
             animation: spin 1s ease-in-out infinite;
-            margin-right: 0.5rem;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
-
-        /* Footer */
-        .login-footer {
-            text-align: center;
-            margin-top: 2rem;
-            color: rgba(255,255,255,0.7);
-        }
-
-        .login-footer a {
-            color: #ff6b6b;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-
-        .login-footer a:hover {
-            color: #ff8e8e;
-            text-decoration: underline;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .login-card {
-                padding: 2rem 1.5rem;
-            }
-
-            .login-header h2 {
-                font-size: 1.8rem;
-            }
-
-            .form-options {
-                flex-direction: column;
-                gap: 1rem;
-                align-items: flex-start;
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Background Circles -->
-    <div class="bg-circle circle1"></div>
-    <div class="bg-circle circle2"></div>
-
-    <!-- Login Container -->
-    <div class="login-container" data-aos="fade-up">
-        <!-- Logo -->
+    <div class="login-container">
         <div class="logo">
             <a href="/frontend/index.html">Dabba<span>'s</span></a>
             <small>Partner Portal</small>
         </div>
 
-        <!-- Login Card -->
         <div class="login-card">
             <div class="login-header">
                 <span class="provider-badge">🍽️ Food Partner</span>
-                <h2>Welcome Back! 👨‍🍳</h2>
-                <p>New partner? <a href="register.html">Register your business</a></p>
+                <h2>Welcome Back!</h2>
+                <p>New partner? <a href="register.html">Register here</a></p>
             </div>
 
-            <!-- Alert Container -->
             <div id="alertContainer"></div>
 
-            <!-- Login Form -->
             <form id="loginForm">
                 <div class="form-group">
-                    <label for="email">Business Email</label>
+                    <label>Email</label>
                     <div class="input-group">
                         <i class="fas fa-envelope"></i>
-                        <input type="email" id="email" name="email" placeholder="your@restaurant.com" required>
+                        <input type="email" id="email" required>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Password</label>
+                    <label>Password</label>
                     <div class="input-group">
                         <i class="fas fa-lock"></i>
-                        <input type="password" id="password" name="password" placeholder="Enter your password" required>
-                        <i class="fas fa-eye toggle-password" id="togglePassword"></i>
+                        <input type="password" id="password" required>
                     </div>
                 </div>
 
@@ -447,55 +256,21 @@
                         <input type="checkbox" id="rememberMe">
                         <span>Remember me</span>
                     </label>
-                    <a href="/frontend/provider/forgot-password.html" class="forgot-password">Forgot password?</a>
+                    <a href="forgot-password.html" class="forgot-password">Forgot password?</a>
                 </div>
 
                 <button type="submit" class="btn-login" id="loginBtn">
-                    <span>Login to Dashboard</span>
+                    Login to Dashboard
                 </button>
             </form>
 
-            <!-- Register Link -->
             <div class="register-link">
-                <p>Don't have a partner account?</p>
-                <a href="register.html" class="btn-register">Register Your Business</a>
+                <p>Don't have an account? <a href="register.html">Register your business</a></p>
             </div>
-
-            <!-- Demo Credentials -->
-            <div style="text-align: center; margin-top: 1.5rem; padding-top: 1rem; border-top: 1px dashed #f0f0f0;">
-                <p style="color: #999; font-size: 0.85rem; margin-bottom: 0.5rem;">Demo Credentials:</p>
-                <p style="color: #666; font-size: 0.8rem;">Email: kitchen@demo.com<br>Password: demo123</p>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="login-footer">
-            <p><a href="/frontend/index.html">← Back to Home</a></p>
         </div>
     </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-
-        // Toggle Password Visibility
-        const togglePassword = document.getElementById('togglePassword');
-        const passwordInput = document.getElementById('password');
-
-        togglePassword.addEventListener('click', function() {
-            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', type);
-            this.classList.toggle('fa-eye');
-            this.classList.toggle('fa-eye-slash');
-        });
-
-        // Show Alert Function
         function showAlert(message, type) {
             const alertContainer = document.getElementById('alertContainer');
             const icons = {
@@ -511,13 +286,18 @@
                 </div>
             `;
 
-            // Auto hide after 5 seconds
             setTimeout(() => {
                 alertContainer.innerHTML = '';
             }, 5000);
         }
 
-        // Handle Login Form Submission
+        // Auto-fill email from registration
+        const registeredEmail = localStorage.getItem('registeredEmail');
+        if (registeredEmail) {
+            document.getElementById('email').value = registeredEmail;
+            localStorage.removeItem('registeredEmail'); // Clear after use
+        }
+
         document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
 
@@ -525,65 +305,30 @@
             const password = document.getElementById('password').value;
             const rememberMe = document.getElementById('rememberMe').checked;
 
-            // Get login button and show loading state
             const loginBtn = document.getElementById('loginBtn');
             const originalText = loginBtn.innerHTML;
             loginBtn.innerHTML = '<span class="spinner"></span> Logging in...';
             loginBtn.disabled = true;
 
             try {
-                // Demo login for testing (remove in production)
-                if (email === 'kitchen@demo.com' && password === 'demo123') {
-                    setTimeout(() => {
-                        // Store session
-                        if (rememberMe) {
-                            localStorage.setItem('token', 'demo-token-provider');
-                            localStorage.setItem('userId', 'PROV001');
-                            localStorage.setItem('userRole', 'provider');
-                            localStorage.setItem('username', 'Spice Kitchen');
-                        } else {
-                            sessionStorage.setItem('token', 'demo-token-provider');
-                            sessionStorage.setItem('userId', 'PROV001');
-                            sessionStorage.setItem('userRole', 'provider');
-                            sessionStorage.setItem('username', 'Spice Kitchen');
-                        }
-
-                        showAlert('Login successful! Redirecting...', 'success');
-
-                        setTimeout(() => {
-                            window.location.href = 'dashboard.html';
-                        }, 1500);
-                    }, 1000);
-                    return;
-                }
-
-                // Real API call
-                const response = await fetch('http://127.0.0.1:5000/api/provider/login', {
+                const response = await fetch('http://localhost:5000/api/provider/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({
-                        email: email,
-                        password: password
-                    })
+                    body: JSON.stringify({ email, password })
                 });
 
                 const data = await response.json();
 
                 if (data.success) {
-                    // Store token and user info
-                    if (rememberMe) {
-                        localStorage.setItem('token', data.token);
-                        localStorage.setItem('userId', data.user_id);
-                        localStorage.setItem('userRole', 'provider');
-                        localStorage.setItem('username', data.username || data.business_name);
-                    } else {
-                        sessionStorage.setItem('token', data.token);
-                        sessionStorage.setItem('userId', data.user_id);
-                        sessionStorage.setItem('userRole', 'provider');
-                        sessionStorage.setItem('username', data.username || data.business_name);
-                    }
+                    // Store session
+                    const storage = rememberMe ? localStorage : sessionStorage;
+                    storage.setItem('token', data.token);
+                    storage.setItem('userId', data.user_id);
+                    storage.setItem('userRole', 'provider');
+                    storage.setItem('username', data.username);
+                    storage.setItem('businessName', data.business_name);
 
                     showAlert('Login successful! Redirecting...', 'success');
 
@@ -592,52 +337,16 @@
                     }, 1500);
                 } else {
                     showAlert(data.error || 'Invalid email or password', 'error');
-                    
                     loginBtn.innerHTML = originalText;
                     loginBtn.disabled = false;
                 }
             } catch (error) {
                 console.error('Login error:', error);
-                showAlert('Network error. Using demo mode.', 'info');
-                
-                // Fallback to demo mode
-                setTimeout(() => {
-                    if (rememberMe) {
-                        localStorage.setItem('token', 'demo-token-provider');
-                        localStorage.setItem('userId', 'PROV001');
-                        localStorage.setItem('userRole', 'provider');
-                        localStorage.setItem('username', 'Spice Kitchen');
-                    } else {
-                        sessionStorage.setItem('token', 'demo-token-provider');
-                        sessionStorage.setItem('userId', 'PROV001');
-                        sessionStorage.setItem('userRole', 'provider');
-                        sessionStorage.setItem('username', 'Spice Kitchen');
-                    }
-
-                    showAlert('Demo mode activated!', 'success');
-
-                    setTimeout(() => {
-                        window.location.href = 'dashboard.html';
-                    }, 1500);
-                }, 1000);
+                showAlert('Network error. Please try again.', 'error');
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
             }
         });
-
-        
-
-        // Demo login (for testing)
-        function demoLogin() {
-            document.getElementById('email').value = 'kitchen@demo.com';
-            document.getElementById('password').value = 'demo123';
-        }
-
-        // Auto-fill demo credentials for testing
-        demoLogin();
     </script>
-      <!-- ✅ JS FILES -->
-    <script src="/frontend/assets/js/main.js"></script>
-    <script src="/frontend/assets/js/provider.js"></script>
-    <script src="/frontend/assets/js/translations.js"></script>
-    <script src="/frontend/assets/js/complaints.js"></script>   <!-- For complaints page -->
 </body>
 </html>

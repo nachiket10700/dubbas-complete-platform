@@ -237,3 +237,131 @@
 2026-02-24 14:55:07,947 - flask-limiter - INFO - ratelimit 50 per 1 hour (127.0.0.1) exceeded at endpoint: get_local_recommendations
 2026-02-24 14:55:07,949 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:07] "[31m[1mGET /api/recommendations/popular?limit=8 HTTP/1.1[0m" 429 -
 2026-02-24 14:55:07,950 - werkzeug - INFO - 127.0.0.1 - - [24/Feb/2026 14:55:07] "[31m[1mGET /api/local-recommendations?city=mumbai HTTP/1.1[0m" 429 -
+2026-02-26 22:02:55,118 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:02:55,124 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:02:55,125 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:02:55,127 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:02:55,136 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:02:55,136 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:02:55,194 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2026-02-26 22:02:55,194 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 22:06:45,352 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:06:45] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:06:53,802 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:06:53] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:06:56,347 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:06:56] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:46:15,838 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:46:15,841 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:46:15,844 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:46:15,848 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:46:15,881 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:46:15,882 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:46:15,940 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2026-02-26 22:46:15,941 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 22:47:55,951 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:47:55] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:09,236 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:09] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:20,351 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:20] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:29,289 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:29] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:31,057 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:31] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:31,710 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:31] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:39,696 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:39] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:50:42,165 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:50:42] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:54:48,337 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:54:48] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:14,023 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:14] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:31,260 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:31,579 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:31,619 - werkzeug - INFO - 192.168.1.5 - - [26/Feb/2026 22:56:31] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:34,689 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:34] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:34,698 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:34] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:34,716 - werkzeug - INFO - 192.168.1.5 - - [26/Feb/2026 22:56:34] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,395 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,498 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,643 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,703 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,813 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,888 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,961 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:35,966 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:56:35] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:56:36,001 - werkzeug - INFO - 192.168.1.5 - - [26/Feb/2026 22:56:36] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:57:58,856 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 22:57:58,857 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 22:57:58,859 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 22:57:58,861 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 22:57:58,873 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 22:57:58,873 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 22:57:58,927 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2026-02-26 22:57:58,927 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 22:58:07,749 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:58:07] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:58:07,757 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:58:07] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:15,531 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:15] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:15,541 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:15] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:15,554 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:15] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 22:59:15,564 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:15] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 400 -
+2026-02-26 22:59:25,241 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:25] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:25,263 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:25] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:25,277 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:25] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 22:59:25,292 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:25] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 400 -
+2026-02-26 22:59:40,206 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:40] "OPTIONS /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:40,218 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:40] "GET /api/health HTTP/1.1" 200 -
+2026-02-26 22:59:40,252 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:40] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 22:59:40,269 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 22:59:40] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 400 -
+2026-02-26 23:05:44,987 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:05:44] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:05:44,995 - flask-limiter - INFO - ratelimit 3 per 1 hour (127.0.0.1) exceeded at endpoint: provider_register
+2026-02-26 23:05:44,996 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:05:44] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 429 -
+2026-02-26 23:05:52,557 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:05:52] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:05:52,564 - flask-limiter - INFO - ratelimit 3 per 1 hour (127.0.0.1) exceeded at endpoint: provider_register
+2026-02-26 23:05:52,567 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:05:52] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 429 -
+2026-02-26 23:09:56,145 - services.recommendation - ERROR - Error loading meals from database: Execution failed on sql '
+                SELECT * FROM menu_items 
+                WHERE is_available = 1
+            ': no such table: menu_items
+2026-02-26 23:09:56,148 - services.recommendation - INFO - Created 10 sample meals
+2026-02-26 23:09:56,150 - services.recommendation - ERROR - Error loading ratings from database: Execution failed on sql '
+                SELECT user_id, meal_id, rating 
+                FROM user_ratings
+            ': no such table: user_ratings
+2026-02-26 23:09:56,155 - services.recommendation - INFO - Recommendation Engine initialized
+2026-02-26 23:09:56,166 - services.email_service - INFO - Email Service initialized (Development Mode)
+2026-02-26 23:09:56,167 - services.sms_service - INFO - SMS Service initialized (Development Mode)
+2026-02-26 23:09:56,206 - werkzeug - INFO - [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.5:5000
+2026-02-26 23:09:56,206 - werkzeug - INFO - [33mPress CTRL+C to quit[0m
+2026-02-26 23:11:25,743 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:25] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:11:25,755 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:25] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 400 -
+2026-02-26 23:11:35,242 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:35] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:11:35,256 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:35] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 400 -
+2026-02-26 23:11:46,188 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:46] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:11:46,194 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:46] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 400 -
+2026-02-26 23:11:56,021 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:56] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:11:56,030 - flask-limiter - INFO - ratelimit 3 per 1 hour (127.0.0.1) exceeded at endpoint: provider_register
+2026-02-26 23:11:56,036 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:11:56] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 429 -
+2026-02-26 23:12:03,680 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:12:03] "OPTIONS /api/provider/register HTTP/1.1" 200 -
+2026-02-26 23:12:03,690 - flask-limiter - INFO - ratelimit 3 per 1 hour (127.0.0.1) exceeded at endpoint: provider_register
+2026-02-26 23:12:03,693 - werkzeug - INFO - 127.0.0.1 - - [26/Feb/2026 23:12:03] "[31m[1mPOST /api/provider/register HTTP/1.1[0m" 429 -
