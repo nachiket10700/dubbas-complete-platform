@@ -3,21 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Browse Meals - Dabba's</title>
-    
-    <!-- CSS Files -->
-    <link rel="stylesheet" href="/frontend/assets/css/style.css">
-    <link rel="stylesheet" href="/frontend/assets/css/customer.css">
-    
+    <title>Browse Tiffin - Dabba's Tiffin Service Nashik</title>
+
     <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Font Awesome Icons -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <!-- AOS Animation Library -->
-    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     
     <style>
         * {
@@ -76,45 +68,35 @@
             -webkit-text-fill-color: transparent;
         }
 
+        .location-badge {
+            background: #f5f5f5;
+            color: #ff6b6b;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .location-badge i {
+            color: #ff6b6b;
+        }
+
         .nav-right {
             display: flex;
             align-items: center;
             gap: 2rem;
         }
 
-        .location-selector {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: #f5f5f5;
+        .subscription-badge {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            color: white;
             padding: 0.5rem 1rem;
             border-radius: 50px;
-            cursor: pointer;
-        }
-
-        .location-selector i {
-            color: #ff6b6b;
-        }
-
-        .notifications {
-            position: relative;
-            cursor: pointer;
-        }
-
-        .notifications i {
-            font-size: 1.3rem;
-            color: #666;
-        }
-
-        .notification-badge {
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            background: #ff6b6b;
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 50%;
+            font-size: 0.9rem;
+            font-weight: 600;
         }
 
         .user-menu {
@@ -150,23 +132,6 @@
             border-right: 1px solid #f0f0f0;
             padding: 2rem 1rem;
             overflow-y: auto;
-        }
-
-        .welcome-message {
-            padding: 1rem;
-            background: linear-gradient(135deg, #fff5f0, #ffeae4);
-            border-radius: 15px;
-            margin-bottom: 2rem;
-        }
-
-        .welcome-message h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.3rem;
-        }
-
-        .welcome-message p {
-            color: #666;
-            font-size: 0.9rem;
         }
 
         .nav-menu {
@@ -209,293 +174,301 @@
             padding: 2rem;
         }
 
-        /* Page Header */
-        .page-header {
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-radius: 20px;
+            padding: 2.5rem;
+            color: white;
+            margin-bottom: 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
         }
 
-        .page-header h1 {
+        .hero-banner::before {
+            content: "🍛";
+            position: absolute;
+            right: 10px;
+            bottom: 10px;
+            font-size: 8rem;
+            opacity: 0.1;
+        }
+
+        .hero-text h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
             font-size: 2rem;
             font-weight: 700;
-            color: #2d2d2d;
         }
 
-        .page-header h1 span {
-            color: #ff6b6b;
+        .stat-label {
+            font-size: 0.9rem;
+            opacity: 0.9;
         }
 
-        /* Search Bar */
-        .search-bar {
+        /* Location Chips */
+        .location-chips {
             display: flex;
-            align-items: center;
+            gap: 0.8rem;
+            margin: 1rem 0 2rem;
+            flex-wrap: wrap;
+        }
+
+        .location-chip {
+            padding: 0.6rem 1.5rem;
             background: white;
+            border: 2px solid #f0f0f0;
             border-radius: 50px;
-            padding: 0.5rem 1rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            width: 100%;
-            max-width: 400px;
-        }
-
-        .search-bar i {
-            color: #ff6b6b;
-            font-size: 1.2rem;
-            margin-right: 0.5rem;
-        }
-
-        .search-bar input {
-            flex: 1;
-            border: none;
-            padding: 0.5rem;
-            font-size: 1rem;
-            outline: none;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .search-bar button {
-            background: #ff6b6b;
-            color: white;
-            border: none;
-            padding: 0.5rem 1.5rem;
-            border-radius: 50px;
-            font-weight: 600;
+            font-size: 0.9rem;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
         }
 
-        .search-bar button:hover {
-            background: #ff8e8e;
-            transform: scale(1.05);
+        .location-chip:hover,
+        .location-chip.active {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-color: #ff6b6b;
+            color: white;
         }
 
-        /* Filters */
-        .filters-section {
+        .location-chip i {
+            color: #ff6b6b;
+        }
+
+        .location-chip:hover i,
+        .location-chip.active i {
+            color: white;
+        }
+
+        /* Search Box */
+        .search-container {
             background: white;
             border-radius: 20px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
         }
 
-        .filter-title {
+        .search-box {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            color: #2d2d2d;
-        }
-
-        .filter-title i {
-            color: #ff6b6b;
-        }
-
-        .filter-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .filter-tag {
-            padding: 0.5rem 1.2rem;
             background: #f5f5f5;
             border-radius: 50px;
-            font-size: 0.9rem;
-            cursor: pointer;
+            padding: 0.3rem;
+            border: 2px solid #f0f0f0;
             transition: all 0.3s ease;
         }
 
-        .filter-tag:hover, .filter-tag.active {
-            background: #ff6b6b;
-            color: white;
+        .search-box:focus-within {
+            border-color: #ff6b6b;
         }
 
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            align-items: center;
+        .search-box i {
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin-left: 1rem;
         }
 
-        .filter-select {
-            padding: 0.5rem 1rem;
-            border: 2px solid #f0f0f0;
-            border-radius: 10px;
-            font-family: 'Inter', sans-serif;
-            outline: none;
-            cursor: pointer;
-        }
-
-        .price-range {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .price-input {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .price-input input {
-            width: 100px;
-            padding: 0.5rem;
-            border: 2px solid #f0f0f0;
-            border-radius: 10px;
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 1rem;
+            font-size: 1rem;
+            background: transparent;
             outline: none;
         }
 
-        .apply-filters {
-            padding: 0.5rem 2rem;
-            background: #ff6b6b;
+        .search-box button {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
             border: none;
-            border-radius: 10px;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .apply-filters:hover {
-            background: #ff8e8e;
+        .search-box button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
 
-        /* Meals Grid */
-        .meals-grid {
+        .filter-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.6rem 1.5rem;
+            background: #f5f5f5;
+            border: 2px solid #f0f0f0;
+            border-radius: 50px;
+            font-weight: 600;
+            color: #666;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-tab.active,
+        .filter-tab:hover {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            border-color: #ff6b6b;
+            color: white;
+        }
+
+        .filter-tab i {
+            margin-right: 0.5rem;
+        }
+
+        /* Tiffin Cards */
+        .tiffin-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
 
-        .meal-card {
+        .tiffin-card {
             background: white;
             border-radius: 15px;
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
             transition: all 0.3s ease;
-            cursor: pointer;
-            position: relative;
         }
 
-        .meal-card:hover {
+        .tiffin-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 40px rgba(255, 107, 107, 0.15);
         }
 
-        .meal-image {
-            height: 180px;
+        .tiffin-header {
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            padding: 1.2rem;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .tiffin-type {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .type-badge {
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            position: relative;
-        }
-
-        .meal-image::before {
-            content: '🍽️';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            opacity: 0.3;
-        }
-
-        .meal-tag {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: rgba(255, 255, 255, 0.9);
+            color: white;
             padding: 0.3rem 1rem;
             border-radius: 50px;
             font-size: 0.8rem;
             font-weight: 600;
-            color: #ff6b6b;
         }
 
-        .meal-tag.veg {
-            background: #e8f5e9;
-            color: #4caf50;
-        }
-
-        .meal-tag.non-veg {
-            background: #ffebee;
-            color: #f44336;
-        }
-
-        .meal-content {
-            padding: 1.5rem;
-        }
-
-        .meal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.5rem;
-        }
-
-        .meal-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        .meal-price {
+        .price {
             font-size: 1.3rem;
             font-weight: 700;
             color: #ff6b6b;
         }
 
-        .meal-cuisine {
-            color: #666;
+        .price span {
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            color: #666;
+            font-weight: 400;
         }
 
-        .meal-cuisine i {
+        .tiffin-body {
+            padding: 1.5rem;
+        }
+
+        /* Menu Images Section */
+        .menu-showcase {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .menu-image-card {
+            background: #fff5f0;
+            border-radius: 15px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #ffeae4;
+        }
+
+        .menu-image-card .time-icon {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+        }
+
+        .menu-image-card h4 {
+            color: #ff6b6b;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .menu-image-card .food-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: center;
+            margin-top: 0.5rem;
+        }
+
+        .food-item-badge {
+            background: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            color: #666;
+            border: 1px solid #ffeae4;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .food-item-badge i {
             color: #ff6b6b;
             font-size: 0.8rem;
         }
 
-        .meal-rating {
+        .tiffin-footer {
             display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1rem;
+            gap: 1rem;
+            padding: 1rem 1.5rem 1.5rem;
         }
 
-        .stars {
-            color: gold;
-        }
-
-        .rating-count {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .meal-info {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1rem;
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .meal-info i {
-            color: #ff6b6b;
-            margin-right: 0.3rem;
-        }
-
-        .btn-add {
-            width: 100%;
+        .btn-subscribe {
+            flex: 2;
             padding: 0.8rem;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
@@ -506,46 +479,209 @@
             transition: all 0.3s ease;
         }
 
-        .btn-add:hover {
-            transform: scale(1.02);
+        .btn-subscribe:hover {
+            transform: translateY(-2px);
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
 
-        /* Pagination */
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 0.5rem;
-            margin-top: 2rem;
-        }
-
-        .page-item {
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: white;
+        .btn-preview {
+            flex: 1;
+            padding: 0.8rem;
+            background: #f5f5f5;
+            color: #ff6b6b;
+            border: 2px solid #ff6b6b;
             border-radius: 10px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
         }
 
-        .page-item:hover, .page-item.active {
-            background: #ff6b6b;
+        .btn-preview:hover {
+            background: #fff5f0;
+        }
+
+        /* Weekly Menu */
+        .weekly-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            color: #2d2d2d;
+        }
+
+        .section-header h2 i {
+            color: #ff6b6b;
+            margin-right: 0.5rem;
+        }
+
+        .week-tabs {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .week-tab {
+            padding: 0.5rem 1.2rem;
+            border: 2px solid #f0f0f0;
+            border-radius: 50px;
+            background: #f5f5f5;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .week-tab.active,
+        .week-tab:hover {
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
+            border-color: #ff6b6b;
+        }
+
+        .weekly-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .day-card {
+            background: #fff5f0;
+            border-radius: 15px;
+            padding: 1.2rem;
+            border: 1px solid #ffeae4;
+        }
+
+        .day-name {
+            font-weight: 700;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px dashed #ffeae4;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .day-meals {
+            list-style: none;
+        }
+
+        .day-meals li {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+            border-bottom: 1px dotted #ffeae4;
+            font-size: 0.95rem;
+        }
+
+        .day-meals li:last-child {
+            border-bottom: none;
+        }
+
+        .day-meals i {
+            color: #ff6b6b;
+            font-size: 0.8rem;
+        }
+
+        .meal-icon {
+            width: 30px;
+            height: 30px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+        }
+
+        /* Tiffin Providers */
+        .providers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .provider-card {
+            background: white;
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid #f0f0f0;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .provider-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.1);
+        }
+
+        .provider-icon {
+            width: 70px;
+            height: 70px;
+            background: #fff5f0;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-size: 2rem;
+            color: #ff6b6b;
+        }
+
+        .provider-name {
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .provider-location {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .provider-rating {
+            color: gold;
+            margin-bottom: 1rem;
+        }
+
+        .provider-type {
+            background: #fff5f0;
+            color: #ff6b6b;
+            padding: 0.3rem;
+            border-radius: 5px;
+            font-size: 0.85rem;
+        }
+
+        /* View All Link */
+        .view-all {
+            color: #ff6b6b;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .view-all i {
+            transition: transform 0.3s ease;
+        }
+
+        .view-all:hover i {
+            transform: translateX(5px);
         }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .sidebar {
-                width: 240px;
-            }
-            .main-content {
-                margin-left: 240px;
-            }
-        }
-
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
@@ -553,12 +689,16 @@
             .main-content {
                 margin-left: 0;
             }
-            .page-header {
+            .hero-banner {
                 flex-direction: column;
-                align-items: flex-start;
+                text-align: center;
+                gap: 1rem;
             }
-            .search-bar {
-                max-width: 100%;
+            .week-tabs {
+                flex-wrap: wrap;
+            }
+            .menu-showcase {
+                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -568,16 +708,13 @@
     <nav class="navbar">
         <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
         <div class="nav-right">
-            <div class="location-selector">
-                <i class="fas fa-location-dot"></i>
-                <span id="selectedCity">Mumbai</span>
-                <i class="fas fa-chevron-down"></i>
+            <div class="location-badge">
+                <i class="fas fa-map-marker-alt"></i> Nashik
             </div>
-            <div class="notifications">
-                <i class="far fa-bell"></i>
-                <span class="notification-badge">3</span>
+            <div class="subscription-badge">
+                <i class="fas fa-clock"></i> Lunch • Dinner
             </div>
-            <div class="user-menu" id="userMenu">
+            <div class="user-menu">
                 <div class="user-avatar" id="userInitials">P</div>
                 <span id="userName">Pranjal</span>
                 <i class="fas fa-chevron-down"></i>
@@ -587,11 +724,6 @@
 
     <!-- Sidebar -->
     <aside class="sidebar">
-        <div class="welcome-message">
-            <h3 id="welcomeMessage">Welcome back, Pranjal! 👋</h3>
-            <p id="membershipLevel">Gold Member</p>
-        </div>
-
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="dashboard.html" class="nav-link">
@@ -602,25 +734,25 @@
             <li class="nav-item">
                 <a href="browse-meals.html" class="nav-link active">
                     <i class="fas fa-utensils"></i>
-                    <span>Browse Meals</span>
+                    <span>Browse Tiffin</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="subscriptions.html" class="nav-link">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>My Subscriptions</span>
+                    <span>My Subscription</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="orders.html" class="nav-link">
                     <i class="fas fa-shopping-bag"></i>
-                    <span>My Orders</span>
+                    <span>My Tiffins</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="favorites.html" class="nav-link">
                     <i class="fas fa-heart"></i>
-                    <span>Favorites</span>
+                    <span>Favorite Tiffins</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -652,397 +784,614 @@
 
     <!-- Main Content -->
     <main class="main-content">
-        <!-- Page Header -->
-        <div class="page-header" data-aos="fade-up">
-            <h1>Browse <span>Meals</span> 🍽️</h1>
-            
-            <!-- Search Bar -->
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" id="searchInput" placeholder="Search for meals, cuisine, restaurant...">
-                <button id="searchBtn">Search</button>
+        <!-- Hero Banner -->
+        <div class="hero-banner">
+            <div class="hero-text">
+                <h1>Dabba's Service in Nashik</h1>
+                <p>Homely Dabba's for students & working professionals</p>
+                <p style="margin-top: 0.5rem;"><i class="fas fa-clock"></i> Lunch 12:00 PM • Dinner 7:30 PM</p>
             </div>
-        </div>
-
-        <!-- Filters Section -->
-        <div class="filters-section" data-aos="fade-up">
-            <div class="filter-title">
-                <i class="fas fa-filter"></i>
-                <span>Filter by</span>
-            </div>
-            
-            <!-- Cuisine Tags -->
-            <div class="filter-tags">
-                <span class="filter-tag active">All</span>
-                <span class="filter-tag">North Indian</span>
-                <span class="filter-tag">South Indian</span>
-                <span class="filter-tag">Chinese</span>
-                <span class="filter-tag">Maharashtrian</span>
-                <span class="filter-tag">Gujarati</span>
-                <span class="filter-tag">Punjabi</span>
-                <span class="filter-tag">Hyderabadi</span>
-                <span class="filter-tag">Street Food</span>
-            </div>
-            
-            <!-- Filter Options -->
-            <div class="filter-row">
-                <select class="filter-select" id="sortBy">
-                    <option value="popular">Sort by: Popular</option>
-                    <option value="rating">Sort by: Rating</option>
-                    <option value="price-low">Price: Low to High</option>
-                    <option value="price-high">Price: High to Low</option>
-                    <option value="newest">Newest First</option>
-                </select>
-                
-                <div class="price-range">
-                    <div class="price-input">
-                        <span>Min:</span>
-                        <input type="number" id="minPrice" placeholder="₹0" value="0">
-                    </div>
-                    <span>-</span>
-                    <div class="price-input">
-                        <span>Max:</span>
-                        <input type="number" id="maxPrice" placeholder="₹1000" value="1000">
-                    </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="stat-number">200+</div>
+                    <div class="stat-label">Happy Customers</div>
                 </div>
-                
-                <button class="apply-filters" id="applyFilters">Apply Filters</button>
+                <div class="stat">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Tiffin Providers</div>
+                </div>
             </div>
         </div>
 
-        <!-- Meals Grid -->
-        <div id="mealsContainer" class="meals-grid" data-aos="fade-up">
-            <!-- Meals will be loaded here -->
+        <!-- Nashik Areas -->
+        <div class="location-chips">
+            <span class="location-chip active"><i class="fas fa-map-marker-alt"></i> All Nashik</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> Gangapur Road</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> College Road</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> CBS</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> Panchavati</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> Satpur</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> Ambad</span>
+            <span class="location-chip"><i class="fas fa-map-marker-alt"></i> Indira Nagar</span>
         </div>
 
-        <!-- Pagination -->
-        <div class="pagination" data-aos="fade-up">
-            <div class="page-item active">1</div>
-            <div class="page-item">2</div>
-            <div class="page-item">3</div>
-            <div class="page-item">4</div>
-            <div class="page-item">5</div>
-            <div class="page-item"><i class="fas fa-chevron-right"></i></div>
+        <!-- Search Section -->
+        <div class="search-container">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search by area, tiffin service name in Nashik...">
+                <button onclick="searchTiffins()">Find Tiffin</button>
+            </div>
+
+            <div class="filter-tabs">
+                <span class="filter-tab active" onclick="filterTiffins('all')">
+                    <i class="fas fa-utensils"></i> All Tiffins
+                </span>
+                <span class="filter-tab" onclick="filterTiffins('student')">
+                    <i class="fas fa-graduation-cap"></i> Student Plans
+                </span>
+                <span class="filter-tab" onclick="filterTiffins('professional')">
+                    <i class="fas fa-briefcase"></i> Professional Plans
+                </span>
+                <span class="filter-tab" onclick="filterTiffins('veg')">
+                    <i class="fas fa-leaf"></i> Pure Veg
+                </span>
+                <span class="filter-tab" onclick="filterTiffins('non-veg')">
+                    <i class="fas fa-drumstick-bite"></i> Non-Veg
+                </span>
+            </div>
+        </div>
+
+        <!-- Tiffin Cards with Menu Images -->
+        <div class="tiffin-grid" id="tiffinGrid">
+            <!-- Tiffins will be loaded here -->
+        </div>
+
+        <!-- Weekly Menu Preview with Images -->
+        <div class="weekly-section">
+            <div class="section-header">
+                <h2><i class="fas fa-calendar-alt"></i> This Week's Menu - Nashik Special</h2>
+                <div class="week-tabs">
+                    <span class="week-tab active">Week 1</span>
+                    <span class="week-tab">Week 2</span>
+                    <span class="week-tab">Week 3</span>
+                    <span class="week-tab">Week 4</span>
+                </div>
+            </div>
+
+            <div class="weekly-grid" id="weeklyMenu">
+                <!-- Weekly menu will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Tiffin Providers in Nashik -->
+        <div class="section-header">
+            <h2><i class="fas fa-store"></i> Tiffin Services in Nashik</h2>
+            <a href="#" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="providers-grid" id="providersGrid">
+            <!-- Providers will be loaded here -->
         </div>
     </main>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    
     <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            once: true
-        });
-
-        // Get user info from localStorage
+        // Get user info
         const username = localStorage.getItem('username') || 'Pranjal';
-        const firstName = username.split(' ')[0] || 'Pranjal';
-        
-        // Update UI with user name
-        document.getElementById('userName').textContent = firstName;
-        document.getElementById('userInitials').textContent = firstName.charAt(0);
-        document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${firstName}! 👋`;
+        document.getElementById('userName').textContent = username.split(' ')[0];
+        document.getElementById('userInitials').textContent = username.charAt(0);
 
-        // Sample meals data
-        const mealsData = [
+        // Tiffin Data - Nashik Areas
+        const tiffins = [
             {
                 id: 1,
-                name: 'Butter Chicken',
-                cuisine: 'North Indian',
-                type: 'non-veg',
-                price: 350,
+                name: 'Matoshree Tiffin Service',
+                area: 'Gangapur Road',
+                type: 'student',
+                category: 'veg',
+                price: 2000,
+                duration: 'month',
+                lunch: {
+                    items: ['2 Bhakari/Chapati', '1 Sabji (Veg)', 'Dal/Pithla', 'Rice', 'Koshimbir'],
+                    image: '🍛'
+                },
+                dinner: {
+                    items: ['2 Bhakari/Chapati', '1 Sabji', 'Dal/Rice', 'Papad', 'Thecha'],
+                    image: '🍲'
+                },
                 rating: 4.8,
-                reviews: 1234,
-                provider: 'Delhi Darbar',
-                time: '30-40 min',
-                distance: '2.5 km'
+                reviews: 156,
+                localSpecial: 'Varan Bhat special on Friday'
             },
             {
                 id: 2,
-                name: 'Masala Dosa',
-                cuisine: 'South Indian',
-                type: 'veg',
-                price: 120,
+                name: 'Annapurna Ghar Ka Khana',
+                area: 'College Road',
+                type: 'professional',
+                category: 'veg',
+                price: 2500,
+                duration: 'month',
+                lunch: {
+                    items: ['3 Chapati', '2 Sabji', 'Dal', 'Rice', 'Curd', 'Salad'],
+                    image: '🍛'
+                },
+                dinner: {
+                    items: ['3 Chapati', '2 Sabji', 'Dal', 'Rice', 'Papad'],
+                    image: '🍲'
+                },
                 rating: 4.9,
-                reviews: 2341,
-                provider: 'Madras Cafe',
-                time: '20-30 min',
-                distance: '1.2 km'
+                reviews: 234,
+                localSpecial: 'Puran Poli on Sunday'
             },
             {
                 id: 3,
-                name: 'Vada Pav',
-                cuisine: 'Maharashtrian',
-                type: 'veg',
-                price: 30,
+                name: 'Sahyadri Tiffin',
+                area: 'Panchavati',
+                type: 'student',
+                category: 'veg',
+                price: 1800,
+                duration: 'month',
+                lunch: {
+                    items: ['2 Bhakari', '1 Sabji', 'Pithla', 'Rice', 'Thecha'],
+                    image: '🍛'
+                },
+                dinner: {
+                    items: ['2 Bhakari', '1 Sabji', 'Dal/Rice', 'Papad'],
+                    image: '🍲'
+                },
                 rating: 4.7,
-                reviews: 3456,
-                provider: 'Mumbai Tiffin',
-                time: '10-15 min',
-                distance: '0.8 km'
+                reviews: 189,
+                localSpecial: 'Misal Pav on Saturday'
             },
             {
                 id: 4,
-                name: 'Hyderabadi Biryani',
-                cuisine: 'Hyderabadi',
-                type: 'non-veg',
-                price: 350,
+                name: 'Godavari Tiffin Service',
+                area: 'Satpur',
+                type: 'professional',
+                category: 'non-veg',
+                price: 3000,
+                duration: 'month',
+                lunch: {
+                    items: ['3 Chapati', '1 Veg Sabji', 'Chicken/Egg Curry', 'Dal', 'Rice'],
+                    image: '🍗'
+                },
+                dinner: {
+                    items: ['3 Chapati', '2 Veg Sabji', 'Egg Bhurji', 'Rice'],
+                    image: '🍳'
+                },
                 rating: 4.8,
-                reviews: 4567,
-                provider: 'Biryani House',
-                time: '35-45 min',
-                distance: '3.1 km'
+                reviews: 167,
+                localSpecial: 'Chicken Thali on Sunday'
             },
             {
                 id: 5,
-                name: 'Paneer Tikka',
-                cuisine: 'North Indian',
-                type: 'veg',
-                price: 280,
+                name: 'Student Special Tiffin',
+                area: 'CBS',
+                type: 'student',
+                category: 'veg',
+                price: 1700,
+                duration: 'month',
+                lunch: {
+                    items: ['2 Chapati', '1 Sabji', 'Dal', 'Rice', 'Papad'],
+                    image: '🍛'
+                },
+                dinner: {
+                    items: ['2 Chapati', '1 Sabji', 'Dal/Rice', 'Salad'],
+                    image: '🍲'
+                },
                 rating: 4.6,
-                reviews: 2345,
-                provider: 'Punjab Grill',
-                time: '25-35 min',
-                distance: '1.8 km'
+                reviews: 312
             },
             {
                 id: 6,
-                name: 'Chole Bhature',
-                cuisine: 'North Indian',
-                type: 'veg',
-                price: 120,
-                rating: 4.7,
-                reviews: 1890,
-                provider: 'Amritsar Kulcha',
-                time: '20-25 min',
-                distance: '2.0 km'
-            },
-            {
-                id: 7,
-                name: 'Idli Sambhar',
-                cuisine: 'South Indian',
-                type: 'veg',
-                price: 80,
-                rating: 4.5,
-                reviews: 3210,
-                provider: 'South Indian Express',
-                time: '15-20 min',
-                distance: '1.5 km'
-            },
-            {
-                id: 8,
-                name: 'Chicken 65',
-                cuisine: 'South Indian',
-                type: 'non-veg',
-                price: 220,
-                rating: 4.6,
-                reviews: 1567,
-                provider: 'Chennai Spice',
-                time: '25-30 min',
-                distance: '2.3 km'
-            },
-            {
-                id: 9,
-                name: ' Pav Bhaji',
-                cuisine: 'Street Food',
-                type: 'veg',
-                price: 150,
-                rating: 4.7,
-                reviews: 2789,
-                provider: 'Juhu Beach Stall',
-                time: '20-25 min',
-                distance: '1.1 km'
-            },
-            {
-                id: 10,
-                name: 'Kadhai Paneer',
-                cuisine: 'North Indian',
-                type: 'veg',
-                price: 320,
-                rating: 4.6,
-                reviews: 1456,
-                provider: 'Punjabi Dhaba',
-                time: '30-35 min',
-                distance: '2.7 km'
-            },
-            {
-                id: 11,
-                name: 'Fish Curry',
-                cuisine: 'Bengali',
-                type: 'non-veg',
-                price: 380,
-                rating: 4.8,
-                reviews: 987,
-                provider: 'Bengal Kitchen',
-                time: '30-40 min',
-                distance: '3.5 km'
-            },
-            {
-                id: 12,
-                name: 'Gobi Manchurian',
-                cuisine: 'Chinese',
-                type: 'veg',
-                price: 180,
-                rating: 4.4,
-                reviews: 2134,
-                provider: 'Chinese Wok',
-                time: '20-25 min',
-                distance: '1.9 km'
+                name: 'Nashik Tiffinwala',
+                area: 'Ambad',
+                type: 'professional',
+                category: 'non-veg',
+                price: 2800,
+                duration: 'month',
+                lunch: {
+                    items: ['3 Chapati', '1 Veg Sabji', 'Chicken Curry', 'Dal', 'Rice'],
+                    image: '🍗'
+                },
+                dinner: {
+                    items: ['3 Chapati', '2 Veg Sabji', 'Egg Curry', 'Rice'],
+                    image: '🍳'
+                },
+                rating: 4.9,
+                reviews: 201,
+                localSpecial: 'Mutton on Sunday (extra cost)'
             }
         ];
 
-        // Generate star rating
-        function generateStars(rating) {
-            const fullStars = Math.floor(rating);
-            const halfStar = rating % 1 >= 0.5;
-            let stars = '';
-            
-            for (let i = 0; i < fullStars; i++) {
-                stars += '<i class="fas fa-star"></i>';
+        // Weekly Menu Data - Nashik Style
+        const weeklyMenu = [
+            {
+                day: 'Monday',
+                lunch: ['Pithla Bhakari', 'Vangyacha Bharit', 'Rice', 'Salad'],
+                dinner: ['Dal', 'Bhendi Fry', 'Chapati', 'Rice'],
+                icon: '🍛'
+            },
+            {
+                day: 'Tuesday',
+                lunch: ['Matki Usal', 'Chapati', 'Rice', 'Onion Salad'],
+                dinner: ['Varan', 'Aloo Palak', 'Chapati', 'Rice'],
+                icon: '🍲'
+            },
+            {
+                day: 'Wednesday',
+                lunch: ['Kadhi', 'Rice', 'Chapati', 'Papad'],
+                dinner: ['Dal Fry', 'Gavar Bhaji', 'Chapati', 'Rice'],
+                icon: '🍛'
+            },
+            {
+                day: 'Thursday',
+                lunch: ['Pav Bhaji', 'Salad', 'Chapati'],
+                dinner: ['Dal', 'Mix Veg', 'Chapati', 'Rice'],
+                icon: '🍛'
+            },
+            {
+                day: 'Friday',
+                lunch: ['Misal Pav', 'Chapati', 'Rice'],
+                dinner: ['Varan Bhat', 'Aloo Bhaji', 'Papad'],
+                icon: '🍲'
+            },
+            {
+                day: 'Saturday',
+                lunch: ['Puran Poli', 'Dal', 'Rice', 'Salad'],
+                dinner: ['Chole', 'Chapati', 'Rice', 'Onion'],
+                icon: '🍛'
+            },
+            {
+                day: 'Sunday',
+                lunch: ['Special Thali', 'Gulab Jamun', 'Rice', 'Chapati'],
+                dinner: ['Paneer Masala', 'Dal', 'Chapati', 'Rice'],
+                icon: '🍗'
             }
-            if (halfStar) {
-                stars += '<i class="fas fa-star-half-alt"></i>';
-            }
-            const emptyStars = 5 - Math.ceil(rating);
-            for (let i = 0; i < emptyStars; i++) {
-                stars += '<i class="far fa-star"></i>';
-            }
-            
-            return stars;
-        }
+        ];
 
-        // Load meals
-        function loadMeals(meals) {
-            const container = document.getElementById('mealsContainer');
+        // Providers Data - Nashik
+        const providers = [
+            {
+                name: 'Matoshree Tiffin',
+                area: 'Gangapur Road',
+                rating: 4.8,
+                type: 'Pure Veg',
+                icon: '🥘'
+            },
+            {
+                name: 'Annapurna Kitchen',
+                area: 'College Road',
+                rating: 4.9,
+                type: 'Pure Veg',
+                icon: '🍛'
+            },
+            {
+                name: 'Sahyadri Tiffin',
+                area: 'Panchavati',
+                rating: 4.7,
+                type: 'Pure Veg',
+                icon: '🍚'
+            },
+            {
+                name: 'Godavari Tiffin',
+                area: 'Satpur',
+                rating: 4.8,
+                type: 'Veg + Non-Veg',
+                icon: '🍗'
+            }
+        ];
+
+        // Load Tiffins with Menu Images
+        function loadTiffins(filter = 'all') {
+            const grid = document.getElementById('tiffinGrid');
             
-            container.innerHTML = meals.map(meal => `
-                <div class="meal-card" onclick="viewMealDetails(${meal.id})">
-                    <div class="meal-image">
-                        <span class="meal-tag ${meal.type}">${meal.type === 'veg' ? '🟢 Veg' : '🔴 Non-Veg'}</span>
+            let filteredTiffins = tiffins;
+            
+            if (filter === 'student') {
+                filteredTiffins = tiffins.filter(t => t.type === 'student');
+            } else if (filter === 'professional') {
+                filteredTiffins = tiffins.filter(t => t.type === 'professional');
+            } else if (filter === 'veg') {
+                filteredTiffins = tiffins.filter(t => t.category === 'veg');
+            } else if (filter === 'non-veg') {
+                filteredTiffins = tiffins.filter(t => t.category === 'non-veg');
+            }
+
+            grid.innerHTML = filteredTiffins.map(tiffin => `
+                <div class="tiffin-card">
+                    <div class="tiffin-header">
+                        <div class="tiffin-type">
+                            <span class="type-badge">
+                                ${tiffin.type === 'student' ? '👨‍🎓 Student Plan' : '💼 Professional Plan'}
+                            </span>
+                            <span class="price">₹${tiffin.price}<span>/${tiffin.duration}</span></span>
+                        </div>
                     </div>
-                    <div class="meal-content">
-                        <div class="meal-header">
-                            <h3 class="meal-name">${meal.name}</h3>
-                            <span class="meal-price">₹${meal.price}</span>
-                        </div>
-                        <div class="meal-cuisine">
-                            <i class="fas fa-utensils"></i> ${meal.cuisine}
-                        </div>
-                        <div class="meal-rating">
-                            <div class="stars">
-                                ${generateStars(meal.rating)}
+                    <div class="tiffin-body">
+                        <h3 style="margin-bottom: 0.5rem;">${tiffin.name}</h3>
+                        <p style="color: #666; margin-bottom: 1rem;">
+                            <i class="fas fa-map-marker-alt" style="color: #ff6b6b;"></i> ${tiffin.area}, Nashik
+                        </p>
+                        
+                        <!-- Menu Images Showcase -->
+                        <div class="menu-showcase">
+                            <div class="menu-image-card">
+                                <div class="time-icon"><i class="fas fa-sun"></i></div>
+                                <h4>Lunch Menu</h4>
+                                <div class="food-items">
+                                    ${tiffin.lunch.items.map(item => `
+                                        <span class="food-item-badge">
+                                            <i class="fas fa-utensils"></i> ${item}
+                                        </span>
+                                    `).join('')}
+                                </div>
                             </div>
-                            <span class="rating-count">(${meal.reviews}+ reviews)</span>
+                            
+                            <div class="menu-image-card">
+                                <div class="time-icon"><i class="fas fa-moon"></i></div>
+                                <h4>Dinner Menu</h4>
+                                <div class="food-items">
+                                    ${tiffin.dinner.items.map(item => `
+                                        <span class="food-item-badge">
+                                            <i class="fas fa-utensils"></i> ${item}
+                                        </span>
+                                    `).join('')}
+                                </div>
+                            </div>
                         </div>
-                        <div class="meal-info">
-                            <span><i class="fas fa-store"></i> ${meal.provider}</span>
-                            <span><i class="fas fa-clock"></i> ${meal.time}</span>
-                            <span><i class="fas fa-map-marker-alt"></i> ${meal.distance}</span>
+
+                        ${tiffin.localSpecial ? `
+                            <div style="background: #fff5f0; padding: 0.5rem; border-radius: 8px; margin: 1rem 0; font-size: 0.9rem; color: #ff6b6b;">
+                                <i class="fas fa-star"></i> ${tiffin.localSpecial}
+                            </div>
+                        ` : ''}
+
+                        <div style="display: flex; gap: 0.5rem; margin: 1rem 0;">
+                            <span style="color: gold;">
+                                ${'★'.repeat(Math.floor(tiffin.rating))}${tiffin.rating % 1 ? '½' : ''}
+                            </span>
+                            <span style="color: #666;">(${tiffin.reviews} reviews)</span>
                         </div>
-                        <button class="btn-add" onclick="event.stopPropagation(); addToCart(${meal.id})">
-                            <i class="fas fa-plus"></i> Add to Cart
+                    </div>
+                    <div class="tiffin-footer">
+                        <button class="btn-subscribe" onclick="subscribe('${tiffin.id}')">
+                            Subscribe Now
+                        </button>
+                        <button class="btn-preview" onclick="previewMenu('${tiffin.id}')">
+                            Preview
                         </button>
                     </div>
                 </div>
             `).join('');
         }
 
-        // View meal details
-        function viewMealDetails(mealId) {
-            window.location.href = `meal-details.html?id=${mealId}`;
+        // Load Weekly Menu with Icons
+        function loadWeeklyMenu() {
+            const grid = document.getElementById('weeklyMenu');
+            
+            grid.innerHTML = weeklyMenu.map(day => `
+                <div class="day-card">
+                    <div class="day-name">
+                        <span>${day.day}</span>
+                        <span class="meal-icon">${day.icon}</span>
+                    </div>
+                    <ul class="day-meals">
+                        <li><i class="fas fa-sun"></i> <strong>Lunch:</strong> ${day.lunch.join(' • ')}</li>
+                        <li><i class="fas fa-moon"></i> <strong>Dinner:</strong> ${day.dinner.join(' • ')}</li>
+                    </ul>
+                </div>
+            `).join('');
         }
 
-        // Add to cart
-        function addToCart(mealId) {
-            const meal = mealsData.find(m => m.id === mealId);
-            alert(`✅ ${meal.name} added to cart!`);
+        // Load Providers
+        function loadProviders() {
+            const grid = document.getElementById('providersGrid');
             
-            // Here you would actually add to cart in localStorage
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            cart.push({...meal, quantity: 1});
-            localStorage.setItem('cart', JSON.stringify(cart));
+            grid.innerHTML = providers.map(provider => `
+                <div class="provider-card">
+                    <div class="provider-icon">${provider.icon}</div>
+                    <div class="provider-name">${provider.name}</div>
+                    <div class="provider-location">
+                        <i class="fas fa-map-marker-alt"></i> ${provider.area}, Nashik
+                    </div>
+                    <div class="provider-rating">
+                        ${'★'.repeat(Math.floor(provider.rating))}${provider.rating % 1 ? '½' : ''}
+                    </div>
+                    <div class="provider-type">${provider.type}</div>
+                </div>
+            `).join('');
         }
 
-        // Filter functionality
-        document.getElementById('applyFilters').addEventListener('click', function() {
-            const minPrice = parseInt(document.getElementById('minPrice').value) || 0;
-            const maxPrice = parseInt(document.getElementById('maxPrice').value) || 1000;
-            const sortBy = document.getElementById('sortBy').value;
-            
-            let filteredMeals = mealsData.filter(meal => 
-                meal.price >= minPrice && meal.price <= maxPrice
-            );
-            
-            // Sort
-            switch(sortBy) {
-                case 'price-low':
-                    filteredMeals.sort((a, b) => a.price - b.price);
-                    break;
-                case 'price-high':
-                    filteredMeals.sort((a, b) => b.price - a.price);
-                    break;
-                case 'rating':
-                    filteredMeals.sort((a, b) => b.rating - a.rating);
-                    break;
-                case 'popular':
-                    filteredMeals.sort((a, b) => b.reviews - a.reviews);
-                    break;
-            }
-            
-            loadMeals(filteredMeals);
-        });
+        // Filter Tiffins
+        window.filterTiffins = function(filter) {
+            document.querySelectorAll('.filter-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            loadTiffins(filter);
+        };
 
-        // Search functionality
-        document.getElementById('searchBtn').addEventListener('click', function() {
+        // Search by Nashik area
+        window.searchTiffins = function() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             
-            if (searchTerm.trim() === '') {
-                loadMeals(mealsData);
-                return;
-            }
-            
-            const filteredMeals = mealsData.filter(meal => 
-                meal.name.toLowerCase().includes(searchTerm) ||
-                meal.cuisine.toLowerCase().includes(searchTerm) ||
-                meal.provider.toLowerCase().includes(searchTerm)
+            const filtered = tiffins.filter(t => 
+                t.name.toLowerCase().includes(searchTerm) ||
+                t.area.toLowerCase().includes(searchTerm)
             );
             
-            loadMeals(filteredMeals);
+            const grid = document.getElementById('tiffinGrid');
             
-            if (filteredMeals.length === 0) {
-                alert('No meals found matching your search.');
+            if (filtered.length === 0) {
+                grid.innerHTML = '<p style="text-align: center; padding: 2rem;">No tiffin services found in this area of Nashik</p>';
+            } else {
+                grid.innerHTML = filtered.map(tiffin => `
+                    <div class="tiffin-card">
+                        <div class="tiffin-header">
+                            <div class="tiffin-type">
+                                <span class="type-badge">
+                                    ${tiffin.type === 'student' ? '👨‍🎓 Student Plan' : '💼 Professional Plan'}
+                                </span>
+                                <span class="price">₹${tiffin.price}<span>/${tiffin.duration}</span></span>
+                            </div>
+                        </div>
+                        <div class="tiffin-body">
+                            <h3 style="margin-bottom: 0.5rem;">${tiffin.name}</h3>
+                            <p style="color: #666; margin-bottom: 1rem;">
+                                <i class="fas fa-map-marker-alt" style="color: #ff6b6b;"></i> ${tiffin.area}, Nashik
+                            </p>
+                            
+                            <div class="menu-showcase">
+                                <div class="menu-image-card">
+                                    <div class="time-icon"><i class="fas fa-sun"></i></div>
+                                    <h4>Lunch</h4>
+                                    <div class="food-items">
+                                        ${tiffin.lunch.items.map(item => `
+                                            <span class="food-item-badge"><i class="fas fa-utensils"></i> ${item}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                                <div class="menu-image-card">
+                                    <div class="time-icon"><i class="fas fa-moon"></i></div>
+                                    <h4>Dinner</h4>
+                                    <div class="food-items">
+                                        ${tiffin.dinner.items.map(item => `
+                                            <span class="food-item-badge"><i class="fas fa-utensils"></i> ${item}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tiffin-footer">
+                            <button class="btn-subscribe" onclick="subscribe('${tiffin.id}')">Subscribe</button>
+                            <button class="btn-preview" onclick="previewMenu('${tiffin.id}')">Preview</button>
+                        </div>
+                    </div>
+                `).join('');
             }
-        });
+        };
 
-        // Enter key in search
-        document.getElementById('searchInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                document.getElementById('searchBtn').click();
-            }
-        });
-
-        // Filter tag clicks
-        document.querySelectorAll('.filter-tag').forEach(tag => {
-            tag.addEventListener('click', function() {
-                // Remove active class from all tags
-                document.querySelectorAll('.filter-tag').forEach(t => t.classList.remove('active'));
-                // Add active class to clicked tag
+        // Location chip click
+        document.querySelectorAll('.location-chip').forEach(chip => {
+            chip.addEventListener('click', function() {
+                document.querySelectorAll('.location-chip').forEach(c => c.classList.remove('active'));
                 this.classList.add('active');
+                const area = this.textContent.trim().replace('All Nashik', '').trim();
                 
-                const cuisine = this.textContent;
-                
-                if (cuisine === 'All') {
-                    loadMeals(mealsData);
+                if (this.textContent.includes('All')) {
+                    loadTiffins('all');
                 } else {
-                    const filteredMeals = mealsData.filter(meal => meal.cuisine === cuisine);
-                    loadMeals(filteredMeals);
+                    const filtered = tiffins.filter(t => t.area === area);
+                    const grid = document.getElementById('tiffinGrid');
+                    
+                    if (filtered.length === 0) {
+                        grid.innerHTML = `<p style="text-align: center; padding: 2rem;">No tiffin services in ${area} yet</p>`;
+                    } else {
+                        grid.innerHTML = filtered.map(tiffin => `
+                            <div class="tiffin-card">
+                                <div class="tiffin-header">
+                                    <div class="tiffin-type">
+                                        <span class="type-badge">
+                                            ${tiffin.type === 'student' ? '👨‍🎓 Student Plan' : '💼 Professional Plan'}
+                                        </span>
+                                        <span class="price">₹${tiffin.price}<span>/${tiffin.duration}</span></span>
+                                    </div>
+                                </div>
+                                <div class="tiffin-body">
+                                    <h3 style="margin-bottom: 0.5rem;">${tiffin.name}</h3>
+                                    <p style="color: #666; margin-bottom: 1rem;">
+                                        <i class="fas fa-map-marker-alt" style="color: #ff6b6b;"></i> ${tiffin.area}, Nashik
+                                    </p>
+                                    <div class="menu-showcase">
+                                        <div class="menu-image-card">
+                                            <div class="time-icon"><i class="fas fa-sun"></i></div>
+                                            <h4>Lunch</h4>
+                                            <div class="food-items">
+                                                ${tiffin.lunch.items.map(item => `
+                                                    <span class="food-item-badge"><i class="fas fa-utensils"></i> ${item}</span>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                        <div class="menu-image-card">
+                                            <div class="time-icon"><i class="fas fa-moon"></i></div>
+                                            <h4>Dinner</h4>
+                                            <div class="food-items">
+                                                ${tiffin.dinner.items.map(item => `
+                                                    <span class="food-item-badge"><i class="fas fa-utensils"></i> ${item}</span>
+                                                `).join('')}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tiffin-footer">
+                                    <button class="btn-subscribe" onclick="subscribe('${tiffin.id}')">Subscribe</button>
+                                    <button class="btn-preview" onclick="previewMenu('${tiffin.id}')">Preview</button>
+                                </div>
+                            </div>
+                        `).join('');
+                    }
                 }
             });
         });
 
-        // Handle logout
+        // Subscribe
+       // Subscribe - Save to localStorage and go to payment
+window.subscribe = function(id) {
+    const tiffin = tiffins.find(t => t.id == id);
+    
+    // Create subscription object with ALL details
+    const subscription = {
+        id: tiffin.id,
+        name: tiffin.name,
+        provider: tiffin.name,
+        area: tiffin.area,
+        price: tiffin.price,
+        duration: tiffin.duration || 'month',
+        planType: tiffin.type === 'student' ? 'Student Plan' : 'Professional Plan',
+        category: tiffin.category,
+        type: tiffin.type,
+        mealsPerDay: 2,
+        deliveryTime: '12:00 PM & 7:30 PM',
+        menu: [...tiffin.lunch.items, ...tiffin.dinner.items.slice(0, 2)],
+        special: tiffin.localSpecial || '',
+        icon: '🍛',
+        // Payment related
+        amount: tiffin.price,
+        gst: Math.round(tiffin.price * 0.05), // 5% GST
+        totalAmount: tiffin.price + Math.round(tiffin.price * 0.05),
+        // Dates
+        startDate: new Date().toLocaleDateString('en-IN', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        }),
+        // Status
+        status: 'pending_payment',
+        paymentStatus: 'pending'
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('pendingSubscription', JSON.stringify(subscription));
+    
+    // Show alert
+    alert(`✅ Proceeding to payment for ${tiffin.name}...`);
+    
+    // Redirect to payments page
+    window.location.href = 'payments.html';
+};
+// Show alert function (optional - instead of alert)
+function showAlert(message, type) {
+    // You can use this if you have an alert container
+    alert(message); // Simple alert for now
+}
+
+        // Preview Menu
+        window.previewMenu = function(id) {
+            alert('📋 Full weekly menu will be shown here with Nashik special items!');
+        };
+
+        // Logout
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
             localStorage.clear();
@@ -1050,14 +1399,10 @@
             window.location.href = 'login.html';
         });
 
-        // Initialize page
-        document.addEventListener('DOMContentLoaded', function() {
-            loadMeals(mealsData);
-        });
+        // Initialize
+        loadTiffins('all');
+        loadWeeklyMenu();
+        loadProviders();
     </script>
-    
-    <!-- JS Files -->
-    <script src="/frontend/assets/js/main.js"></script>
-    <script src="/frontend/assets/js/customer.js"></script>
 </body>
 </html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Favorites - Dabba's</title>
+    <title>My Favorites - Dabba's Tiffin Service Nashik</title>
     
     <!-- CSS Files -->
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
@@ -321,7 +321,7 @@
         /* Favorites Grid */
         .favorites-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 1.5rem;
             margin-bottom: 2rem;
         }
@@ -333,6 +333,7 @@
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
             position: relative;
+            border: 1px solid #f0f0f0;
         }
 
         .favorite-card:hover {
@@ -340,20 +341,26 @@
             box-shadow: 0 15px 40px rgba(255, 107, 107, 0.15);
         }
 
-        .favorite-image {
-            height: 160px;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+        .favorite-header-bg {
+            height: 100px;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
             position: relative;
         }
 
-        .favorite-image::before {
-            content: '🍽️';
+        .meal-icon-large {
             position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 3rem;
-            opacity: 0.3;
+            bottom: -30px;
+            left: 20px;
+            width: 70px;
+            height: 70px;
+            background: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            border: 3px solid white;
         }
 
         .favorite-badge {
@@ -368,6 +375,8 @@
             display: flex;
             align-items: center;
             gap: 0.3rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            z-index: 2;
         }
 
         .favorite-badge i {
@@ -389,6 +398,7 @@
             cursor: pointer;
             transition: all 0.3s ease;
             z-index: 10;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .favorite-remove:hover {
@@ -398,7 +408,7 @@
         }
 
         .favorite-content {
-            padding: 1.5rem;
+            padding: 2rem 1.5rem 1.5rem;
         }
 
         .favorite-header {
@@ -409,8 +419,8 @@
         }
 
         .favorite-name {
-            font-size: 1.2rem;
-            font-weight: 600;
+            font-size: 1.3rem;
+            font-weight: 700;
         }
 
         .favorite-price {
@@ -419,10 +429,29 @@
             color: #ff6b6b;
         }
 
+        .favorite-type-badge {
+            display: inline-block;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .type-veg {
+            background: #e8f5e9;
+            color: #4caf50;
+        }
+
+        .type-nonveg {
+            background: #ffebee;
+            color: #f44336;
+        }
+
         .favorite-cuisine {
             color: #666;
             font-size: 0.9rem;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
             gap: 0.5rem;
@@ -436,7 +465,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
         }
 
         .stars {
@@ -455,6 +484,9 @@
             color: #666;
             font-size: 0.9rem;
             margin-bottom: 1rem;
+            padding: 0.5rem 0;
+            border-top: 1px dashed #f0f0f0;
+            border-bottom: 1px dashed #f0f0f0;
         }
 
         .favorite-provider i {
@@ -466,7 +498,7 @@
             gap: 0.8rem;
         }
 
-        .btn-add {
+        .btn-subscribe {
             flex: 2;
             padding: 0.8rem;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
@@ -478,7 +510,7 @@
             transition: all 0.3s ease;
         }
 
-        .btn-add:hover {
+        .btn-subscribe:hover {
             transform: scale(1.02);
             box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
         }
@@ -497,6 +529,22 @@
 
         .btn-view:hover {
             background: #e0e0e0;
+        }
+
+        .menu-preview {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .menu-tag {
+            background: #fff5f0;
+            padding: 0.2rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            color: #ff6b6b;
+            border: 1px solid #ffeae4;
         }
 
         /* Empty State */
@@ -616,7 +664,7 @@
         <div class="nav-right">
             <div class="location-selector">
                 <i class="fas fa-location-dot"></i>
-                <span id="selectedCity">Mumbai</span>
+                <span id="selectedCity">Nashik</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
             <div class="notifications">
@@ -648,25 +696,25 @@
             <li class="nav-item">
                 <a href="browse-meals.html" class="nav-link">
                     <i class="fas fa-utensils"></i>
-                    <span>Browse Meals</span>
+                    <span>Browse Tiffin</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="subscriptions.html" class="nav-link">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>My Subscriptions</span>
+                    <span>My Subscription</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="orders.html" class="nav-link">
                     <i class="fas fa-shopping-bag"></i>
-                    <span>My Orders</span>
+                    <span>My Tiffins</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="favorites.html" class="nav-link active">
                     <i class="fas fa-heart"></i>
-                    <span>Favorites</span>
+                    <span>Favorite Tiffins</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -704,17 +752,17 @@
         <!-- Page Header -->
         <div class="page-header" data-aos="fade-up">
             <h1>
-                <i class="fas fa-heart"></i> My <span>Favorites</span>
+                <i class="fas fa-heart"></i> My Favorite <span>Tiffins</span>
             </h1>
             
             <div class="favorite-stats">
                 <div class="stat-item">
                     <i class="fas fa-heart"></i>
-                    <span id="favoriteCount">12</span> Items
+                    <span id="favoriteCount">8</span> Items
                 </div>
                 <div class="stat-item">
                     <i class="fas fa-store"></i>
-                    <span id="restaurantCount">8</span> Restaurants
+                    <span id="providerCount">4</span> Providers
                 </div>
             </div>
         </div>
@@ -722,18 +770,18 @@
         <!-- Search Bar -->
         <div class="search-bar" data-aos="fade-up">
             <i class="fas fa-search"></i>
-            <input type="text" id="searchInput" placeholder="Search in favorites...">
+            <input type="text" id="searchInput" placeholder="Search in your favorite tiffins...">
             <button id="searchBtn">Search</button>
         </div>
 
         <!-- Filter Tabs -->
         <div class="filter-tabs" data-aos="fade-up">
             <span class="filter-tab active" onclick="filterFavorites('all')">All</span>
-            <span class="filter-tab" onclick="filterFavorites('veg')">Veg</span>
+            <span class="filter-tab" onclick="filterFavorites('student')">Student Plans</span>
+            <span class="filter-tab" onclick="filterFavorites('professional')">Professional Plans</span>
+            <span class="filter-tab" onclick="filterFavorites('veg')">Pure Veg</span>
             <span class="filter-tab" onclick="filterFavorites('non-veg')">Non-Veg</span>
-            <span class="filter-tab" onclick="filterFavorites('north-indian')">North Indian</span>
-            <span class="filter-tab" onclick="filterFavorites('south-indian')">South Indian</span>
-            <span class="filter-tab" onclick="filterFavorites('street-food')">Street Food</span>
+            <span class="filter-tab" onclick="filterFavorites('special')">Nashik Special</span>
         </div>
 
         <!-- Favorites Grid Container -->
@@ -760,152 +808,177 @@
         document.getElementById('userName').textContent = firstName;
         document.getElementById('userInitials').textContent = firstName.charAt(0);
         document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${firstName}! 👋`;
+        document.getElementById('selectedCity').textContent = 'Nashik';
 
-        // Sample favorites data
+        // Sample favorites data - TIFFIN SERVICE STYLE
         let favoritesData = [
             {
                 id: 1,
-                name: 'Butter Chicken',
-                cuisine: 'North Indian',
-                type: 'non-veg',
-                price: 350,
+                name: 'Matoshree Tiffin Service',
+                shortName: 'Matoshree',
+                type: 'student',
+                category: 'veg',
+                price: 2000,
+                duration: 'month',
                 rating: 4.8,
-                reviews: 1234,
-                provider: 'Delhi Darbar',
+                reviews: 156,
+                provider: 'Matoshree Tiffin',
                 providerId: 101,
-                dateAdded: '2026-02-20'
+                area: 'Gangapur Road',
+                dateAdded: '2026-02-20',
+                icon: '🥘',
+                menu: ['Pithla Bhakari', 'Vangyacha Bharit', 'Dal', 'Rice'],
+                special: 'Varan Bhat on Friday',
+                planType: 'Monthly Veg',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 2,
-                name: 'Masala Dosa',
-                cuisine: 'South Indian',
-                type: 'veg',
-                price: 120,
+                name: 'Annapurna Ghar Ka Khana',
+                shortName: 'Annapurna',
+                type: 'professional',
+                category: 'veg',
+                price: 2500,
+                duration: 'month',
                 rating: 4.9,
-                reviews: 2341,
-                provider: 'Madras Cafe',
+                reviews: 234,
+                provider: 'Annapurna Kitchen',
                 providerId: 102,
-                dateAdded: '2026-02-18'
+                area: 'College Road',
+                dateAdded: '2026-02-18',
+                icon: '🍛',
+                menu: ['3 Chapati', '2 Sabji', 'Dal', 'Rice', 'Curd'],
+                special: 'Puran Poli on Sunday',
+                planType: 'Premium Veg',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 3,
-                name: 'Vada Pav',
-                cuisine: 'Street Food',
-                type: 'veg',
-                price: 30,
+                name: 'Sahyadri Tiffin',
+                shortName: 'Sahyadri',
+                type: 'student',
+                category: 'veg',
+                price: 1800,
+                duration: 'month',
                 rating: 4.7,
-                reviews: 3456,
-                provider: 'Mumbai Tiffin',
+                reviews: 189,
+                provider: 'Sahyadri Tiffin',
                 providerId: 103,
-                dateAdded: '2026-02-15'
+                area: 'Panchavati',
+                dateAdded: '2026-02-15',
+                icon: '🍚',
+                menu: ['2 Bhakari', 'Sabji', 'Pithla', 'Rice', 'Thecha'],
+                special: 'Misal Pav on Saturday',
+                planType: 'Student Special',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 4,
-                name: 'Hyderabadi Biryani',
-                cuisine: 'Hyderabadi',
-                type: 'non-veg',
-                price: 350,
+                name: 'Godavari Tiffin Service',
+                shortName: 'Godavari',
+                type: 'professional',
+                category: 'non-veg',
+                price: 3000,
+                duration: 'month',
                 rating: 4.8,
-                reviews: 4567,
-                provider: 'Biryani House',
+                reviews: 167,
+                provider: 'Godavari Tiffin',
                 providerId: 104,
-                dateAdded: '2026-02-10'
+                area: 'Satpur',
+                dateAdded: '2026-02-10',
+                icon: '🍗',
+                menu: ['3 Chapati', 'Veg Sabji', 'Chicken/Egg Curry', 'Dal', 'Rice'],
+                special: 'Chicken Thali on Sunday',
+                planType: 'Non-Veg Premium',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 5,
-                name: 'Paneer Tikka',
-                cuisine: 'North Indian',
-                type: 'veg',
-                price: 280,
+                name: 'Student Special Tiffin',
+                shortName: 'Student Special',
+                type: 'student',
+                category: 'veg',
+                price: 1700,
+                duration: 'month',
                 rating: 4.6,
-                reviews: 2345,
-                provider: 'Punjab Grill',
+                reviews: 312,
+                provider: 'Student Special',
                 providerId: 105,
-                dateAdded: '2026-02-05'
+                area: 'CBS',
+                dateAdded: '2026-02-05',
+                icon: '📚',
+                menu: ['2 Chapati', '1 Sabji', 'Dal', 'Rice', 'Papad'],
+                special: 'Budget friendly',
+                planType: 'Student Basic',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 6,
-                name: 'Chole Bhature',
-                cuisine: 'North Indian',
-                type: 'veg',
-                price: 120,
-                rating: 4.7,
-                reviews: 1890,
-                provider: 'Amritsar Kulcha',
+                name: 'Nashik Tiffinwala',
+                shortName: 'Nashik Tiffin',
+                type: 'professional',
+                category: 'non-veg',
+                price: 2800,
+                duration: 'month',
+                rating: 4.9,
+                reviews: 201,
+                provider: 'Nashik Tiffinwala',
                 providerId: 106,
-                dateAdded: '2026-02-01'
+                area: 'Ambad',
+                dateAdded: '2026-02-01',
+                icon: '🍳',
+                menu: ['3 Chapati', 'Veg Sabji', 'Egg Curry', 'Dal', 'Rice'],
+                special: 'Mutton on Sunday (extra)',
+                planType: 'Non-Veg Special',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 7,
-                name: 'Idli Sambhar',
-                cuisine: 'South Indian',
-                type: 'veg',
-                price: 80,
-                rating: 4.5,
-                reviews: 3210,
-                provider: 'South Indian Express',
+                name: 'Panchavati Pure Veg',
+                shortName: 'Panchavati',
+                type: 'professional',
+                category: 'veg',
+                price: 2400,
+                duration: 'month',
+                rating: 4.7,
+                reviews: 145,
+                provider: 'Panchavati Tiffin',
                 providerId: 107,
-                dateAdded: '2026-01-28'
+                area: 'Panchavati',
+                dateAdded: '2026-01-28',
+                icon: '🥗',
+                menu: ['3 Chapati', '2 Sabji', 'Dal', 'Rice', 'Curd', 'Salad'],
+                special: 'Special Thali on Sunday',
+                planType: 'Premium Veg Plus',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 8,
-                name: 'Chicken 65',
-                cuisine: 'South Indian',
-                type: 'non-veg',
-                price: 220,
-                rating: 4.6,
-                reviews: 1567,
-                provider: 'Chennai Spice',
+                name: 'CBS Student Mess',
+                shortName: 'CBS Mess',
+                type: 'student',
+                category: 'veg',
+                price: 1600,
+                duration: 'month',
+                rating: 4.5,
+                reviews: 278,
+                provider: 'CBS Student Mess',
                 providerId: 108,
-                dateAdded: '2026-01-25'
-            },
-            {
-                id: 9,
-                name: 'Pav Bhaji',
-                cuisine: 'Street Food',
-                type: 'veg',
-                price: 150,
-                rating: 4.7,
-                reviews: 2789,
-                provider: 'Juhu Beach Stall',
-                providerId: 109,
-                dateAdded: '2026-01-20'
-            },
-            {
-                id: 10,
-                name: 'Kadhai Paneer',
-                cuisine: 'North Indian',
-                type: 'veg',
-                price: 320,
-                rating: 4.6,
-                reviews: 1456,
-                provider: 'Punjabi Dhaba',
-                providerId: 110,
-                dateAdded: '2026-01-15'
-            },
-            {
-                id: 11,
-                name: 'Fish Curry',
-                cuisine: 'Bengali',
-                type: 'non-veg',
-                price: 380,
-                rating: 4.8,
-                reviews: 987,
-                provider: 'Bengal Kitchen',
-                providerId: 111,
-                dateAdded: '2026-01-10'
-            },
-            {
-                id: 12,
-                name: 'Gobi Manchurian',
-                cuisine: 'Chinese',
-                type: 'veg',
-                price: 180,
-                rating: 4.4,
-                reviews: 2134,
-                provider: 'Chinese Wok',
-                providerId: 112,
-                dateAdded: '2026-01-05'
+                area: 'CBS',
+                dateAdded: '2026-01-25',
+                icon: '🍲',
+                menu: ['2 Bhakari', '1 Sabji', 'Dal', 'Rice', 'Papad'],
+                special: 'Popular among students',
+                planType: 'Student Basic',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             }
         ];
 
@@ -939,54 +1012,67 @@
                         <div class="empty-icon">
                             <i class="fas fa-heart-broken"></i>
                         </div>
-                        <h2>No favorites yet</h2>
-                        <p>You haven't added any meals to your favorites. Browse meals and click the heart icon to save them here!</p>
+                        <h2>No favorite tiffins yet</h2>
+                        <p>You haven't added any tiffin services to your favorites. Browse tiffins and click the heart icon to save them here!</p>
                         <a href="browse-meals.html" class="btn-browse">
-                            <i class="fas fa-utensils"></i> Browse Meals
+                            <i class="fas fa-utensils"></i> Browse Tiffins
                         </a>
                     </div>
                 `;
                 return;
             }
             
-            container.innerHTML = favorites.map(meal => `
-                <div class="favorite-card" data-id="${meal.id}" data-type="${meal.type}" data-cuisine="${meal.cuisine.toLowerCase()}">
-                    <div class="favorite-image">
+            container.innerHTML = favorites.map(item => `
+                <div class="favorite-card" data-id="${item.id}" data-type="${item.type}" data-category="${item.category}">
+                    <div class="favorite-header-bg">
+                        <div class="meal-icon-large">${item.icon}</div>
                         <span class="favorite-badge">
-                            <i class="fas fa-star"></i> ${meal.rating}
+                            <i class="fas fa-star"></i> ${item.rating}
                         </span>
-                        <div class="favorite-remove" onclick="event.stopPropagation(); removeFromFavorites(${meal.id})">
+                        <div class="favorite-remove" onclick="event.stopPropagation(); removeFromFavorites(${item.id})">
                             <i class="fas fa-trash"></i>
                         </div>
                     </div>
                     <div class="favorite-content">
                         <div class="favorite-header">
-                            <h3 class="favorite-name">${meal.name}</h3>
-                            <span class="favorite-price">₹${meal.price}</span>
+                            <h3 class="favorite-name">${item.name}</h3>
+                            <span class="favorite-price">₹${item.price}<span style="font-size: 0.8rem; color: #666;">/${item.duration}</span></span>
                         </div>
+                        
+                        <span class="favorite-type-badge ${item.category === 'veg' ? 'type-veg' : 'type-nonveg'}">
+                            ${item.category === 'veg' ? '🟢 Pure Veg' : '🔴 Non-Veg'}
+                        </span>
+                        
                         <div class="favorite-cuisine">
-                            <i class="fas fa-utensils"></i> ${meal.cuisine}
-                            <span style="margin-left: auto; font-size: 0.8rem; color: ${meal.type === 'veg' ? '#4caf50' : '#f44336'}">
-                                ${meal.type === 'veg' ? '🟢 Veg' : '🔴 Non-Veg'}
+                            <i class="fas fa-map-marker-alt"></i> ${item.area}, Nashik
+                            <span style="margin-left: auto; font-size: 0.8rem; background: ${item.type === 'student' ? '#fff3cd' : '#e3f2fd'}; padding: 0.2rem 0.5rem; border-radius: 5px;">
+                                ${item.type === 'student' ? '👨‍🎓 Student' : '💼 Professional'}
                             </span>
                         </div>
-                        <div class="favorite-rating">
-                            <div class="stars">
-                                ${generateStars(meal.rating)}
+                        
+                        <div class="menu-preview">
+                            ${item.menu.slice(0, 3).map(m => `<span class="menu-tag">${m}</span>`).join('')}
+                            <span class="menu-tag">+${item.menu.length - 3} more</span>
+                        </div>
+                        
+                        ${item.special ? `
+                            <div style="background: #fff5f0; padding: 0.4rem; border-radius: 5px; margin: 0.5rem 0; font-size: 0.85rem; color: #ff6b6b;">
+                                <i class="fas fa-star"></i> ${item.special}
                             </div>
-                            <span class="rating-count">(${meal.reviews}+ reviews)</span>
-                        </div>
+                        ` : ''}
+                        
                         <div class="favorite-provider">
-                            <i class="fas fa-store"></i> ${meal.provider}
+                            <i class="fas fa-store"></i> ${item.provider}
                             <span style="margin-left: auto; font-size: 0.8rem; color: #999;">
-                                Added: ${meal.dateAdded}
+                                <i class="far fa-calendar"></i> Added: ${item.dateAdded}
                             </span>
                         </div>
+                        
                         <div class="favorite-actions">
-                            <button class="btn-add" onclick="event.stopPropagation(); addToCart(${meal.id})">
-                                <i class="fas fa-shopping-cart"></i> Add to Cart
+                            <button class="btn-subscribe" onclick="event.stopPropagation(); subscribeTiffin(${item.id})">
+                                <i class="fas fa-calendar-check"></i> Subscribe
                             </button>
-                            <button class="btn-view" onclick="event.stopPropagation(); viewMealDetails(${meal.id})">
+                            <button class="btn-view" onclick="event.stopPropagation(); viewTiffinDetails(${item.id})">
                                 <i class="fas fa-eye"></i>
                             </button>
                         </div>
@@ -1002,40 +1088,70 @@
         function updateStats() {
             document.getElementById('favoriteCount').textContent = favoritesData.length;
             
-            const uniqueProviders = [...new Set(favoritesData.map(meal => meal.providerId))];
-            document.getElementById('restaurantCount').textContent = uniqueProviders.length;
+            const uniqueProviders = [...new Set(favoritesData.map(item => item.providerId))];
+            document.getElementById('providerCount').textContent = uniqueProviders.length;
         }
 
         // Remove from favorites
-        window.removeFromFavorites = function(mealId) {
-            favoritesData = favoritesData.filter(meal => meal.id !== mealId);
+        window.removeFromFavorites = function(itemId) {
+            favoritesData = favoritesData.filter(item => item.id !== itemId);
             loadFavorites();
             showAlert('Removed from favorites!', 'success');
         };
 
-        // Add to cart
-        window.addToCart = function(mealId) {
-            const meal = favoritesData.find(m => m.id === mealId);
-            
-            // Get existing cart from localStorage
-            let cart = JSON.parse(localStorage.getItem('cart') || '[]');
-            
-            // Check if item already in cart
-            const existingItem = cart.find(item => item.id === mealId);
-            if (existingItem) {
-                existingItem.quantity += 1;
-                showAlert(`Added another ${meal.name} to cart!`, 'success');
-            } else {
-                cart.push({...meal, quantity: 1});
-                showAlert(`${meal.name} added to cart!`, 'success');
-            }
-            
-            localStorage.setItem('cart', JSON.stringify(cart));
-        };
+        // Subscribe to tiffin - THIS WILL SAVE TO LOCALSTORAGE AND REDIRECT TO SUBSCRIPTIONS PAGE
+       // Subscribe to tiffin - Saves to localStorage and redirects to PAYMENT page
+window.subscribeTiffin = function(itemId) {
+    const item = favoritesData.find(i => i.id === itemId);
+    
+    // Create subscription object with ALL details including payment
+    const subscription = {
+        id: item.id,
+        name: item.name,
+        provider: item.provider,
+        area: item.area,
+        price: item.price,
+        duration: item.duration,
+        planType: item.planType,
+        category: item.category,
+        type: item.type,
+        mealsPerDay: item.mealsPerDay,
+        deliveryTime: item.deliveryTime,
+        menu: item.menu,
+        special: item.special,
+        icon: item.icon,
+        // Payment related fields
+        amount: item.price,
+        gst: Math.round(item.price * 0.05), // 5% GST
+        totalAmount: item.price + Math.round(item.price * 0.05),
+        // Dates
+        startDate: new Date().toLocaleDateString('en-IN', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        }),
+        // Status - changed from 'active' to 'pending_payment'
+        status: 'pending_payment',
+        paymentStatus: 'pending',
+        mealsDelivered: 0,
+        totalMeals: 30
+    };
+    
+    // Save to localStorage as pending subscription (not active yet)
+    localStorage.setItem('pendingSubscription', JSON.stringify(subscription));
+    localStorage.setItem('subscriptionSource', 'favorites');
+    
+    showAlert(`✅ Proceeding to payment for ${item.name}...`, 'success');
+    
+    // Redirect to PAYMENTS page instead of subscriptions page
+    setTimeout(() => {
+        window.location.href = 'payments.html';
+    }, 1500);
+};
 
-        // View meal details
-        window.viewMealDetails = function(mealId) {
-            window.location.href = `meal-details.html?id=${mealId}`;
+        // View tiffin details
+        window.viewTiffinDetails = function(itemId) {
+            window.location.href = `tiffin-details.html?id=${itemId}`;
         };
 
         // Filter favorites
@@ -1049,20 +1165,20 @@
             let filtered = favoritesData;
             
             switch(filter) {
+                case 'student':
+                    filtered = favoritesData.filter(item => item.type === 'student');
+                    break;
+                case 'professional':
+                    filtered = favoritesData.filter(item => item.type === 'professional');
+                    break;
                 case 'veg':
-                    filtered = favoritesData.filter(meal => meal.type === 'veg');
+                    filtered = favoritesData.filter(item => item.category === 'veg');
                     break;
                 case 'non-veg':
-                    filtered = favoritesData.filter(meal => meal.type === 'non-veg');
+                    filtered = favoritesData.filter(item => item.category === 'non-veg');
                     break;
-                case 'north-indian':
-                    filtered = favoritesData.filter(meal => meal.cuisine === 'North Indian');
-                    break;
-                case 'south-indian':
-                    filtered = favoritesData.filter(meal => meal.cuisine === 'South Indian');
-                    break;
-                case 'street-food':
-                    filtered = favoritesData.filter(meal => meal.cuisine === 'Street Food');
+                case 'special':
+                    filtered = favoritesData.filter(item => item.special);
                     break;
                 default:
                     filtered = favoritesData;
@@ -1080,10 +1196,11 @@
                 return;
             }
             
-            const filtered = favoritesData.filter(meal => 
-                meal.name.toLowerCase().includes(searchTerm) ||
-                meal.cuisine.toLowerCase().includes(searchTerm) ||
-                meal.provider.toLowerCase().includes(searchTerm)
+            const filtered = favoritesData.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) ||
+                item.area.toLowerCase().includes(searchTerm) ||
+                item.provider.toLowerCase().includes(searchTerm) ||
+                item.menu.some(m => m.toLowerCase().includes(searchTerm))
             );
             
             loadFavorites(filtered);
@@ -1132,7 +1249,7 @@
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             loadFavorites();
-            showAlert(`You have ${favoritesData.length} favorite items`, 'info');
+            showAlert(`You have ${favoritesData.length} favorite tiffin services`, 'info');
         });
     </script>
     
