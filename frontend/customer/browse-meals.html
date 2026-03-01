@@ -706,7 +706,7 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span> Tiffin</a>
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
         <div class="nav-right">
             <div class="location-badge">
                 <i class="fas fa-map-marker-alt"></i> Nashik
@@ -1336,10 +1336,55 @@
         });
 
         // Subscribe
-        window.subscribe = function(id) {
-            alert('✅ Subscription started! You can manage it in "My Subscription" page.');
-            window.location.href = 'subscriptions.html';
-        };
+       // Subscribe - Save to localStorage and go to payment
+window.subscribe = function(id) {
+    const tiffin = tiffins.find(t => t.id == id);
+    
+    // Create subscription object with ALL details
+    const subscription = {
+        id: tiffin.id,
+        name: tiffin.name,
+        provider: tiffin.name,
+        area: tiffin.area,
+        price: tiffin.price,
+        duration: tiffin.duration || 'month',
+        planType: tiffin.type === 'student' ? 'Student Plan' : 'Professional Plan',
+        category: tiffin.category,
+        type: tiffin.type,
+        mealsPerDay: 2,
+        deliveryTime: '12:00 PM & 7:30 PM',
+        menu: [...tiffin.lunch.items, ...tiffin.dinner.items.slice(0, 2)],
+        special: tiffin.localSpecial || '',
+        icon: '🍛',
+        // Payment related
+        amount: tiffin.price,
+        gst: Math.round(tiffin.price * 0.05), // 5% GST
+        totalAmount: tiffin.price + Math.round(tiffin.price * 0.05),
+        // Dates
+        startDate: new Date().toLocaleDateString('en-IN', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        }),
+        // Status
+        status: 'pending_payment',
+        paymentStatus: 'pending'
+    };
+    
+    // Save to localStorage
+    localStorage.setItem('pendingSubscription', JSON.stringify(subscription));
+    
+    // Show alert
+    alert(`✅ Proceeding to payment for ${tiffin.name}...`);
+    
+    // Redirect to payments page
+    window.location.href = 'payments.html';
+};
+// Show alert function (optional - instead of alert)
+function showAlert(message, type) {
+    // You can use this if you have an alert container
+    alert(message); // Simple alert for now
+}
 
         // Preview Menu
         window.previewMenu = function(id) {

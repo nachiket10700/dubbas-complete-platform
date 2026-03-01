@@ -752,7 +752,7 @@
         <!-- Page Header -->
         <div class="page-header" data-aos="fade-up">
             <h1>
-                <i class="fas fa-heart"></i> My Favorite <span>Dabba's</span>
+                <i class="fas fa-heart"></i> My Favorite <span>Tiffins</span>
             </h1>
             
             <div class="favorite-stats">
@@ -828,7 +828,10 @@
                 dateAdded: '2026-02-20',
                 icon: '🥘',
                 menu: ['Pithla Bhakari', 'Vangyacha Bharit', 'Dal', 'Rice'],
-                special: 'Varan Bhat on Friday'
+                special: 'Varan Bhat on Friday',
+                planType: 'Monthly Veg',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 2,
@@ -846,7 +849,10 @@
                 dateAdded: '2026-02-18',
                 icon: '🍛',
                 menu: ['3 Chapati', '2 Sabji', 'Dal', 'Rice', 'Curd'],
-                special: 'Puran Poli on Sunday'
+                special: 'Puran Poli on Sunday',
+                planType: 'Premium Veg',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 3,
@@ -864,7 +870,10 @@
                 dateAdded: '2026-02-15',
                 icon: '🍚',
                 menu: ['2 Bhakari', 'Sabji', 'Pithla', 'Rice', 'Thecha'],
-                special: 'Misal Pav on Saturday'
+                special: 'Misal Pav on Saturday',
+                planType: 'Student Special',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 4,
@@ -882,7 +891,10 @@
                 dateAdded: '2026-02-10',
                 icon: '🍗',
                 menu: ['3 Chapati', 'Veg Sabji', 'Chicken/Egg Curry', 'Dal', 'Rice'],
-                special: 'Chicken Thali on Sunday'
+                special: 'Chicken Thali on Sunday',
+                planType: 'Non-Veg Premium',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 5,
@@ -900,7 +912,10 @@
                 dateAdded: '2026-02-05',
                 icon: '📚',
                 menu: ['2 Chapati', '1 Sabji', 'Dal', 'Rice', 'Papad'],
-                special: 'Budget friendly'
+                special: 'Budget friendly',
+                planType: 'Student Basic',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 6,
@@ -918,7 +933,10 @@
                 dateAdded: '2026-02-01',
                 icon: '🍳',
                 menu: ['3 Chapati', 'Veg Sabji', 'Egg Curry', 'Dal', 'Rice'],
-                special: 'Mutton on Sunday (extra)'
+                special: 'Mutton on Sunday (extra)',
+                planType: 'Non-Veg Special',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 7,
@@ -936,7 +954,10 @@
                 dateAdded: '2026-01-28',
                 icon: '🥗',
                 menu: ['3 Chapati', '2 Sabji', 'Dal', 'Rice', 'Curd', 'Salad'],
-                special: 'Special Thali on Sunday'
+                special: 'Special Thali on Sunday',
+                planType: 'Premium Veg Plus',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             },
             {
                 id: 8,
@@ -954,7 +975,10 @@
                 dateAdded: '2026-01-25',
                 icon: '🍲',
                 menu: ['2 Bhakari', '1 Sabji', 'Dal', 'Rice', 'Papad'],
-                special: 'Popular among students'
+                special: 'Popular among students',
+                planType: 'Student Basic',
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM'
             }
         ];
 
@@ -1075,14 +1099,55 @@
             showAlert('Removed from favorites!', 'success');
         };
 
-        // Subscribe to tiffin
-        window.subscribeTiffin = function(itemId) {
-            const item = favoritesData.find(i => i.id === itemId);
-            showAlert(`✅ Starting subscription to ${item.name}!`, 'success');
-            setTimeout(() => {
-                window.location.href = 'subscriptions.html';
-            }, 1500);
-        };
+        // Subscribe to tiffin - THIS WILL SAVE TO LOCALSTORAGE AND REDIRECT TO SUBSCRIPTIONS PAGE
+       // Subscribe to tiffin - Saves to localStorage and redirects to PAYMENT page
+window.subscribeTiffin = function(itemId) {
+    const item = favoritesData.find(i => i.id === itemId);
+    
+    // Create subscription object with ALL details including payment
+    const subscription = {
+        id: item.id,
+        name: item.name,
+        provider: item.provider,
+        area: item.area,
+        price: item.price,
+        duration: item.duration,
+        planType: item.planType,
+        category: item.category,
+        type: item.type,
+        mealsPerDay: item.mealsPerDay,
+        deliveryTime: item.deliveryTime,
+        menu: item.menu,
+        special: item.special,
+        icon: item.icon,
+        // Payment related fields
+        amount: item.price,
+        gst: Math.round(item.price * 0.05), // 5% GST
+        totalAmount: item.price + Math.round(item.price * 0.05),
+        // Dates
+        startDate: new Date().toLocaleDateString('en-IN', { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric' 
+        }),
+        // Status - changed from 'active' to 'pending_payment'
+        status: 'pending_payment',
+        paymentStatus: 'pending',
+        mealsDelivered: 0,
+        totalMeals: 30
+    };
+    
+    // Save to localStorage as pending subscription (not active yet)
+    localStorage.setItem('pendingSubscription', JSON.stringify(subscription));
+    localStorage.setItem('subscriptionSource', 'favorites');
+    
+    showAlert(`✅ Proceeding to payment for ${item.name}...`, 'success');
+    
+    // Redirect to PAYMENTS page instead of subscriptions page
+    setTimeout(() => {
+        window.location.href = 'payments.html';
+    }, 1500);
+};
 
         // View tiffin details
         window.viewTiffinDetails = function(itemId) {

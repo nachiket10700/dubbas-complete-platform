@@ -3,21 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payments - Dabba's</title>
+    <title>Payment - Dabba's Tiffin Service Nashik</title>
 
-    <link rel="stylesheet" href="../assets/css/style.css">
-    <link rel="stylesheet" href="../assets/css/customer.css">
+    <link rel="stylesheet" href="/frontend/assets/css/style.css">
+    <link rel="stylesheet" href="/frontend/assets/css/customer.css">
+    <link rel="stylesheet" href="/frontend/assets/css/payments.css">
     
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-     <!-- ✅ CSS FILES -->
-    <link rel="stylesheet" href="/frontend/assets/css/style.css">
-    <link rel="stylesheet" href="/frontend/assets/css/customer.css">
-    <link rel="stylesheet" href="/frontend/assets/css/complaints.css"> <!-- For complaints page -->
-    <link rel="stylesheet" href="/frontend/assets/css/payments.css">   <!-- For payments page -->
     
     <style>
-        /* Same navigation and sidebar styles as before */
         * {
             margin: 0;
             padding: 0;
@@ -65,25 +60,18 @@
             gap: 2rem;
         }
 
-        .cart-icon {
-            position: relative;
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
             cursor: pointer;
         }
 
-        .cart-icon i {
-            font-size: 1.3rem;
-            color: #666;
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #ff6b6b;
-            color: white;
-            font-size: 0.7rem;
-            padding: 0.2rem 0.5rem;
-            border-radius: 50%;
+        .location-selector i {
+            color: #ff6b6b;
         }
 
         .user-menu {
@@ -171,204 +159,62 @@
             font-weight: 700;
         }
 
-        .btn-primary {
-            padding: 1rem 2rem;
-            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
-            color: white;
-            border: none;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
+        .back-link {
+            color: #ff6b6b;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.3);
-        }
-
-        /* Wallet Card */
-        .wallet-card {
-            background: linear-gradient(135deg, #667eea, #764ba2);
+        /* Order Summary Card */
+        .summary-card {
+            background: white;
             border-radius: 20px;
             padding: 2rem;
-            color: white;
             margin-bottom: 2rem;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
+            border: 1px solid #f0f0f0;
         }
 
-        .wallet-header {
+        .summary-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 1.5rem;
         }
 
-        .wallet-balance {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 0.3rem;
-        }
-
-        .wallet-label {
-            opacity: 0.9;
-        }
-
-        .btn-add-money {
-            padding: 0.8rem 2rem;
-            background: white;
-            color: #667eea;
-            border: none;
-            border-radius: 50px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-add-money:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Payment Methods */
-        .section-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 2rem 0 1.5rem;
-        }
-
-        .section-title h2 {
-            font-size: 1.5rem;
-        }
-
-        .payment-methods {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .method-card {
-            background: white;
-            border-radius: 15px;
-            padding: 1.5rem;
+        .summary-header h2 {
             display: flex;
             align-items: center;
-            gap: 1rem;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-        }
-
-        .method-card:hover {
-            border-color: #ff6b6b;
-            transform: translateY(-2px);
-        }
-
-        .method-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #fff5f0, #ffeae4);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #ff6b6b;
-            font-size: 1.5rem;
-        }
-
-        .method-info {
-            flex: 1;
-        }
-
-        .method-name {
-            font-weight: 600;
-            margin-bottom: 0.3rem;
-        }
-
-        .method-details {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        .method-actions {
-            display: flex;
             gap: 0.5rem;
         }
 
-        .method-actions button {
-            background: none;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            transition: 0.3s;
-            font-size: 1rem;
-        }
-
-        .method-actions button:hover {
-            color: #ff6b6b;
-        }
-
-        .method-default {
-            font-size: 0.8rem;
-            padding: 0.2rem 0.8rem;
-            background: #d4edda;
-            color: #155724;
-            border-radius: 50px;
-        }
-
-        /* Add Method Card */
-        .add-method-card {
-            background: #f8f9fc;
-            border: 2px dashed #ff6b6b;
-            border-radius: 15px;
-            padding: 1.5rem;
+        .tiffin-icon {
+            font-size: 2rem;
+            background: #fff5f0;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            min-height: 120px;
         }
 
-        .add-method-card:hover {
-            background: #ffeae4;
+        .tiffin-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .add-method-card i {
-            font-size: 2rem;
-            color: #ff6b6b;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Transactions */
-        .transactions-list {
-            background: white;
-            border-radius: 15px;
-            overflow: hidden;
-        }
-
-        .transaction-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.5rem;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .transaction-item:last-child {
-            border-bottom: none;
-        }
-
-        .transaction-info {
+        .detail-item {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
         }
 
-        .transaction-icon {
+        .detail-icon {
             width: 40px;
             height: 40px;
             background: #f0f0f0;
@@ -379,79 +225,182 @@
             color: #ff6b6b;
         }
 
-        .transaction-details h4 {
+        .detail-text h4 {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 0.2rem;
+        }
+
+        .detail-text p {
+            font-weight: 600;
+        }
+
+        .menu-tags {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .menu-tag {
+            background: #fff5f0;
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: #ff6b6b;
+        }
+
+        /* Price Breakdown */
+        .price-breakdown {
+            background: #f8f9fc;
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .price-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 0.8rem 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+
+        .price-row:last-child {
+            border-bottom: none;
+        }
+
+        .price-row.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            padding-top: 1rem;
+        }
+
+        .price-row.total .amount {
+            color: #ff6b6b;
+        }
+
+        /* Payment Options */
+        .payment-options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .payment-option {
+            background: white;
+            border: 2px solid #f0f0f0;
+            border-radius: 15px;
+            padding: 1.5rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .payment-option:hover {
+            border-color: #ff6b6b;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(255, 107, 107, 0.1);
+        }
+
+        .payment-option.selected {
+            border-color: #ff6b6b;
+            background: #fff5f0;
+        }
+
+        .payment-option input[type="radio"] {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            width: 20px;
+            height: 20px;
+            accent-color: #ff6b6b;
+        }
+
+        .payment-icon {
+            font-size: 2rem;
+            color: #ff6b6b;
+            margin-bottom: 1rem;
+        }
+
+        .payment-option h3 {
             margin-bottom: 0.3rem;
         }
 
-        .transaction-details p {
+        .payment-option p {
             color: #666;
             font-size: 0.9rem;
         }
 
-        .transaction-amount {
-            text-align: right;
-        }
-
-        .amount {
-            font-weight: 600;
-            font-size: 1.1rem;
-        }
-
-        .amount.credit {
-            color: #4caf50;
-        }
-
-        .amount.debit {
-            color: #ff6b6b;
-        }
-
-        .transaction-date {
-            color: #999;
-            font-size: 0.8rem;
-        }
-
-        .transaction-status {
-            font-size: 0.8rem;
-            padding: 0.2rem 0.8rem;
-            border-radius: 50px;
-            margin-top: 0.3rem;
-            display: inline-block;
-        }
-
-        .status-success {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status-pending {
-            background: #fff3cd;
-            color: #856404;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-        }
-
-        .modal-content {
-            background: white;
-            max-width: 500px;
-            margin: 2rem auto;
+        /* QR Code Section */
+        .qr-section {
+            text-align: center;
             padding: 2rem;
-            border-radius: 20px;
+            background: #f8f9fc;
+            border-radius: 15px;
+            margin: 2rem 0;
+            display: none;
         }
 
-        .close {
-            float: right;
-            font-size: 1.5rem;
+        .qr-section.show {
+            display: block;
+        }
+
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
+            margin: 1rem auto;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.9rem;
+            text-align: center;
+            padding: 1rem;
+            border: 4px solid white;
+            box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+        }
+
+        .qr-placeholder {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .upi-id {
+            font-weight: 600;
+            color: #ff6b6b;
+            font-size: 1.2rem;
+            margin: 0.5rem 0;
+        }
+
+        .copy-btn {
+            background: none;
+            border: 2px solid #ff6b6b;
+            color: #ff6b6b;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
             cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .copy-btn:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        /* Card Form */
+        .card-form {
+            background: #f8f9fc;
+            border-radius: 15px;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .card-form.show {
+            display: block;
         }
 
         .form-group {
@@ -470,6 +419,7 @@
             border: 2px solid #f0f0f0;
             border-radius: 10px;
             font-size: 1rem;
+            transition: all 0.3s ease;
         }
 
         .form-group input:focus {
@@ -483,36 +433,136 @@
             gap: 1rem;
         }
 
-        .btn-save {
+        /* Pay Button */
+        .pay-btn {
             width: 100%;
-            padding: 1rem;
+            padding: 1.5rem;
             background: linear-gradient(135deg, #ff6b6b, #ff8e8e);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
+            font-size: 1.2rem;
             font-weight: 600;
             cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .pay-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.4);
+        }
+
+        .pay-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Wallet Balance */
+        .wallet-info {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            padding: 1.5rem;
+            color: white;
+            margin: 2rem 0;
+            display: none;
+        }
+
+        .wallet-info.show {
+            display: block;
+        }
+
+        .wallet-balance {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.3rem;
+        }
+
+        .use-wallet {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .use-wallet input {
+            width: 20px;
+            height: 20px;
+            accent-color: white;
+        }
+
+        /* Alert */
+        .alert {
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-success {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-info {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .main-content {
+                margin-left: 0;
+            }
+            .payment-options {
+                grid-template-columns: 1fr;
+            }
+            .tiffin-details {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- Navigation (same as orders.html) -->
+    <!-- Navigation -->
     <nav class="navbar">
-        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span> Tiffin</a>
         <div class="nav-right">
-            <div class="cart-icon">
-                <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge">3</span>
+            <div class="location-selector">
+                <i class="fas fa-location-dot"></i>
+                <span id="selectedCity">Nashik</span>
+                <i class="fas fa-chevron-down"></i>
             </div>
             <div class="user-menu">
-                <div class="user-avatar">JD</div>
-                <span>John Doe</span>
+                <div class="user-avatar" id="userInitials">P</div>
+                <span id="userName">Pranjal</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
         </div>
     </nav>
 
-    <!-- Sidebar (same as orders.html) -->
+    <!-- Sidebar -->
     <aside class="sidebar">
         <ul class="nav-menu">
             <li class="nav-item">
@@ -522,21 +572,27 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="orders.html" class="nav-link">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>My Orders</span>
+                <a href="browse-meals.html" class="nav-link">
+                    <i class="fas fa-utensils"></i>
+                    <span>Browse Tiffin</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="subscriptions.html" class="nav-link">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>Subscriptions</span>
+                    <span>My Subscription</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="wishlist.html" class="nav-link">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Tiffins</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="favorites.html" class="nav-link">
                     <i class="fas fa-heart"></i>
-                    <span>Wishlist</span>
+                    <span>Favorite Tiffins</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -546,31 +602,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="addresses.html" class="nav-link">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Addresses</span>
+                <a href="support.html" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="complaints.html" class="nav-link">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>Complaints</span>
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="notifications.html" class="nav-link">
-                    <i class="fas fa-bell"></i>
-                    <span>Notifications</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="profile.html" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="login.html" class="nav-link" id="logoutBtn">
+                <a href="#" class="nav-link" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
@@ -581,305 +625,352 @@
     <!-- Main Content -->
     <main class="main-content">
         <div class="page-header">
-            <h1>Payments</h1>
+            <h1>Complete Payment</h1>
+            <a href="javascript:history.back()" class="back-link">
+                <i class="fas fa-arrow-left"></i> Back
+            </a>
         </div>
 
-        <!-- Wallet Card -->
-        <div class="wallet-card">
-            <div class="wallet-header">
-                <div>
-                    <div class="wallet-balance">₹2,450</div>
-                    <div class="wallet-label">Wallet Balance</div>
-                </div>
-                <button class="btn-add-money" onclick="addMoney()">
-                    <i class="fas fa-plus"></i> Add Money
-                </button>
-            </div>
-            <p>Use wallet balance for faster checkout</p>
+        <!-- Alert Container -->
+        <div id="alertContainer"></div>
+
+        <!-- Subscription Summary -->
+        <div class="summary-card" id="subscriptionSummary">
+            <!-- Will be populated by JavaScript -->
         </div>
 
         <!-- Payment Methods -->
-        <div class="section-title">
-            <h2>Saved Payment Methods</h2>
-            <button class="btn-primary" onclick="addPaymentMethod()">
-                <i class="fas fa-plus"></i> Add New
+        <h2 style="margin: 2rem 0 1rem;">Select Payment Method</h2>
+        
+        <div class="payment-options">
+            <label class="payment-option" onclick="selectPaymentMethod('upi')">
+                <input type="radio" name="payment" value="upi" checked>
+                <div class="payment-icon">
+                    <i class="fas fa-mobile-alt"></i>
+                </div>
+                <h3>UPI</h3>
+                <p>Google Pay, PhonePe, Paytm</p>
+            </label>
+
+            <label class="payment-option" onclick="selectPaymentMethod('card')">
+                <input type="radio" name="payment" value="card">
+                <div class="payment-icon">
+                    <i class="fas fa-credit-card"></i>
+                </div>
+                <h3>Credit/Debit Card</h3>
+                <p>Visa, MasterCard, RuPay</p>
+            </label>
+
+            <label class="payment-option" onclick="selectPaymentMethod('wallet')">
+                <input type="radio" name="payment" value="wallet">
+                <div class="payment-icon">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <h3>Wallet</h3>
+                <p>Balance: <span id="walletBalanceDisplay">₹2,450</span></p>
+            </label>
+
+            <label class="payment-option" onclick="selectPaymentMethod('cash')">
+                <input type="radio" name="payment" value="cash">
+                <div class="payment-icon">
+                    <i class="fas fa-money-bill-wave"></i>
+                </div>
+                <h3>Cash on Delivery</h3>
+                <p>Pay when you receive</p>
+            </label>
+        </div>
+
+        <!-- UPI QR Section -->
+        <div id="upiSection" class="qr-section show">
+            <h3>Scan QR Code to Pay</h3>
+            <div class="qr-code">
+                <div>
+                    <div class="qr-placeholder">📱</div>
+                    <div>Scan with any UPI app</div>
+                </div>
+            </div>
+            <div class="upi-id">dabbas@okhdfcbank</div>
+            <button class="copy-btn" onclick="copyUPI()">
+                <i class="fas fa-copy"></i> Copy UPI ID
             </button>
+            <p style="color: #666; margin-top: 1rem; font-size: 0.9rem;">
+                After payment, click "I've Paid" button below
+            </p>
         </div>
 
-        <div class="payment-methods" id="paymentMethods">
-            <!-- Payment methods will be loaded here -->
+        <!-- Card Form Section -->
+        <div id="cardSection" class="card-form">
+            <h3 style="margin-bottom: 1.5rem;">Enter Card Details</h3>
+            <div class="form-group">
+                <label>Card Number</label>
+                <input type="text" id="cardNumber" placeholder="1234 5678 9012 3456" maxlength="19">
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Expiry Date</label>
+                    <input type="text" id="expiry" placeholder="MM/YY" maxlength="5">
+                </div>
+                <div class="form-group">
+                    <label>CVV</label>
+                    <input type="password" id="cvv" placeholder="***" maxlength="3">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Name on Card</label>
+                <input type="text" id="cardName" placeholder="PRANJAL SHARMA">
+            </div>
         </div>
 
-        <!-- Recent Transactions -->
-        <div class="section-title">
-            <h2>Recent Transactions</h2>
-            <a href="#" style="color: #ff6b6b; text-decoration: none;">View All</a>
+        <!-- Wallet Section -->
+        <div id="walletSection" class="wallet-info">
+            <div class="wallet-balance" id="walletBalance">₹2,450</div>
+            <p>Available balance in your wallet</p>
+            <label class="use-wallet">
+                <input type="checkbox" id="useWallet" onchange="toggleWalletUse()">
+                <span>Use wallet balance for this payment</span>
+            </label>
         </div>
 
-        <div class="transactions-list" id="transactionsList">
-            <!-- Transactions will be loaded here -->
-        </div>
+        <!-- Pay Button -->
+        <button class="pay-btn" id="payBtn" onclick="processPayment()">
+            Pay ₹<span id="totalAmount">0</span>
+        </button>
     </main>
 
-    <!-- Add Payment Method Modal -->
-    <div id="paymentModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Payment Method</h2>
-            
-            <div style="display: flex; gap: 1rem; margin: 2rem 0;">
-                <button class="btn-primary" style="flex: 1;" onclick="showCardForm()">
-                    <i class="fas fa-credit-card"></i> Card
-                </button>
-                <button class="btn-primary" style="flex: 1;" onclick="showUpiForm()">
-                    <i class="fas fa-mobile-alt"></i> UPI
-                </button>
-            </div>
-
-            <div id="cardForm">
-                <div class="form-group">
-                    <label>Card Number</label>
-                    <input type="text" placeholder="1234 5678 9012 3456">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Expiry</label>
-                        <input type="text" placeholder="MM/YY">
-                    </div>
-                    <div class="form-group">
-                        <label>CVV</label>
-                        <input type="password" placeholder="***">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Name on Card</label>
-                    <input type="text" placeholder="John Doe">
-                </div>
-            </div>
-
-            <div id="upiForm" style="display: none;">
-                <div class="form-group">
-                    <label>UPI ID</label>
-                    <input type="text" placeholder="username@okhdfcbank">
-                </div>
-            </div>
-
-            <button class="btn-save" onclick="savePaymentMethod()">Save Payment Method</button>
-        </div>
-    </div>
-
-    <!-- Add Money Modal -->
-    <div id="addMoneyModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Add Money to Wallet</h2>
-            
-            <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
-                <button class="btn-primary" onclick="selectAmount(100)">₹100</button>
-                <button class="btn-primary" onclick="selectAmount(500)">₹500</button>
-                <button class="btn-primary" onclick="selectAmount(1000)">₹1000</button>
-            </div>
-
-            <div class="form-group">
-                <label>Custom Amount</label>
-                <input type="number" id="customAmount" placeholder="Enter amount">
-            </div>
-
-            <button class="btn-save" onclick="addToWallet()">Proceed to Payment</button>
-        </div>
-    </div>
-
     <script>
-        // Sample payment methods
-        const paymentMethods = [
-            {
-                type: 'card',
-                name: 'HDFC Bank Credit Card',
-                last4: '4242',
-                expiry: '12/26',
-                isDefault: true
-            },
-            {
-                type: 'upi',
-                name: 'Google Pay',
-                id: 'john@okhdfcbank',
-                isDefault: false
-            },
-            {
-                type: 'card',
-                name: 'SBI Debit Card',
-                last4: '1234',
-                expiry: '08/25',
-                isDefault: false
-            }
-        ];
+        // Get user info
+        const username = localStorage.getItem('username') || 'Pranjal';
+        const firstName = username.split(' ')[0] || 'Pranjal';
+        
+        document.getElementById('userName').textContent = firstName;
+        document.getElementById('userInitials').textContent = firstName.charAt(0);
+        document.getElementById('selectedCity').textContent = 'Nashik';
 
-        // Sample transactions
-        const transactions = [
-            {
-                id: 'TXN001',
-                date: '2026-02-24',
-                description: 'Payment for Order #ORD001',
-                amount: 450,
-                type: 'debit',
-                status: 'success'
-            },
-            {
-                id: 'TXN002',
-                date: '2026-02-23',
-                description: 'Added money to wallet',
-                amount: 1000,
-                type: 'credit',
-                status: 'success'
-            },
-            {
-                id: 'TXN003',
-                date: '2026-02-22',
-                description: 'Subscription renewal - Monthly Master',
-                amount: 1999,
-                type: 'debit',
-                status: 'success'
-            },
-            {
-                id: 'TXN004',
-                date: '2026-02-21',
-                description: 'Payment for Order #ORD002',
-                amount: 380,
-                type: 'debit',
-                status: 'pending'
-            },
-            {
-                id: 'TXN005',
-                date: '2026-02-20',
-                description: 'Wallet refund for cancelled order',
-                amount: 450,
-                type: 'credit',
-                status: 'success'
-            }
-        ];
+        // Get pending subscription from localStorage
+        const pendingSubscription = JSON.parse(localStorage.getItem('pendingSubscription'));
+        const subscriptionSource = localStorage.getItem('subscriptionSource');
 
-        // Load payment methods
-        function loadPaymentMethods() {
-            const container = document.getElementById('paymentMethods');
-            container.innerHTML = paymentMethods.map(method => `
-                <div class="method-card">
-                    <div class="method-icon">
-                        <i class="fas fa-${method.type === 'card' ? 'credit-card' : 'mobile-alt'}"></i>
-                    </div>
-                    <div class="method-info">
-                        <div class="method-name">${method.name}</div>
-                        <div class="method-details">
-                            ${method.type === 'card' 
-                                ? `•••• ${method.last4} | Expires ${method.expiry}` 
-                                : method.id}
+        // Wallet balance (simulated)
+        let walletBalance = 2450;
+        let useWallet = false;
+
+        // Redirect if no subscription
+        if (!pendingSubscription) {
+            window.location.href = 'browse-meals.html';
+        }
+
+        // Display subscription summary
+        function displaySubscription() {
+            const sub = pendingSubscription;
+            const container = document.getElementById('subscriptionSummary');
+            
+            document.getElementById('totalAmount').textContent = sub.totalAmount;
+            document.getElementById('walletBalance').textContent = `₹${walletBalance}`;
+            document.getElementById('walletBalanceDisplay').textContent = `₹${walletBalance}`;
+
+            container.innerHTML = `
+                <div class="summary-header">
+                    <h2>
+                        <span class="tiffin-icon">${sub.icon || '🍛'}</span>
+                        ${sub.name}
+                    </h2>
+                    <span style="background: #fff5f0; padding: 0.5rem 1rem; border-radius: 50px; color: #ff6b6b;">
+                        ${sub.planType || 'Monthly Plan'}
+                    </span>
+                </div>
+
+                <div class="tiffin-details">
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-map-marker-alt"></i>
                         </div>
-                        ${method.isDefault ? '<div class="method-default">Default</div>' : ''}
+                        <div class="detail-text">
+                            <h4>Location</h4>
+                            <p>${sub.area}, Nashik</p>
+                        </div>
                     </div>
-                    <div class="method-actions">
-                        <button onclick="editMethod('${method.name}')"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteMethod('${method.name}')"><i class="fas fa-trash"></i></button>
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="detail-text">
+                            <h4>Delivery Time</h4>
+                            <p>${sub.deliveryTime || '12:00 PM & 7:30 PM'}</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div class="detail-text">
+                            <h4>Meals/Day</h4>
+                            <p>${sub.mealsPerDay || 2} meals (Lunch + Dinner)</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="detail-text">
+                            <h4>Duration</h4>
+                            <p>${sub.duration || 'month'} plan</p>
+                        </div>
                     </div>
                 </div>
-            `).join('');
-            
-            // Add "Add New" card
-            container.innerHTML += `
-                <div class="add-method-card" onclick="addPaymentMethod()">
-                    <i class="fas fa-plus-circle"></i>
-                    <p>Add New Payment Method</p>
+
+                <div class="menu-tags">
+                    ${sub.menu ? sub.menu.map(item => `<span class="menu-tag">${item}</span>`).join('') : ''}
+                </div>
+
+                ${sub.special ? `
+                    <div style="background: #fff5f0; padding: 1rem; border-radius: 10px; margin: 1rem 0;">
+                        <i class="fas fa-star" style="color: #ff6b6b;"></i> ${sub.special}
+                    </div>
+                ` : ''}
+
+                <div class="price-breakdown">
+                    <div class="price-row">
+                        <span>Subscription Amount</span>
+                        <span>₹${sub.amount}</span>
+                    </div>
+                    <div class="price-row">
+                        <span>GST (5%)</span>
+                        <span>₹${sub.gst}</span>
+                    </div>
+                    <div class="price-row total">
+                        <span>Total Amount</span>
+                        <span class="amount">₹${sub.totalAmount}</span>
+                    </div>
                 </div>
             `;
         }
 
-        // Load transactions
-        function loadTransactions() {
-            const container = document.getElementById('transactionsList');
-            container.innerHTML = transactions.map(t => `
-                <div class="transaction-item">
-                    <div class="transaction-info">
-                        <div class="transaction-icon">
-                            <i class="fas ${t.type === 'credit' ? 'fa-arrow-down' : 'fa-arrow-up'}"></i>
-                        </div>
-                        <div class="transaction-details">
-                            <h4>${t.description}</h4>
-                            <p>${t.id} • ${t.date}</p>
-                        </div>
-                    </div>
-                    <div class="transaction-amount">
-                        <div class="amount ${t.type}">
-                            ${t.type === 'credit' ? '+' : '-'} ₹${t.amount}
-                        </div>
-                        <span class="transaction-status status-${t.status}">${t.status}</span>
-                        <div class="transaction-date">${t.date}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Add money
-        let selectedAmount = 0;
-        const addMoneyModal = document.getElementById('addMoneyModal');
-        const paymentModal = document.getElementById('paymentModal');
-
-        function addMoney() {
-            addMoneyModal.style.display = 'block';
-        }
-
-        function selectAmount(amount) {
-            selectedAmount = amount;
-            document.getElementById('customAmount').value = amount;
-        }
-
-        function addToWallet() {
-            const amount = document.getElementById('customAmount').value;
-            if (amount && amount > 0) {
-                alert(`Adding ₹${amount} to wallet`);
-                addMoneyModal.style.display = 'none';
-            }
-        }
-
-        // Add payment method
-        function addPaymentMethod() {
-            paymentModal.style.display = 'block';
-        }
-
-        function showCardForm() {
-            document.getElementById('cardForm').style.display = 'block';
-            document.getElementById('upiForm').style.display = 'none';
-        }
-
-        function showUpiForm() {
-            document.getElementById('cardForm').style.display = 'none';
-            document.getElementById('upiForm').style.display = 'block';
-        }
-
-        function savePaymentMethod() {
-            alert('Payment method added successfully!');
-            paymentModal.style.display = 'none';
-        }
-
-        function editMethod(name) {
-            alert(`Edit ${name}`);
-        }
-
-        function deleteMethod(name) {
-            if (confirm(`Delete ${name}?`)) {
-                alert('Payment method deleted');
-            }
-        }
-
-        // Close modals
-        document.querySelectorAll('.close').forEach(btn => {
-            btn.addEventListener('click', function() {
-                this.closest('.modal').style.display = 'none';
-            });
-        });
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal')) {
-                event.target.style.display = 'none';
+        // Select payment method
+        window.selectPaymentMethod = function(method) {
+            // Hide all sections
+            document.getElementById('upiSection').classList.remove('show');
+            document.getElementById('cardSection').classList.remove('show');
+            document.getElementById('walletSection').classList.remove('show');
+            
+            // Show selected section
+            if (method === 'upi') {
+                document.getElementById('upiSection').classList.add('show');
+            } else if (method === 'card') {
+                document.getElementById('cardSection').classList.add('show');
+            } else if (method === 'wallet') {
+                document.getElementById('walletSection').classList.add('show');
+            } else if (method === 'cash') {
+                // No extra section for COD
             }
         };
+
+        // Copy UPI ID
+        window.copyUPI = function() {
+            navigator.clipboard.writeText('dabbas@okhdfcbank');
+            showAlert('UPI ID copied to clipboard!', 'success');
+        };
+
+        // Toggle wallet use
+        window.toggleWalletUse = function() {
+            useWallet = document.getElementById('useWallet').checked;
+            const total = pendingSubscription.totalAmount;
+            
+            if (useWallet) {
+                if (walletBalance >= total) {
+                    document.getElementById('payBtn').innerHTML = `Pay ₹0 (Using Wallet)`;
+                } else {
+                    const remaining = total - walletBalance;
+                    document.getElementById('payBtn').innerHTML = `Pay ₹${remaining} (Wallet: ₹${walletBalance})`;
+                }
+            } else {
+                document.getElementById('payBtn').innerHTML = `Pay ₹${total}`;
+            }
+        };
+
+        // Process payment
+        window.processPayment = function() {
+            const payBtn = document.getElementById('payBtn');
+            payBtn.disabled = true;
+            payBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Processing...';
+
+            setTimeout(() => {
+                // Get selected payment method
+                const selectedMethod = document.querySelector('input[name="payment"]:checked').value;
+                
+                // Create active subscription from pending
+                const activeSubscription = {
+                    ...pendingSubscription,
+                    status: 'active',
+                    paymentStatus: 'paid',
+                    paymentMethod: selectedMethod,
+                    paymentDate: new Date().toLocaleDateString('en-IN', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    }),
+                    startDate: new Date().toLocaleDateString('en-IN', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    }),
+                    mealsDelivered: 0,
+                    totalMeals: 30
+                };
+
+                // Save to localStorage
+                localStorage.setItem('activeSubscription', JSON.stringify(activeSubscription));
+                
+                // Clear pending subscription
+                localStorage.removeItem('pendingSubscription');
+                localStorage.removeItem('subscriptionSource');
+
+                showAlert('✅ Payment successful! Redirecting to your subscription...', 'success');
+
+                setTimeout(() => {
+                    window.location.href = 'subscriptions.html';
+                }, 2000);
+            }, 2000);
+        };
+
+        // Show alert
+        function showAlert(message, type) {
+            const alertContainer = document.getElementById('alertContainer');
+            const icons = {
+                success: 'fa-check-circle',
+                error: 'fa-exclamation-circle',
+                info: 'fa-info-circle'
+            };
+            
+            alertContainer.innerHTML = `
+                <div class="alert alert-${type}">
+                    <i class="fas ${icons[type]}"></i>
+                    <span>${message}</span>
+                </div>
+            `;
+
+            setTimeout(() => {
+                alertContainer.innerHTML = '';
+            }, 3000);
+        }
+
+        // Format card number
+        document.getElementById('cardNumber')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\s/g, '');
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) formatted += ' ';
+                formatted += value[i];
+            }
+            e.target.value = formatted;
+        });
+
+        // Format expiry
+        document.getElementById('expiry')?.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
+            if (value.length >= 2) {
+                e.target.value = value.slice(0, 2) + '/' + value.slice(2, 4);
+            }
+        });
 
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
@@ -890,14 +981,7 @@
         });
 
         // Initialize
-        loadPaymentMethods();
-        loadTransactions();
+        displaySubscription();
     </script>
-     <!-- ✅ JS FILES -->
-    <script src="/frontend/assets/js/main.js"></script>
-    <script src="/frontend/assets/js/customer.js"></script>
-    <script src="/frontend/assets/js/translations.js"></script>
-    <script src="/frontend/assets/js/payment.js"></script>      <!-- For payments page -->
-    <script src="/frontend/assets/js/complaints.js"></script>   <!-- For complaints page -->
 </body>
 </html>

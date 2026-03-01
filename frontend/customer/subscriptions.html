@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Subscriptions - Dabba's</title>
+    <title>My Subscriptions - Dabba's Tiffin Service Nashik</title>
 
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="../assets/css/customer.css">
@@ -13,11 +13,10 @@
      <!-- ✅ CSS FILES -->
     <link rel="stylesheet" href="/frontend/assets/css/style.css">
     <link rel="stylesheet" href="/frontend/assets/css/customer.css">
-    <link rel="stylesheet" href="/frontend/assets/css/complaints.css"> <!-- For complaints page -->
-    <link rel="stylesheet" href="/frontend/assets/css/payments.css">   <!-- For payments page -->
+    <link rel="stylesheet" href="/frontend/assets/css/complaints.css">
+    <link rel="stylesheet" href="/frontend/assets/css/payments.css">
     
     <style>
-        /* Same navigation and sidebar styles as orders.html */
         * {
             margin: 0;
             padding: 0;
@@ -63,6 +62,20 @@
             display: flex;
             align-items: center;
             gap: 2rem;
+        }
+
+        .location-selector {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f5f5f5;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .location-selector i {
+            color: #ff6b6b;
         }
 
         .cart-icon {
@@ -118,6 +131,23 @@
             border-right: 1px solid #f0f0f0;
             padding: 2rem 1rem;
             overflow-y: auto;
+        }
+
+        .welcome-message {
+            padding: 1rem;
+            background: linear-gradient(135deg, #fff5f0, #ffeae4);
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .welcome-message h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .welcome-message p {
+            color: #666;
+            font-size: 0.9rem;
         }
 
         .nav-menu {
@@ -214,6 +244,20 @@
             margin-bottom: 0.5rem;
         }
 
+        .subscription-details {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .detail-badge {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+        }
+
         .subscription-dates {
             display: flex;
             gap: 2rem;
@@ -247,7 +291,21 @@
             height: 100%;
             background: white;
             border-radius: 4px;
-            width: 60%;
+        }
+
+        /* Menu Preview in Active Subscription */
+        .menu-preview-sub {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .menu-tag-sub {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.3rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
         }
 
         /* Subscription Grid */
@@ -286,6 +344,11 @@
             transform: rotate(45deg);
             font-size: 0.8rem;
             font-weight: 600;
+        }
+
+        .plan-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
         .plan-name {
@@ -385,6 +448,12 @@
             font-weight: 600;
         }
 
+        .delivery-meal {
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: 0.3rem;
+        }
+
         .delivery-status {
             padding: 0.3rem 0.8rem;
             border-radius: 50px;
@@ -466,24 +535,34 @@
     </style>
 </head>
 <body>
-    <!-- Navigation (same as orders.html) -->
+    <!-- Navigation -->
     <nav class="navbar">
-        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span> Tiffin</a>
         <div class="nav-right">
+            <div class="location-selector">
+                <i class="fas fa-location-dot"></i>
+                <span id="selectedCity">Nashik</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
             <div class="cart-icon">
                 <i class="fas fa-shopping-cart"></i>
-                <span class="cart-badge">3</span>
+                <span class="cart-badge" id="cartCount">0</span>
             </div>
             <div class="user-menu">
-                <div class="user-avatar">JD</div>
-                <span>John Doe</span>
+                <div class="user-avatar" id="userInitials">P</div>
+                <span id="userName">Pranjal</span>
                 <i class="fas fa-chevron-down"></i>
             </div>
         </div>
     </nav>
 
-    <!-- Sidebar (same as orders.html) -->
+    <!-- Sidebar -->
     <aside class="sidebar">
+        <div class="welcome-message">
+            <h3 id="welcomeMessage">Welcome back, Pranjal! 👋</h3>
+            <p id="membershipLevel">Gold Member</p>
+        </div>
+
         <ul class="nav-menu">
             <li class="nav-item">
                 <a href="dashboard.html" class="nav-link">
@@ -492,21 +571,27 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="orders.html" class="nav-link">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span>My Orders</span>
+                <a href="browse-meals.html" class="nav-link">
+                    <i class="fas fa-utensils"></i>
+                    <span>Browse Tiffin</span>
                 </a>
             </li>
             <li class="nav-item">
                 <a href="subscriptions.html" class="nav-link active">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>Subscriptions</span>
+                    <span>My Subscription</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="wishlist.html" class="nav-link">
+                <a href="orders.html" class="nav-link">
+                    <i class="fas fa-shopping-bag"></i>
+                    <span>My Tiffins</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="favorites.html" class="nav-link">
                     <i class="fas fa-heart"></i>
-                    <span>Wishlist</span>
+                    <span>Favorite Tiffins</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -516,31 +601,19 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a href="addresses.html" class="nav-link">
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span>Addresses</span>
+                <a href="support.html" class="nav-link">
+                    <i class="fas fa-headset"></i>
+                    <span>Support</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="complaints.html" class="nav-link">
-                    <i class="fas fa-exclamation-circle"></i>
-                    <span>Complaints</span>
+                <a href="settings.html" class="nav-link">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="notifications.html" class="nav-link">
-                    <i class="fas fa-bell"></i>
-                    <span>Notifications</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="profile.html" class="nav-link">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a href="login.html" class="nav-link" id="logoutBtn">
+                <a href="#" class="nav-link" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i>
                     <span>Logout</span>
                 </a>
@@ -557,32 +630,9 @@
             </button>
         </div>
 
-        <!-- Active Subscription -->
-        <div class="active-subscription">
-            <div class="subscription-info">
-                <h3>Active Subscription</h3>
-                <div class="subscription-plan">Monthly Master</div>
-                <p>₹1999/month • 1 meal per day</p>
-                <div class="subscription-dates">
-                    <div class="date-item">
-                        <div class="date-label">Started</div>
-                        <div class="date-value">Feb 1, 2026</div>
-                    </div>
-                    <div class="date-item">
-                        <div class="date-label">Renews on</div>
-                        <div class="date-value">Mar 1, 2026</div>
-                    </div>
-                </div>
-            </div>
-            <div style="text-align: right;">
-                <div class="progress-bar">
-                    <div class="progress-fill"></div>
-                </div>
-                <p style="margin-top: 0.5rem;">23 days remaining</p>
-                <button class="btn-primary" style="margin-top: 1rem; background: white; color: #ff6b6b;" onclick="manageSubscription()">
-                    Manage Subscription
-                </button>
-            </div>
+        <!-- Active Subscription Section -->
+        <div id="activeSubscriptionContainer">
+            <!-- Will be dynamically loaded -->
         </div>
 
         <!-- Available Plans -->
@@ -643,64 +693,167 @@
     </div>
 
     <script>
-        // Sample plans data
+        // Get user info
+        const username = localStorage.getItem('username') || 'Pranjal';
+        const firstName = username.split(' ')[0] || 'Pranjal';
+        
+        document.getElementById('userName').textContent = firstName;
+        document.getElementById('userInitials').textContent = firstName.charAt(0);
+        document.getElementById('welcomeMessage').innerHTML = `Welcome back, ${firstName}! 👋`;
+        document.getElementById('selectedCity').textContent = 'Nashik';
+
+        // Sample plans data - TIFFIN SERVICE STYLE
         const plans = [
             {
-                name: 'Daily Delight',
-                price: 99,
-                period: 'day',
-                description: 'Perfect for trying out',
-                features: ['1 meal per day', 'Free delivery', 'Choose cuisine', 'Cancel anytime'],
-                popular: false
-            },
-            {
-                name: 'Weekly Warrior',
-                price: 599,
-                period: 'week',
-                description: 'Most popular choice',
-                features: ['7 meals', 'Save 15%', 'Free delivery', 'Priority support', 'Flexible schedule'],
-                popular: true
-            },
-            {
-                name: 'Monthly Master',
-                price: 1999,
+                name: 'Student Saver',
+                price: 1700,
                 period: 'month',
-                description: 'Best value for money',
-                features: ['30 meals', 'Save 33%', 'Free delivery', 'Premium support', 'Skip anytime'],
-                popular: false
+                icon: '📚',
+                description: 'Perfect for students',
+                features: ['2 meals per day (Lunch + Dinner)', '2 Bhakari/Chapati per meal', '1 Sabji + Dal + Rice', 'Weekly rotating menu', 'Free delivery in Nashik'],
+                popular: true,
+                type: 'student',
+                category: 'veg'
             },
             {
-                name: 'Family Weekly',
-                price: 1499,
-                period: 'week',
-                description: 'For the whole family',
-                features: ['21 meals (3 per day)', 'Family portions', 'Free delivery', 'Priority support'],
-                popular: false
-            },
-            {
-                name: 'Family Monthly',
-                price: 4999,
+                name: 'Professional Plan',
+                price: 2500,
                 period: 'month',
-                description: 'Complete family solution',
-                features: ['90 meals (3 per day)', 'Save 20%', 'Free delivery', 'Premium support'],
-                popular: false
+                icon: '💼',
+                description: 'For working professionals',
+                features: ['2 meals per day (Lunch + Dinner)', '3 Chapati per meal', '2 Sabji + Dal + Rice', 'Curd/Salad included', 'Premium menu items'],
+                popular: false,
+                type: 'professional',
+                category: 'veg'
+            },
+            {
+                name: 'Non-Veg Special',
+                price: 3000,
+                period: 'month',
+                icon: '🍗',
+                description: 'Includes egg/chicken',
+                features: ['2 meals per day', '3 Chapati per meal', '1 Veg + 1 Non-Veg curry', 'Egg 3 times a week', 'Chicken on weekends'],
+                popular: false,
+                type: 'professional',
+                category: 'non-veg'
+            },
+            {
+                name: 'Executive Plus',
+                price: 2800,
+                period: 'month',
+                icon: '👔',
+                description: 'Premium tiffin service',
+                features: ['2 meals per day', '3 Chapati + extra roti', '2 Sabji + Dal + Rice', 'Special Sunday thali', 'Dessert on weekends'],
+                popular: false,
+                type: 'professional',
+                category: 'veg'
             }
         ];
 
-        // Sample schedule data
+        // Sample schedule data - Nashik style
         const schedule = [
-            { date: '2026-02-25', day: 'Tuesday', meal: 'Butter Chicken', status: 'scheduled' },
-            { date: '2026-02-26', day: 'Wednesday', meal: 'Paneer Tikka', status: 'scheduled' },
-            { date: '2026-02-27', day: 'Thursday', meal: 'Biryani', status: 'scheduled' },
-            { date: '2026-02-28', day: 'Friday', meal: 'Dal Makhani', status: 'scheduled' },
-            { date: '2026-03-01', day: 'Saturday', meal: 'Chole Bhature', status: 'scheduled' }
+            { date: '2026-02-25', day: 'Tuesday', meal: 'Pithla Bhakari', status: 'scheduled' },
+            { date: '2026-02-26', day: 'Wednesday', meal: 'Vangyacha Bharit', status: 'scheduled' },
+            { date: '2026-02-27', day: 'Thursday', meal: 'Matki Usal', status: 'scheduled' },
+            { date: '2026-02-28', day: 'Friday', meal: 'Misal Pav', status: 'scheduled' },
+            { date: '2026-03-01', day: 'Saturday', meal: 'Puran Poli', status: 'scheduled' }
         ];
+
+        let selectedPauseDays = 7;
+
+        // Load active subscription from localStorage (from favorites or browse page)
+        function loadActiveSubscription() {
+            const container = document.getElementById('activeSubscriptionContainer');
+            const activeSub = JSON.parse(localStorage.getItem('activeSubscription'));
+            const source = localStorage.getItem('subscriptionSource');
+
+            if (activeSub) {
+                // Calculate days remaining
+                const startDate = new Date();
+                const endDate = new Date();
+                endDate.setDate(endDate.getDate() + 30);
+                const daysRemaining = 30 - activeSub.mealsDelivered || 23;
+                const progressPercent = ((30 - daysRemaining) / 30) * 100;
+
+                container.innerHTML = `
+                    <div class="active-subscription">
+                        <div class="subscription-info">
+                            <h3>${source === 'favorites' ? 'Selected from Favorites' : 'Active Subscription'}</h3>
+                            <div class="subscription-plan">${activeSub.name}</div>
+                            <p>₹${activeSub.price}/${activeSub.duration} • ${activeSub.mealsPerDay} meals per day</p>
+                            
+                            <div class="subscription-details">
+                                <span class="detail-badge"><i class="fas fa-map-marker-alt"></i> ${activeSub.area}</span>
+                                <span class="detail-badge"><i class="fas fa-clock"></i> ${activeSub.deliveryTime}</span>
+                                <span class="detail-badge">${activeSub.planType}</span>
+                            </div>
+                            
+                            <div class="menu-preview-sub">
+                                ${activeSub.menu.slice(0, 3).map(item => `<span class="menu-tag-sub">${item}</span>`).join('')}
+                                <span class="menu-tag-sub">+${activeSub.menu.length - 3} more</span>
+                            </div>
+                            
+                            <div class="subscription-dates">
+                                <div class="date-item">
+                                    <div class="date-label">Started</div>
+                                    <div class="date-value">${activeSub.startDate || 'Feb 1, 2026'}</div>
+                                </div>
+                                <div class="date-item">
+                                    <div class="date-label">Renews on</div>
+                                    <div class="date-value">Mar 1, 2026</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: ${progressPercent}%;"></div>
+                            </div>
+                            <p style="margin-top: 0.5rem;">${daysRemaining} days remaining</p>
+                            <button class="btn-primary" style="margin-top: 1rem; background: white; color: #ff6b6b;" onclick="manageSubscription()">
+                                Manage Subscription
+                            </button>
+                        </div>
+                    </div>
+                `;
+            } else {
+                // Default active subscription if none selected
+                container.innerHTML = `
+                    <div class="active-subscription">
+                        <div class="subscription-info">
+                            <h3>Active Subscription</h3>
+                            <div class="subscription-plan">Monthly Master</div>
+                            <p>₹1999/month • 1 meal per day</p>
+                            <div class="subscription-dates">
+                                <div class="date-item">
+                                    <div class="date-label">Started</div>
+                                    <div class="date-value">Feb 1, 2026</div>
+                                </div>
+                                <div class="date-item">
+                                    <div class="date-label">Renews on</div>
+                                    <div class="date-value">Mar 1, 2026</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%;"></div>
+                            </div>
+                            <p style="margin-top: 0.5rem;">23 days remaining</p>
+                            <button class="btn-primary" style="margin-top: 1rem; background: white; color: #ff6b6b;" onclick="manageSubscription()">
+                                Manage Subscription
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+        }
 
         // Load plans
         function loadPlans() {
             const grid = document.getElementById('plansGrid');
             grid.innerHTML = plans.map(plan => `
                 <div class="plan-card ${plan.popular ? 'popular' : ''}">
+                    <div class="plan-icon">${plan.icon}</div>
                     <h3 class="plan-name">${plan.name}</h3>
                     <div class="plan-price">₹${plan.price}<span>/${plan.period}</span></div>
                     <p class="plan-description">${plan.description}</p>
@@ -724,7 +877,7 @@
                     <div>
                         <div class="delivery-date">${item.day}</div>
                         <small>${item.date}</small>
-                        <div style="margin-top: 0.3rem;">${item.meal}</div>
+                        <div class="delivery-meal">${item.meal}</div>
                     </div>
                     <span class="delivery-status status-${item.status}">
                         ${item.status.charAt(0).toUpperCase() + item.status.slice(1)}
@@ -735,7 +888,31 @@
 
         // Subscribe to plan
         function subscribe(planName) {
-            alert(`You have subscribed to ${planName}!`);
+            const selectedPlan = plans.find(p => p.name === planName);
+            
+            // Create subscription object
+            const subscription = {
+                name: planName,
+                price: selectedPlan.price,
+                duration: selectedPlan.period,
+                planType: selectedPlan.name,
+                category: selectedPlan.category,
+                type: selectedPlan.type,
+                mealsPerDay: 2,
+                deliveryTime: '12:00 PM & 7:30 PM',
+                area: 'Nashik',
+                menu: ['Pithla Bhakari', 'Vangyacha Bharit', 'Dal', 'Rice'],
+                startDate: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }),
+                status: 'active',
+                mealsDelivered: 0,
+                totalMeals: 30
+            };
+            
+            localStorage.setItem('activeSubscription', JSON.stringify(subscription));
+            localStorage.setItem('subscriptionSource', 'plans');
+            
+            alert(`✅ You have subscribed to ${planName}!`);
+            loadActiveSubscription(); // Reload the active subscription display
         }
 
         // Show plans (scroll to plans)
@@ -749,8 +926,6 @@
         }
 
         // Pause subscription
-        let selectedPauseDays = 7;
-        
         function pauseSubscription() {
             document.getElementById('manageModal').style.display = 'none';
             document.getElementById('pauseModal').style.display = 'block';
@@ -765,14 +940,17 @@
         }
 
         function confirmPause() {
-            alert(`Subscription paused for ${selectedPauseDays} days`);
+            alert(`✅ Subscription paused for ${selectedPauseDays} days`);
             document.getElementById('pauseModal').style.display = 'none';
         }
 
         function cancelSubscription() {
             if (confirm('Are you sure you want to cancel your subscription?')) {
-                alert('Subscription cancelled');
+                localStorage.removeItem('activeSubscription');
+                localStorage.removeItem('subscriptionSource');
+                alert('❌ Subscription cancelled');
                 document.getElementById('manageModal').style.display = 'none';
+                loadActiveSubscription(); // Reload to show default
             }
         }
 
@@ -797,6 +975,12 @@
             }
         };
 
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+            document.getElementById('cartCount').textContent = cart.length;
+        }
+
         // Logout
         document.getElementById('logoutBtn').addEventListener('click', function(e) {
             e.preventDefault();
@@ -806,14 +990,16 @@
         });
 
         // Initialize
+        loadActiveSubscription();
         loadPlans();
         loadSchedule();
+        updateCartCount();
     </script>
      <!-- ✅ JS FILES -->
     <script src="/frontend/assets/js/main.js"></script>
     <script src="/frontend/assets/js/customer.js"></script>
     <script src="/frontend/assets/js/translations.js"></script>
-    <script src="/frontend/assets/js/payment.js"></script>      <!-- For payments page -->
-    <script src="/frontend/assets/js/complaints.js"></script>   <!-- For complaints page -->
+    <script src="/frontend/assets/js/payment.js"></script>
+    <script src="/frontend/assets/js/complaints.js"></script>
 </body>
 </html>
