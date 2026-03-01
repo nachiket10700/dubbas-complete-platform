@@ -537,7 +537,7 @@
 <body>
     <!-- Navigation -->
     <nav class="navbar">
-        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span> Tiffin</a>
+        <a href="/frontend/index.html" class="logo">Dabba<span>'s</span></a>
         <div class="nav-right">
             <div class="location-selector">
                 <i class="fas fa-location-dot"></i>
@@ -692,7 +692,7 @@
         </div>
     </div>
 
-    <script>
+   <script>
         // Get user info
         const username = localStorage.getItem('username') || 'Pranjal';
         const firstName = username.split(' ')[0] || 'Pranjal';
@@ -752,55 +752,54 @@
 
         // Sample schedule data - Nashik style
         const schedule = [
-            { date: '2026-02-25', day: 'Tuesday', meal: 'Pithla Bhakari', status: 'scheduled' },
-            { date: '2026-02-26', day: 'Wednesday', meal: 'Vangyacha Bharit', status: 'scheduled' },
-            { date: '2026-02-27', day: 'Thursday', meal: 'Matki Usal', status: 'scheduled' },
-            { date: '2026-02-28', day: 'Friday', meal: 'Misal Pav', status: 'scheduled' },
-            { date: '2026-03-01', day: 'Saturday', meal: 'Puran Poli', status: 'scheduled' }
+            { date: '2026-03-01', day: 'Sunday', meal: 'Special Thali', status: 'scheduled' },
+            { date: '2026-03-02', day: 'Monday', meal: 'Pithla Bhakari', status: 'scheduled' },
+            { date: '2026-03-03', day: 'Tuesday', meal: 'Vangyacha Bharit', status: 'scheduled' },
+            { date: '2026-03-04', day: 'Wednesday', meal: 'Matki Usal', status: 'scheduled' },
+            { date: '2026-03-05', day: 'Thursday', meal: 'Misal Pav', status: 'scheduled' }
         ];
 
         let selectedPauseDays = 7;
 
-        // Load active subscription from localStorage (from favorites or browse page)
+        // Load active subscription from localStorage
         function loadActiveSubscription() {
             const container = document.getElementById('activeSubscriptionContainer');
             const activeSub = JSON.parse(localStorage.getItem('activeSubscription'));
-            const source = localStorage.getItem('subscriptionSource');
 
             if (activeSub) {
                 // Calculate days remaining
                 const startDate = new Date();
                 const endDate = new Date();
                 endDate.setDate(endDate.getDate() + 30);
-                const daysRemaining = 30 - activeSub.mealsDelivered || 23;
+                const daysRemaining = 30 - (activeSub.mealsDelivered || 0);
                 const progressPercent = ((30 - daysRemaining) / 30) * 100;
 
                 container.innerHTML = `
                     <div class="active-subscription">
                         <div class="subscription-info">
-                            <h3>${source === 'favorites' ? 'Selected from Favorites' : 'Active Subscription'}</h3>
+                            <h3>Active Subscription</h3>
                             <div class="subscription-plan">${activeSub.name}</div>
-                            <p>₹${activeSub.price}/${activeSub.duration} • ${activeSub.mealsPerDay} meals per day</p>
+                            <p>₹${activeSub.price}/${activeSub.duration} • ${activeSub.mealsPerDay || 2} meals per day</p>
                             
                             <div class="subscription-details">
-                                <span class="detail-badge"><i class="fas fa-map-marker-alt"></i> ${activeSub.area}</span>
-                                <span class="detail-badge"><i class="fas fa-clock"></i> ${activeSub.deliveryTime}</span>
-                                <span class="detail-badge">${activeSub.planType}</span>
+                                <span class="detail-badge"><i class="fas fa-map-marker-alt"></i> ${activeSub.area || 'Nashik'}</span>
+                                <span class="detail-badge"><i class="fas fa-clock"></i> ${activeSub.deliveryTime || '12:00 PM & 7:30 PM'}</span>
+                                <span class="detail-badge">${activeSub.planType || 'Monthly Plan'}</span>
                             </div>
                             
                             <div class="menu-preview-sub">
-                                ${activeSub.menu.slice(0, 3).map(item => `<span class="menu-tag-sub">${item}</span>`).join('')}
-                                <span class="menu-tag-sub">+${activeSub.menu.length - 3} more</span>
+                                ${activeSub.menu ? activeSub.menu.slice(0, 3).map(item => `<span class="menu-tag-sub">${item}</span>`).join('') : '<span class="menu-tag-sub">Menu not available</span>'}
+                                ${activeSub.menu && activeSub.menu.length > 3 ? '<span class="menu-tag-sub">+' + (activeSub.menu.length - 3) + ' more</span>' : ''}
                             </div>
                             
                             <div class="subscription-dates">
                                 <div class="date-item">
                                     <div class="date-label">Started</div>
-                                    <div class="date-value">${activeSub.startDate || 'Feb 1, 2026'}</div>
+                                    <div class="date-value">${activeSub.startDate || 'Mar 1, 2026'}</div>
                                 </div>
                                 <div class="date-item">
                                     <div class="date-label">Renews on</div>
-                                    <div class="date-value">Mar 1, 2026</div>
+                                    <div class="date-value">Mar 30, 2026</div>
                                 </div>
                             </div>
                         </div>
@@ -816,31 +815,17 @@
                     </div>
                 `;
             } else {
-                // Default active subscription if none selected
+                // No active subscription
                 container.innerHTML = `
-                    <div class="active-subscription">
+                    <div class="active-subscription" style="background: linear-gradient(135deg, #95a5a6, #7f8c8d);">
                         <div class="subscription-info">
-                            <h3>Active Subscription</h3>
-                            <div class="subscription-plan">Monthly Master</div>
-                            <p>₹1999/month • 1 meal per day</p>
-                            <div class="subscription-dates">
-                                <div class="date-item">
-                                    <div class="date-label">Started</div>
-                                    <div class="date-value">Feb 1, 2026</div>
-                                </div>
-                                <div class="date-item">
-                                    <div class="date-label">Renews on</div>
-                                    <div class="date-value">Mar 1, 2026</div>
-                                </div>
-                            </div>
+                            <h3>No Active Subscription</h3>
+                            <p style="margin: 1rem 0; font-size: 1.1rem;">You don't have any active subscription yet.</p>
+                            <p>Choose a plan below to get started with Dabba's Tiffin Service!</p>
                         </div>
                         <div style="text-align: right;">
-                            <div class="progress-bar">
-                                <div class="progress-fill" style="width: 60%;"></div>
-                            </div>
-                            <p style="margin-top: 0.5rem;">23 days remaining</p>
-                            <button class="btn-primary" style="margin-top: 1rem; background: white; color: #ff6b6b;" onclick="manageSubscription()">
-                                Manage Subscription
+                            <button class="btn-primary" style="margin-top: 1rem; background: white; color: #ff6b6b;" onclick="showPlans()">
+                                Browse Plans
                             </button>
                         </div>
                     </div>
@@ -886,33 +871,84 @@
             `).join('');
         }
 
-        // Subscribe to plan
+        // 🔍 DEBUG VERSION - Subscribe to plan
         function subscribe(planName) {
+            console.log('🔵 ===== SUBSCRIBE CLICKED =====');
+            console.log('🔵 Plan name received:', planName);
+            
+            // Find the selected plan
             const selectedPlan = plans.find(p => p.name === planName);
+            console.log('🔵 Selected plan found:', selectedPlan);
             
-            // Create subscription object
-            const subscription = {
-                name: planName,
-                price: selectedPlan.price,
-                duration: selectedPlan.period,
-                planType: selectedPlan.name,
-                category: selectedPlan.category,
-                type: selectedPlan.type,
-                mealsPerDay: 2,
-                deliveryTime: '12:00 PM & 7:30 PM',
-                area: 'Nashik',
-                menu: ['Pithla Bhakari', 'Vangyacha Bharit', 'Dal', 'Rice'],
-                startDate: new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' }),
-                status: 'active',
-                mealsDelivered: 0,
-                totalMeals: 30
-            };
+            if (!selectedPlan) {
+                console.error('❌ ERROR: Plan not found!');
+                alert('Error: Plan not found. Please try again.');
+                return;
+            }
             
-            localStorage.setItem('activeSubscription', JSON.stringify(subscription));
-            localStorage.setItem('subscriptionSource', 'plans');
-            
-            alert(`✅ You have subscribed to ${planName}!`);
-            loadActiveSubscription(); // Reload the active subscription display
+            try {
+                // Calculate GST
+                const gstAmount = Math.round(selectedPlan.price * 0.05);
+                const totalAmount = selectedPlan.price + gstAmount;
+                
+                console.log('🔵 Price:', selectedPlan.price);
+                console.log('🔵 GST:', gstAmount);
+                console.log('🔵 Total:', totalAmount);
+                
+                // Create subscription object
+                const subscription = {
+                    id: 'PLAN' + Date.now(),
+                    name: selectedPlan.name,
+                    provider: selectedPlan.name + ' Tiffin Service',
+                    area: 'Nashik',
+                    price: selectedPlan.price,
+                    duration: selectedPlan.period,
+                    planType: selectedPlan.name,
+                    category: selectedPlan.category || 'veg',
+                    type: selectedPlan.type || 'professional',
+                    mealsPerDay: 2,
+                    deliveryTime: '12:00 PM & 7:30 PM',
+                    menu: ['Pithla Bhakari', 'Vangyacha Bharit', 'Dal', 'Rice', 'Chapati'],
+                    icon: selectedPlan.icon || '🍛',
+                    special: selectedPlan.popular ? '🔥 Most Popular Plan' : '',
+                    amount: selectedPlan.price,
+                    gst: gstAmount,
+                    totalAmount: totalAmount,
+                    startDate: new Date().toLocaleDateString('en-IN', { 
+                        year: 'numeric', 
+                        month: 'short', 
+                        day: 'numeric' 
+                    }),
+                    status: 'pending_payment',
+                    paymentStatus: 'pending'
+                };
+                
+                console.log('🔵 Subscription object created:', subscription);
+                
+                // Save to localStorage
+                localStorage.setItem('pendingSubscription', JSON.stringify(subscription));
+                localStorage.setItem('subscriptionSource', 'plans');
+                
+                // Verify it was saved
+                const savedCheck = localStorage.getItem('pendingSubscription');
+                console.log('🔵 Verified saved:', savedCheck ? '✅ YES' : '❌ NO');
+                
+                if (!savedCheck) {
+                    console.error('❌ Failed to save to localStorage!');
+                    alert('Error: Could not save subscription. Please try again.');
+                    return;
+                }
+                
+                alert(`✅ Proceeding to payment for ${planName}...`);
+                
+                // Redirect to payments page
+                console.log('🔵 Redirecting to payments.html');
+                window.location.href = 'payments.html';
+                
+            } catch (error) {
+                console.error('❌ ERROR in subscribe function:', error);
+                alert('An error occurred: ' + error.message);
+            }
         }
 
         // Show plans (scroll to plans)
@@ -1001,5 +1037,150 @@
     <script src="/frontend/assets/js/translations.js"></script>
     <script src="/frontend/assets/js/payment.js"></script>
     <script src="/frontend/assets/js/complaints.js"></script>
+    <!-- 🔴 TEST BUTTON - Add this temporarily -->
+<div style="position: fixed; bottom: 20px; left: 20px; z-index: 9999; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.2);">
+    <h4 style="margin-bottom: 10px; color: #ff6b6b;">🔴 DEBUG PANEL</h4>
+    <button onclick="testSubscribe()" style="background: #ff6b6b; color: white; border: none; padding: 10px 20px; border-radius: 5px; margin-right: 10px; cursor: pointer;">
+        Test Subscribe (Student Saver)
+    </button>
+    <button onclick="checkLocalStorage()" style="background: #4ecdc4; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer;">
+        Check Storage
+    </button>
+    <div id="debugOutput" style="margin-top: 10px; font-size: 12px; color: #333;"></div>
+</div>
+
+<script>
+// 🔴 TEST FUNCTION
+function testSubscribe() {
+    console.log('🔴 TEST: Subscribe clicked');
+    const plan = plans.find(p => p.name === 'Student Saver');
+    console.log('🔴 TEST: Found plan:', plan);
+    
+    if (plan) {
+        // Call the original subscribe function
+        subscribe('Student Saver');
+    }
+}
+
+// 🔴 CHECK STORAGE FUNCTION
+function checkLocalStorage() {
+    const debug = document.getElementById('debugOutput');
+    const pending = localStorage.getItem('pendingSubscription');
+    const active = localStorage.getItem('activeSubscription');
+    
+    let output = '📦 LocalStorage:<br>';
+    output += 'pendingSubscription: ' + (pending ? '✅ Present' : '❌ Empty') + '<br>';
+    output += 'activeSubscription: ' + (active ? '✅ Present' : '❌ Empty') + '<br>';
+    
+    if (pending) {
+        try {
+            const data = JSON.parse(pending);
+            output += 'Plan: ' + data.name + '<br>';
+            output += 'Price: ₹' + data.price + '<br>';
+        } catch(e) {
+            output += 'Error parsing pending data';
+        }
+    }
+    
+    debug.innerHTML = output;
+}
+
+// 🔴 FIX: Make sure subscribe is globally available
+window.subscribe = function(planName) {
+    console.log('🔵 subscribe called with:', planName);
+    
+    const selectedPlan = plans.find(p => p.name === planName);
+    console.log('🔵 selectedPlan:', selectedPlan);
+    
+    if (!selectedPlan) {
+        alert('Plan not found: ' + planName);
+        return;
+    }
+    
+    try {
+        const gstAmount = Math.round(selectedPlan.price * 0.05);
+        const totalAmount = selectedPlan.price + gstAmount;
+        
+        const subscription = {
+            id: 'PLAN' + Date.now(),
+            name: selectedPlan.name,
+            provider: selectedPlan.name + ' Tiffin Service',
+            area: 'Nashik',
+            price: selectedPlan.price,
+            duration: selectedPlan.period,
+            planType: selectedPlan.name,
+            category: selectedPlan.category || 'veg',
+            type: selectedPlan.type || 'professional',
+            mealsPerDay: 2,
+            deliveryTime: '12:00 PM & 7:30 PM',
+            menu: ['Pithla Bhakari', 'Vangyacha Bharit', 'Dal', 'Rice', 'Chapati'],
+            icon: selectedPlan.icon || '🍛',
+            special: selectedPlan.popular ? 'Most Popular Plan' : '',
+            amount: selectedPlan.price,
+            gst: gstAmount,
+            totalAmount: totalAmount,
+            startDate: new Date().toLocaleDateString('en-IN', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+            }),
+            status: 'pending_payment',
+            paymentStatus: 'pending'
+        };
+        
+        console.log('🔵 Saving subscription:', subscription);
+        localStorage.setItem('pendingSubscription', JSON.stringify(subscription));
+        localStorage.setItem('subscriptionSource', 'plans');
+        
+        // Verify save
+        const saved = localStorage.getItem('pendingSubscription');
+        console.log('🔵 Save verified:', saved ? 'YES' : 'NO');
+        
+        alert('✅ Proceeding to payment for ' + planName);
+        
+        // Check if payments.html exists
+        console.log('🔵 Redirecting to payments.html');
+        window.location.href = 'payments.html';
+        
+    } catch (error) {
+        console.error('❌ Error:', error);
+        alert('Error: ' + error.message);
+    }
+};
+
+// 🔴 Also add direct onclick handlers to buttons
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('✅ Page loaded, fixing subscribe buttons...');
+    
+    // Get all subscribe buttons
+    const buttons = document.querySelectorAll('.btn-plan');
+    console.log('Found', buttons.length, 'subscribe buttons');
+    
+    buttons.forEach((button, index) => {
+        // Store original onclick
+        const originalOnClick = button.getAttribute('onclick');
+        console.log('Button', index, 'onclick:', originalOnClick);
+        
+        // Remove old onclick and add new one
+        button.removeAttribute('onclick');
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            // Extract plan name from button text or parent
+            const planCard = this.closest('.plan-card');
+            const planName = planCard ? planCard.querySelector('.plan-name').textContent : null;
+            
+            console.log('Button clicked, plan name:', planName);
+            
+            if (planName) {
+                window.subscribe(planName);
+            } else {
+                alert('Could not identify plan');
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
