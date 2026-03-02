@@ -993,38 +993,81 @@
             `).join('');
         }
 
-        // Add a new menu item
+        // Add a new menu item - ANY item name allowed!
         function addMenuItem() {
-            // Create a modal or prompt for item type
-            const itemTypes = ['chapati', 'rice', 'dal', 'sabji'];
-            const type = prompt('Enter item type (chapati/rice/dal/sabji):', 'chapati');
+            // First, ask if they want to use a preset type or custom
+            const usePreset = confirm('Would you like to select from common types? Click OK for preset list, Cancel to enter custom type');
             
-            if (!type || !itemTypes.includes(type.toLowerCase())) {
-                alert('Please enter a valid item type');
-                return;
+            let type = '';
+            
+            if (usePreset) {
+                // Show preset options with prompt
+                const typeChoice = prompt(
+                    'Select item type:\n' +
+                    '1. Chapati\n' +
+                    '2. Rice\n' +
+                    '3. Dal\n' +
+                    '4. Sabji\n' +
+                    '5. Other (enter custom)',
+                    '1'
+                );
+                
+                // Convert choice to type
+                switch(typeChoice) {
+                    case '1':
+                        type = 'chapati';
+                        break;
+                    case '2':
+                        type = 'rice';
+                        break;
+                    case '3':
+                        type = 'dal';
+                        break;
+                    case '4':
+                        type = 'sabji';
+                        break;
+                    default:
+                        // If they entered something else, ask for custom type
+                        type = prompt('Enter custom item type (e.g., Salad, Raita, Papad, Pickle):', '');
+                        if (!type || type.trim() === '') {
+                            alert('Please enter a valid type');
+                            return;
+                        }
+                }
+            } else {
+                // Direct custom type entry
+                type = prompt('Enter item type (e.g., Salad, Raita, Papad, Pickle, Roti, Paratha, etc.):', '');
+                if (!type || type.trim() === '') {
+                    alert('Please enter a valid type');
+                    return;
+                }
             }
             
+            // Get item name (always required)
             const name = prompt('Enter item name:', '');
             if (!name || name.trim() === '') {
                 alert('Please enter item name');
                 return;
             }
             
+            // Create new item object
             const newItem = { 
-                type: type.toLowerCase(), 
+                type: type.toLowerCase().trim(), 
                 name: name.trim() 
             };
             
-            // If chapati, ask for quantity
-            if (type.toLowerCase() === 'chapati') {
+            // If it's chapati or similar bread items, ask for quantity
+            const breadTypes = ['chapati', 'roti', 'naan', 'paratha', 'puri', 'bhakari'];
+            if (breadTypes.includes(type.toLowerCase())) {
                 const quantity = prompt('Enter quantity available:', '50');
                 newItem.quantity = parseInt(quantity) || 50;
             }
             
-            // Ask for extra price for all items
-            const extraPrice = prompt('Enter extra price (for additional portion):', '0');
+            // Ask for extra price (for additional portion)
+            const extraPrice = prompt('Enter extra price (for additional portion) in ₹:', '0');
             newItem.extraPrice = parseInt(extraPrice) || 0;
             
+            // Add to menu
             menuItems.push(newItem);
             renderMenuItems();
         }
